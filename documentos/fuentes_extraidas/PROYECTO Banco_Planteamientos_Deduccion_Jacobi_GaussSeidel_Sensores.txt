@@ -1,0 +1,222 @@
+FUENTE: QR_CON_FUNCIONES/CLASES Y PROYECTOS/CLASE PROYECTOS  JACOBI_GAUSS-SEIDEL/PROYECTO Banco_Planteamientos_Deduccion_Jacobi_GaussSeidel_Sensores.docx
+
+SECCIÓN: word/document.xml
+Banco de problemas para deducir sistemas lineales
+Métodos Numéricos – Jacobi y Gauss-Seidel con sensores Arduino Uno
+Objetivo: que los estudiantes construyan las ecuaciones algebraicas a partir de cada situación de ingeniería, formen A·x=b y resuelvan el sistema con Jacobi y Gauss-Seidel.
+Orientaciones para los estudiantes
+Defina las incógnitas, unidades y significado físico.
+Identifique qué mide cada sensor y cómo convertir la lectura ADC o digital a una magnitud útil.
+Deduza las ecuaciones a partir de balances, equilibrio, calibración, continuidad o relaciones del proceso.
+Organice las ecuaciones como A·x=b.
+Verifique si la matriz es diagonalmente dominante.
+Use x^(0)=0, tolerancia 0.001 y máximo 100 iteraciones, salvo que el docente indique otra condición.
+Resuelva con Jacobi y Gauss-Seidel.
+Calcule el error entre iteraciones y el residuo r=A·x−b.
+Compare convergencia, iteraciones y significado físico.
+Formato mínimo de entrega
+Planteamiento → variables → conversión de sensores → ecuaciones → A y b → dominancia diagonal → Jacobi → Gauss-Seidel → tablas → residuo → gráfica → conclusión.
+1. Placa térmica con LM35
+Planteamiento: Tres LM35 están ubicados en tres nodos internos de una placa. Las lecturas de temperatura de frontera y de una fuente térmica se toman simultáneamente. El balance de energía de cada nodo considera su propia temperatura y el intercambio con los nodos vecinos. Deduzca tres ecuaciones para T1,T2,T3.
+Sensor(es): LM35 analógico
+Pista de modelado: Convierta ADC→voltaje→°C. Explique qué lecturas forman b y cuáles parámetros permanecen en A.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una graphics.
+2. Iluminación de un laboratorio con LDR
+Planteamiento: Tres zonas del laboratorio tienen LDR conectados en divisores de voltaje. La iluminación de cada zona se afecta por las zonas vecinas. Deduzca un sistema para L1,L2,L3 usando una calibración voltaje–iluminación.
+Sensor(es): LDR analógico
+Pista de modelado: Convierta ADC a voltaje y use la curva de calibración proporcionada por el grupo.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+3. Posición de una plataforma con potenciómetros
+Planteamiento: Tres potenciómetros miden posiciones angulares de una plataforma de tres grados de libertad. Los ejes tienen acoplamiento mecánico. Deduzca un sistema para q1,q2,q3 a partir de referencias y acoplamientos.
+Sensor(es): Potenciómetros analógicos
+Pista de modelado: Convierta ADC a grados y justifique los coeficientes de acoplamiento.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+4. Depósitos conectados con ultrasonido
+Planteamiento: Tres depósitos conectados reciben y descargan agua. Tres sensores ultrasónicos miden distancias a la superficie. Deduzca balances de volumen para h1,h2,h3.
+Sensor(es): HC-SR04 digital
+Pista de modelado: Convierta tiempo de eco a distancia y distancia a altura.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+5. Ocupación de aulas con PIR
+Planteamiento: Tres sensores PIR registran eventos de movimiento durante ventanas de 60 segundos. Deduzca un sistema que estime ocupación o demanda de tres zonas considerando intercambio entre zonas.
+Sensor(es): PIR digital
+Pista de modelado: Convierta pulsos en conteos por minuto y defina un índice de ocupación.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+6. Confort ambiental con DHT22
+Planteamiento: Tres estaciones DHT22 miden temperatura y humedad. Defina un índice I=αT+βH y deduzca un sistema para tres estados ambientales C1,C2,C3.
+Sensor(es): DHT22 digital
+Pista de modelado: Explique α y β, promedie varias muestras y use unidades coherentes.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+7. Calidad del aire con MQ-2, MQ-7 y MQ-135
+Planteamiento: Tres sensores MQ se instalan en una cámara de ensayo. Sus señales se convierten en índices relativos de concentración. Deduzca un sistema para G1,G2,G3.
+Sensor(es): MQ-2, MQ-7, MQ-135 analógicos
+Pista de modelado: Use calibración relativa; no reporte ppm sin una curva de calibración válida.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+8. Plataforma de pesaje con HX711
+Planteamiento: Una plataforma tiene tres puntos de apoyo. El HX711 mide la carga total y se conocen las distancias de los apoyos. Deduzca ecuaciones de suma de fuerzas y momentos para F1,F2,F3.
+Sensor(es): HX711 digital
+Pista de modelado: Use F=mg y las ecuaciones de equilibrio estático.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+9. Clasificación de color con GY-31
+Planteamiento: El GY-31 registra frecuencias correspondientes a rojo, verde y azul. Deduzca un sistema para las intensidades normalizadas R,G,B de una muestra.
+Sensor(es): GY-31 digital
+Pista de modelado: Explique la calibración de cada canal y normalice las frecuencias.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+10. Control de temperatura con LM35 y servo9g
+Planteamiento: Un LM35 mide la temperatura de un proceso y un servo regula una compuerta. Para tres condiciones de operación, deduzca un sistema para temperatura estimada, apertura y error de control.
+Sensor(es): LM35 analógico + servo9g
+Pista de modelado: Defina la referencia, el error y el ángulo de control.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+11. Nivel de agua con sensor water level
+Planteamiento: Tres sensores de nivel se ubican en compartimentos comunicados. Deduzca ecuaciones de continuidad para h1,h2,h3.
+Sensor(es): Water level analógico
+Pista de modelado: Convierta ADC a porcentaje o altura mediante calibración.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+12. Escenarios con DIP switch de 4 posiciones
+Planteamiento: Un DIP switch selecciona uno de varios escenarios de carga para un sistema de tres variables. Deduzca el sistema correspondiente al escenario seleccionado.
+Sensor(es): DIP switch digital
+Pista de modelado: El código binario selecciona b o condiciones de frontera; documente cada escenario.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+13. Mapa de riesgo con matriz LED 8×8
+Planteamiento: MQ135, DHT11 y PIR proporcionan índices de gas, ambiente y presencia. Deduzca un sistema de riesgo y represente la solución en la matriz LED.
+Sensor(es): MQ135 analógico + DHT11/PIR digitales
+Pista de modelado: La matriz LED es salida; los sensores generan los datos del modelo.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+14. Indicador de proceso con display de 4 dígitos
+Planteamiento: Tres variables de un proceso se calculan a partir de sensores y se muestran una por una en un display de 7 segmentos. Deduzca el sistema y defina la codificación del valor principal.
+Sensor(es): Sensores analógicos/digitales + display
+Pista de modelado: El display visualiza el resultado; no genera las ecuaciones.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+15. Almacenamiento inteligente
+Planteamiento: HX711 mide masa, water level mide nivel y DHT11 mide temperatura/humedad. Deduzca un sistema para estimar masa, nivel y estado ambiental, y controle LEDs según los umbrales.
+Sensor(es): HX711 + water level + DHT11
+Pista de modelado: Justifique los balances, conversiones y criterios de alarma.
+El grupo debe entregar: las ecuaciones deducidas, A, b, las fórmulas iterativas, las tablas de Jacobi y Gauss-Seidel, la verificación y una gráfica.
+Tabla de control de entregas
+Problema
+Variables
+Sensores
+A y b
+Jacobi
+Gauss-Seidel
+Gráfica/residuo
+1
+☐
+☐
+☐
+☐
+☐
+☐
+2
+☐
+☐
+☐
+☐
+☐
+☐
+3
+☐
+☐
+☐
+☐
+☐
+☐
+4
+☐
+☐
+☐
+☐
+☐
+☐
+5
+☐
+☐
+☐
+☐
+☐
+☐
+6
+☐
+☐
+☐
+☐
+☐
+☐
+7
+☐
+☐
+☐
+☐
+☐
+☐
+8
+☐
+☐
+☐
+☐
+☐
+☐
+9
+☐
+☐
+☐
+☐
+☐
+☐
+10
+☐
+☐
+☐
+☐
+☐
+☐
+11
+☐
+☐
+☐
+☐
+☐
+☐
+12
+☐
+☐
+☐
+☐
+☐
+☐
+13
+☐
+☐
+☐
+☐
+☐
+☐
+14
+☐
+☐
+☐
+☐
+☐
+☐
+15
+☐
+☐
+☐
+☐
+☐
+☐
+Preguntas de análisis
+¿Qué ley física permitió construir cada ecuación?
+¿Qué mediciones forman el vector b?
+¿Qué coeficientes se obtienen de calibración?
+¿La matriz es diagonalmente dominante?
+¿Qué método necesitó menos iteraciones?
+¿El residuo es aceptable?
+¿Qué limitaciones tienen las mediciones de los sensores?
+Advertencia metodológica
+Los sensores no producen ecuaciones automáticamente. El modelo físico, la calibración y las condiciones del problema determinan la matriz A y el vector b. Las lecturas deben convertirse a unidades coherentes y documentarse.
+
+METADATOS:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title></dc:title><dc:subject></dc:subject><dc:creator>python-docx</dc:creator><cp:keywords></cp:keywords><dc:description>generated by python-docx</dc:description><cp:lastModifiedBy>SAMUEL CARRASCO</cp:lastModifiedBy><cp:revision>2</cp:revision><dcterms:created xsi:type="dcterms:W3CDTF">2013-12-23T23:15:00Z</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">2026-10-07T13:04:14Z</dcterms:modified><cp:category></cp:category></cp:coreProperties>
+
+RECURSOS EMBEBIDOS:

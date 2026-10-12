@@ -1,0 +1,331 @@
+FUENTE: QR_CON_FUNCIONES/CLASES Y PROYECTOS/CLASE PROYECTOS  JACOBI_GAUSS-SEIDEL/Banco_Problemas_Eliminacion_Gauss_Gauss_Jordan_Sensores.docx
+
+SECCIÓN: word/document.xml
+.Banco de problemas: eliminación de Gauss y Gauss-Jordan, Jacobi, Gauss-Seidel y Doolittle
+Aplicaciones de ingeniería con sensores analógicos y digitales
+Objetivo: resolver sistemas lineales obtenidos de problemas de instrumentación mediante eliminación de Gauss y Gauss-Jordan, Jacobi, Gauss-Seidel y Doolitel, interpretar las incógnitas y verificar los resultados.
+Instrucciones
+Identifique las variables y sus unidades.
+Explique la relación entre las lecturas de los sensores y el modelo matemático.
+Use eliminación de Gauss con sustitución regresiva.
+Resuelva el mismo sistema con Gauss-Jordan hasta obtener la matriz identidad.
+Calcule el residuo r=A·x−b.
+Compare ambos resultados y analice su significado físico.
+Redondee a cuatro decimales.
+1. Temperatura en una placa
+Planteamiento: Tres LM35 miden nodos térmicos acoplados. Las variables T1,T2,T3 representan temperaturas corregidas en °C.
+Sensores: LM35 analógico
+Sistema que debe resolver:
+A
+b
+10
+-1
+2
+18
+-1
+11
+-1
+20
+2
+-1
+10
+27
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+2. Iluminación de tres zonas
+Planteamiento: Tres LDR se calibran para obtener niveles de iluminación L1,L2,L3. El acoplamiento representa reflexión entre zonas.
+Sensores: LDR analógico
+Sistema que debe resolver:
+A
+b
+8
+-1
+-1
+30
+-1
+7
+-1
+20
+-1
+-1
+8
+25
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+3. Posición de un mecanismo
+Planteamiento: Tres potenciómetros entregan posiciones angulares q1,q2,q3 con acoplamiento mecánico.
+Sensores: Potenciómetros analógicos
+Sistema que debe resolver:
+A
+b
+5
+1
+0
+12
+1
+6
+-1
+18
+0
+-1
+7
+14
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+4. Altura en depósitos comunicados
+Planteamiento: Tres sensores HC-SR04 miden distancias y permiten calcular las alturas h1,h2,h3.
+Sensores: Ultrasonido digital
+Sistema que debe resolver:
+A
+b
+6
+-1
+0
+24
+-1
+7
+-1
+32
+0
+-1
+6
+30
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+5. Ocupación de zonas
+Planteamiento: Tres PIR producen índices de ocupación O1,O2,O3 a partir del conteo de eventos.
+Sensores: PIR digital
+Sistema que debe resolver:
+A
+b
+4
+-1
+-1
+12
+-1
+5
+-1
+15
+-1
+-1
+4
+10
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+6. Índice ambiental
+Planteamiento: Tres DHT22 permiten calcular estados ambientales C1,C2,C3 usando temperatura y humedad calibradas.
+Sensores: DHT22 digital
+Sistema que debe resolver:
+A
+b
+9
+-1
+-2
+70
+-1
+8
+-1
+50
+-2
+-1
+10
+90
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+7. Calidad del aire
+Planteamiento: Tres sensores MQ producen índices de gases G1,G2,G3 después de la calibración relativa.
+Sensores: MQ-2, MQ-7 y MQ-135 analógicos
+Sistema que debe resolver:
+A
+b
+9
+-1
+-2
+70
+-1
+8
+-1
+50
+-2
+-1
+10
+90
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+8. Plataforma de pesaje
+Planteamiento: Tres celdas de carga conectadas a HX711 miden F1,F2,F3. El modelo combina fuerzas y momentos.
+Sensores: HX711 digital
+Sistema que debe resolver:
+A
+b
+1
+1
+1
+60
+1
+2
+3
+120
+2
+-1
+1
+30
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+9. Clasificación RGB
+Planteamiento: El GY-31 permite estimar intensidades R,G,B corregidas por calibración.
+Sensores: GY-31 digital
+Sistema que debe resolver:
+A
+b
+4
+1
+1
+18
+1
+5
+-1
+20
+1
+-1
+6
+25
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+10. Temperatura y apertura
+Planteamiento: Un LM35 mide temperatura y un servo9g regula una compuerta. Las variables son temperatura, apertura y error.
+Sensores: LM35 analógico y servo9g
+Sistema que debe resolver:
+A
+b
+7
+-1
+1
+30
+-1
+8
+-2
+40
+1
+-2
+9
+50
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+11. Nivel en compartimentos
+Planteamiento: Tres sensores water level permiten estimar los niveles h1,h2,h3.
+Sensores: Water level analógico
+Sistema que debe resolver:
+A
+b
+5
+-1
+0
+20
+-1
+5
+-1
+30
+0
+-1
+4
+25
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+12. Escenario de carga
+Planteamiento: Un DIP switch selecciona el escenario S1. Las variables x1,x2,x3 representan respuestas del sistema.
+Sensores: DIP switch digital
+Sistema que debe resolver:
+A
+b
+8
+-1
+1
+30
+-1
+9
+-1
+40
+1
+-2
+10
+50
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+13. Mapa de riesgo
+Planteamiento: MQ135, DHT11 y PIR generan índices de gas, ambiente y presencia.
+Sensores: MQ135 analógico, DHT11 y PIR digitales
+Sistema que debe resolver:
+A
+b
+10
+-1
+-2
+80
+-1
+9
+-1
+60
+-2
+-1
+8
+50
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+14. Indicador de proceso
+Planteamiento: Tres variables calculadas mediante sensores se muestran en un display de 7 segmentos.
+Sensores: Sensores analógicos/digitales y display
+Sistema que debe resolver:
+A
+b
+6
+-1
+1
+25
+-1
+7
+-2
+35
+1
+-2
+8
+45
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+15. Almacenamiento inteligente
+Planteamiento: HX711, sensor de nivel y DHT11 estiman masa, nivel y estado ambiental.
+Sensores: HX711, water level y DHT11
+Sistema que debe resolver:
+A
+b
+12
+-1
+1
+100
+-1
+10
+-2
+80
+1
+-2
+11
+90
+Tareas: resolver por eliminación de Gauss, resolver por Gauss-Jordan, calcular el residuo y explicar el resultado en el contexto del sensor.
+Formato de solución del estudiante
+1. Definición de variables.
+2. Conversión o interpretación de sensores.
+3. Matriz aumentada [A|b].
+4. Eliminación hacia forma triangular.
+5. Sustitución regresiva.
+6. Operaciones elementales de Gauss-Jordan.
+7. Solución final.
+8. Residuo y análisis de error.
+9. Interpretación de las magnitudes calculadas.
+Tabla de evaluación sugerida
+Criterio
+Puntaje
+Observaciones
+Modelo y variables
+20%
+Matriz aumentada
+15%
+Eliminación de Gauss
+25%
+Gauss-Jordan
+25%
+Residuo e interpretación
+15%
+Nota
+Los valores de A y b son datos académicos de referencia. Para una práctica experimental, los estudiantes pueden reemplazar b con datos obtenidos mediante sensores calibrados, manteniendo la estructura del modelo o justificando cualquier cambio.
+
+METADATOS:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title></dc:title><dc:subject></dc:subject><dc:creator>python-docx</dc:creator><cp:keywords></cp:keywords><dc:description>generated by python-docx</dc:description><cp:lastModifiedBy>DIEGO DOMINGUEZ</cp:lastModifiedBy><cp:revision>6</cp:revision><dcterms:created xsi:type="dcterms:W3CDTF">2013-12-23T23:15:00Z</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">2026-10-07T23:18:00Z</dcterms:modified><cp:category></cp:category></cp:coreProperties>
+
+RECURSOS EMBEBIDOS:

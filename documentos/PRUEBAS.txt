@@ -1,0 +1,34 @@
+test_calibracion_interpolada_sin_extrapolar (test_adquisicion.AdquisicionTest.test_calibracion_interpolada_sin_extrapolar) ... ok
+test_carga_calibracion_exige_tres_sensores (test_adquisicion.AdquisicionTest.test_carga_calibracion_exige_tres_sensores) ... ok
+test_desconexion_conserva_archivo (test_adquisicion.AdquisicionTest.test_desconexion_conserva_archivo) ... ok
+test_linea_fragmentada_y_timeout (test_adquisicion.AdquisicionTest.test_linea_fragmentada_y_timeout) ... ok
+test_parser_controlado (test_adquisicion.AdquisicionTest.test_parser_controlado) ... ok
+test_parser_rechaza_invalidos (test_adquisicion.AdquisicionTest.test_parser_rechaza_invalidos) ... ok
+test_registro_valida_y_conserva_adc (test_adquisicion.AdquisicionTest.test_registro_valida_y_conserva_adc) ... ok
+test_serial_real_trama_sin_newline_respeta_limite (test_adquisicion.AdquisicionTest.test_serial_real_trama_sin_newline_respeta_limite) ... ok
+test_timeout_finaliza (test_adquisicion.AdquisicionTest.test_timeout_finaliza) ... ok
+test_argumento_invalido (test_cli.CliTest.test_argumento_invalido) ... ok
+test_limite_no_se_anuncia_como_convergencia (test_cli.CliTest.test_limite_no_se_anuncia_como_convergencia) ... ok
+test_qr_exige_contenido_explicito (test_cli.CliTest.test_qr_exige_contenido_explicito) ... ok
+test_qr_protege_texto_existente (test_cli.CliTest.test_qr_protege_texto_existente) ... ok
+test_qr_roundtrip_real (test_cli.CliTest.test_qr_roundtrip_real) ... skipped 'qrcode y OpenCV no disponibles: QR final pendiente'
+test_resolver_exporta_todo (test_cli.CliTest.test_resolver_exporta_todo) ... ok
+test_mediciones_controladas_y_reinicio (test_graficas.GraficasTest.test_mediciones_controladas_y_reinicio) ... ok
+test_mediciones_vacias_invalidas (test_graficas.GraficasTest.test_mediciones_vacias_invalidas) ... ok
+test_png_academicos (test_graficas.GraficasTest.test_png_academicos) ... ok
+test_convencion_profesor_y_primera_iteracion (test_metodos.MetodosTest.test_convencion_profesor_y_primera_iteracion) ... ok
+test_convergencia_y_referencia_independiente (test_metodos.MetodosTest.test_convergencia_y_referencia_independiente) ... ok
+test_desbordamiento_residuo_no_se_verifica (test_metodos.MetodosTest.test_desbordamiento_residuo_no_se_verifica) ... ok
+test_entradas_invalidas (test_metodos.MetodosTest.test_entradas_invalidas) ... ok
+test_exportacion_csv (test_metodos.MetodosTest.test_exportacion_csv) ... ok
+test_gauss_jordan_solucion_y_operaciones (test_metodos.MetodosTest.test_gauss_jordan_solucion_y_operaciones) ... ok
+test_inicial_configurable_y_no_mutacion (test_metodos.MetodosTest.test_inicial_configurable_y_no_mutacion) ... ok
+test_no_convergencia (test_metodos.MetodosTest.test_no_convergencia) ... ok
+test_pivoteo_y_singularidad (test_metodos.MetodosTest.test_pivoteo_y_singularidad) ... ok
+test_relativo_indefinido_sin_division_por_cero (test_metodos.MetodosTest.test_relativo_indefinido_sin_division_por_cero) ... ok
+test_residuo_y_errores (test_metodos.MetodosTest.test_residuo_y_errores) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 2.813s
+
+OK (skipped=1)

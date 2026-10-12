@@ -1,0 +1,22 @@
+Sofiaproject/
+Sofiaproject/sistema.py
+Sofiaproject/Lab2SC Ed1-2026-2.pdf
+Sofiaproject/Copia de guiadecodigo.pdf
+Sofiaproject/producto.py
+Sofiaproject/inventario.py
+Sofiaproject/test_inventario.py
+Sofiaproject/REQUISITOS.md
+Sofiaproject/README.md
+Sofiaproject/__pycache__/
+Sofiaproject/__pycache__/inventario.cpython-314.pyc
+Sofiaproject/__pycache__/producto.cpython-314.pyc
+Sofiaproject/__pycache__/datos_iniciales.cpython-314.pyc
+Sofiaproject/__pycache__/test_inventario.cpython-314.pyc
+Sofiaproject/__pycache__/test_integracion.cpython-314.pyc
+Sofiaproject/__pycache__/sistema.cpython-314.pyc
+Sofiaproject/.gitignore
+Sofiaproject/test_integracion.py
+Sofiaproject/datos_iniciales.py
+Sofiaproject/docs/
+Sofiaproject/docs/informe_laboratorio.ms
+Sofiaproject/docs/Informe_Laboratorio_2.pdf

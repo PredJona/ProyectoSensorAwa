@@ -1,0 +1,233 @@
+FUENTE: QR_CON_FUNCIONES/CLASES Y PROYECTOS/CLASE PROYECTOS  JACOBI_GAUSS-SEIDEL/PROYECTO_Guia_Problemas_Sensores_Jacobi_GaussJordan.docx
+
+SECCIÓN: word/document.xml
+Problemas de ingeniería con sensores: Jacobi y Gauss-Jordan
+Guía para estudiantes – Métodos Numéricos
+Objetivo: deducir sistemas de ecuaciones a partir de problemas de ingeniería con sensores analógicos y digitales, y resolverlos mediante Jacobi y Gauss-Jordan.
+Indicaciones generales
+Defina las variables desconocidas y sus unidades.
+Explique qué mide cada sensor y cómo se convierte la lectura.
+Deduza las ecuaciones desde balances, calibración, equilibrio o relaciones del proceso.
+Construya A y b.
+Verifique dominancia diagonal para Jacobi.
+Use x^(0)=0 y tolerancia 0.001 para Jacobi.
+Resuelva también mediante Gauss-Jordan y compare los resultados.
+Calcule el residuo r=A·x−b y presente una gráfica de convergencia.
+1. Balance térmico con tres LM35
+Planteamiento: Tres LM35 se colocan en tres nodos de una placa. El modelo de balance térmico discretizado establece que cada nodo intercambia calor con sus vecinos. Las lecturas de frontera o fuentes se convierten en b. Deduza el sistema para T1,T2,T3 y resuélvalo con Jacobi y Gauss-Jordan.
+Sensor(es): LM35 analógico
+Datos de trabajo para validar el modelo: A: [10 −1 2; −1 11 −1; 2 −1 10], b: [18,20,27]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+2. Iluminación de un área con LDR
+Planteamiento: Tres LDR se instalan en zonas de trabajo. Después de convertir ADC a voltaje y aplicar una calibración de iluminación, deduzca un sistema para los niveles L1,L2,L3 considerando acoplamiento de luz entre zonas.
+Sensor(es): LDR analógico
+Datos de trabajo para validar el modelo: A: [8 −1 −1; −1 7 −1; −1 −1 8], b: [30,20,25]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+3. Posición de un mecanismo con potenciómetros
+Planteamiento: Tres potenciómetros miden posiciones angulares q1,q2,q3. A partir de una matriz de acoplamiento del mecanismo, deduzca las ecuaciones que relacionan posiciones y referencias.
+Sensor(es): Potenciómetros analógicos
+Datos de trabajo para validar el modelo: A: [5 1 0; 1 6 −1; 0 −1 7], b: [12,18,14]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+4. Nivel de depósito con sensor ultrasónico
+Planteamiento: Tres depósitos conectados tienen alturas h1,h2,h3. Los sensores ultrasónicos miden distancia; convierta distancia en altura y deduzca los balances de nivel.
+Sensor(es): HC-SR04 digital
+Datos de trabajo para validar el modelo: A: [6 −1 0; −1 7 −1; 0 −1 6], b: [24,32,30]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+5. Detección de ocupación con PIR
+Planteamiento: Tres zonas poseen sensores PIR. Cuente eventos durante una ventana temporal y convierta los conteos en demanda estimada. Deduzca un sistema para los niveles de ocupación O1,O2,O3.
+Sensor(es): PIR digital
+Datos de trabajo para validar el modelo: A: [4 −1 −1; −1 5 −1; −1 −1 4], b: [12,15,10]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+6. Ambiente con DHT22
+Planteamiento: Tres estaciones DHT22 miden temperatura y humedad. Defina un índice ambiental I=aT+bH y deduzca un sistema para los estados ambientales C1,C2,C3.
+Sensor(es): DHT22 digital
+Datos de trabajo para validar el modelo: A: [9 −1 −2; −1 8 −1; −2 −1 10], b: [70,50,90]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+7. Calidad del aire con MQ135
+Planteamiento: Tres puntos tienen sensores MQ135. Use una calibración relativa de resistencia para formar índices G1,G2,G3. Deduzca un modelo de acoplamiento y resuélvalo.
+Sensor(es): MQ135 analógico
+Datos de trabajo para validar el modelo: A: [9 −1 −2; −1 8 −1; −2 −1 10], b: [70,50,90]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+8. Pesaje de plataforma con HX711
+Planteamiento: Tres puntos de apoyo se instrumentan con una celda de carga y HX711. A partir de equilibrio de fuerzas y momentos, deduzca un sistema para F1,F2,F3.
+Sensor(es): HX711 digital
+Datos de trabajo para validar el modelo: A: [1 1 1; 1 2 3; 2 −1 1], b: [60,120,30]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+9. Clasificación RGB con GY-31
+Planteamiento: El GY-31 mide intensidades RGB. Calibre los canales y deduzca un sistema para estimar las contribuciones R,G,B de una muestra.
+Sensor(es): GY-31 digital
+Datos de trabajo para validar el modelo: A: [4 1 1; 1 5 −1; 1 −1 6], b: [18,20,25]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+10. Control de temperatura con LM35 y servo
+Planteamiento: Un LM35 mide temperatura y un servo9g regula una compuerta. Con tres estados de operación, deduzca un sistema para temperatura, apertura y error de control.
+Sensor(es): LM35 analógico + servo
+Datos de trabajo para validar el modelo: A: [7 −1 1; −1 8 −2; 1 −2 9], b: [30,40,50]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+11. Nivel de agua con sensor water level
+Planteamiento: Tres lecturas de nivel se toman en un tanque compartimentado. Deduza balances de volumen para h1,h2,h3.
+Sensor(es): Water level analógico
+Datos de trabajo para validar el modelo: A: [5 −1 0; −1 5 −1; 0 −1 4], b: [20,30,25]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+12. Selección de carga con DIP switch
+Planteamiento: Un DIP switch digital selecciona uno de varios escenarios de carga. Para el escenario elegido, deduzca el sistema de respuesta x1,x2,x3.
+Sensor(es): DIP switch digital
+Datos de trabajo para validar el modelo: Escenario S1: A: [8 −1 1; −1 9 −1; 1 −2 10], b: [30,40,50]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+13. Mapa de riesgo con matriz LED 8x8
+Planteamiento: Sensores MQ135, DHT22 y PIR producen tres índices. Deduza un sistema para riesgo de gas, ambiente y ocupación; la matriz LED representa el resultado.
+Sensor(es): MQ135 analógico + DHT22/PIR digitales
+Datos de trabajo para validar el modelo: A: [10 −1 −2; −1 9 −1; −2 −1 8], b: [80,60,50]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+14. Indicador con display de 4 dígitos
+Planteamiento: Tres variables de proceso se calculan con sensores y se muestran secuencialmente en el display de 7 segmentos. Deduzca el sistema y defina el formato de salida.
+Sensor(es): Sensores analógicos/digitales + display
+Datos de trabajo para validar el modelo: A: [6 −1 1; −1 7 −2; 1 −2 8], b: [25,35,45]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+15. Sistema integrado de almacenamiento
+Planteamiento: HX711 mide masa, water level mide nivel y DHT11 mide ambiente. Deduza un sistema para masa, nivel y estado ambiental, y active LEDs según umbrales.
+Sensor(es): HX711 + water level + DHT11
+Datos de trabajo para validar el modelo: A: [12 −1 1; −1 10 −2; 1 −2 11], b: [100,80,90]
+Tarea: deduzca el sistema con sus propias palabras, explique la correspondencia entre sensores, A y b, resuelva por Jacobi y Gauss-Jordan, y compare el residuo.
+Soluciones de referencia
+Las soluciones numéricas siguientes sirven para verificar el trabajo de los estudiantes. En cada problema, Jacobi debe detenerse con la tolerancia indicada y Gauss-Jordan debe producir la misma solución, salvo redondeo.
+Problema 1
+Solución de referencia: x1 = 1.495192, x2 = 2.192308, x3 = 2.620192
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 2
+Solución de referencia: x1 = 4.799054, x2 = 4.148936, x3 = 4.243499
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 3
+Solución de referencia: x1 = 1.777778, x2 = 3.111111, x3 = 2.444444
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 4
+Solución de referencia: x1 = 5.025000, x2 = 6.150000, x3 = 6.025000
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 5
+Solución de referencia: x1 = 5.584615, x2 = 5.153846, x3 = 5.184615
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 6
+Solución de referencia: x1 = 11.518797, x2 = 9.218045, x3 = 12.225564
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 7
+Solución de referencia: x1 = 11.518797, x2 = 9.218045, x3 = 12.225564
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 8
+Solución de referencia: x1 = 18.000000, x2 = 24.000000, x3 = 18.000000
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 9
+Solución de referencia: x1 = 2.252427, x2 = 4.456311, x3 = 4.533981
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 10
+Solución de referencia: x1 = 4.362851, x2 = 7.213823, x3 = 6.673866
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 11
+Solución de referencia: x1 = 5.769231, x2 = 8.846154, x3 = 8.461538
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 12
+Solución de referencia: x1 = 3.720930, x2 = 5.494186, x3 = 5.726744
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 13
+Solución de referencia: x1 = 10.921450, x2 = 9.003021, x3 = 10.105740
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 14
+Solución de referencia: x1 = 4.269103, x2 = 7.607973, x3 = 6.993355
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Problema 15
+Solución de referencia: x1 = 8.446215, x2 = 10.717131, x3 = 9.362550
+Verificación: A·x = b. Residuo esperado cercano a cero.
+Tabla de comparación de resultados
+Problema
+Jacobi
+Gauss-Jordan
+Residuo
+Conclusión
+1
+[1.4952, 2.1923, 2.6202]
+[1.4952, 2.1923, 2.6202]
+≈ 0
+Completar con iteraciones y análisis
+2
+[4.7991, 4.1489, 4.2435]
+[4.7991, 4.1489, 4.2435]
+≈ 0
+Completar con iteraciones y análisis
+3
+[1.7778, 3.1111, 2.4444]
+[1.7778, 3.1111, 2.4444]
+≈ 0
+Completar con iteraciones y análisis
+4
+[5.0250, 6.1500, 6.0250]
+[5.0250, 6.1500, 6.0250]
+≈ 0
+Completar con iteraciones y análisis
+5
+[5.5846, 5.1538, 5.1846]
+[5.5846, 5.1538, 5.1846]
+≈ 0
+Completar con iteraciones y análisis
+6
+[11.5188, 9.2180, 12.2256]
+[11.5188, 9.2180, 12.2256]
+≈ 0
+Completar con iteraciones y análisis
+7
+[11.5188, 9.2180, 12.2256]
+[11.5188, 9.2180, 12.2256]
+≈ 0
+Completar con iteraciones y análisis
+8
+[18.0000, 24.0000, 18.0000]
+[18.0000, 24.0000, 18.0000]
+≈ 0
+Completar con iteraciones y análisis
+9
+[2.2524, 4.4563, 4.5340]
+[2.2524, 4.4563, 4.5340]
+≈ 0
+Completar con iteraciones y análisis
+10
+[4.3629, 7.2138, 6.6739]
+[4.3629, 7.2138, 6.6739]
+≈ 0
+Completar con iteraciones y análisis
+11
+[5.7692, 8.8462, 8.4615]
+[5.7692, 8.8462, 8.4615]
+≈ 0
+Completar con iteraciones y análisis
+12
+[3.7209, 5.4942, 5.7267]
+[3.7209, 5.4942, 5.7267]
+≈ 0
+Completar con iteraciones y análisis
+13
+[10.9215, 9.0030, 10.1057]
+[10.9215, 9.0030, 10.1057]
+≈ 0
+Completar con iteraciones y análisis
+14
+[4.2691, 7.6080, 6.9934]
+[4.2691, 7.6080, 6.9934]
+≈ 0
+Completar con iteraciones y análisis
+15
+[8.4462, 10.7171, 9.3625]
+[8.4462, 10.7171, 9.3625]
+≈ 0
+Completar con iteraciones y análisis
+Entregables
+Código Arduino de adquisición.
+Código Python de lectura y procesamiento.
+Matriz A y vector b justificados.
+Tabla de iteraciones de Jacobi.
+Solución de Gauss-Jordan.
+Gráficas de sensores, convergencia y error.
+Fotografía del montaje.
+Conclusiones y limitaciones de calibración.
+
+METADATOS:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title></dc:title><dc:subject></dc:subject><dc:creator>python-docx</dc:creator><cp:keywords></cp:keywords><dc:description>generated by python-docx</dc:description><cp:lastModifiedBy></cp:lastModifiedBy><cp:revision>1</cp:revision><dcterms:created xsi:type="dcterms:W3CDTF">2013-12-23T23:15:00Z</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">2013-12-23T23:15:00Z</dcterms:modified><cp:category></cp:category></cp:coreProperties>
+
+RECURSOS EMBEBIDOS:

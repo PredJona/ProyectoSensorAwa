@@ -1,0 +1,215 @@
+FUENTE: QR_CON_FUNCIONES/CLASES Y PROYECTOS/CLASE PROYECTOS  JACOBI_GAUSS-SEIDEL/Banco_Problemas_Jacobi_GaussSeidel_Doolittle.pptx
+
+SECCIÓN: ppt/slides/slide1.xml
+BANCO DE PROBLEMAS
+Jacobi • Gauss-Seidel • Doolittle
+Profesor: Jaime Pérez
+Problemas de ingeniería para desarrollar en clase
+
+SECCIÓN: ppt/slides/slide2.xml
+Objetivo del banco
+Resolver problemas de ingeniería formulados como A𝒙 = 𝒃 aplicando Jacobi, Gauss-Seidel y factorización de Doolittle. Cada equipo debe mostrar ecuaciones, matriz A, vector b, aproximación inicial, tolerancia, iteraciones y verificación.
+2
+
+SECCIÓN: ppt/slides/slide3.xml
+Instrucciones
+1. Defina incógnitas y unidades.
+2. Construya las ecuaciones.
+3. Escriba A𝒙 = 𝒃.
+4. Verifique dominancia diagonal.
+5. Aplique los tres métodos.
+6. Use ε = 0.001 y 𝒙⁽⁰⁾ = 0.
+7. Compare iteraciones y residuos.
+8. No consulte las soluciones hasta terminar.
+3
+
+SECCIÓN: ppt/slides/slide4.xml
+Criterios de evaluación
+Planteamiento físico: 20 %.
+Construcción de A y b: 20 %.
+Jacobi: 15 %.
+Gauss-Seidel: 15 %.
+Doolittle: 15 %.
+Verificación, interpretación y presentación: 15 %.
+4
+
+SECCIÓN: ppt/slides/slide5.xml
+Problema 1: red eléctrica
+10I₁ − I₂ + 2I₃ = 18
+−I₁ + 11I₂ − I₃ = 20
+2I₁ − I₂ + 10I₃ = 27
+Determine las corrientes en A.
+5
+
+SECCIÓN: ppt/slides/slide6.xml
+Problema 2: placa térmica
+4T₁ − T₂ − T₃ = 100
+−T₁ + 4T₂ − T₄ = 200
+−T₁ + 4T₃ − T₄ = 300
+−T₂ − T₃ + 4T₄ = 400
+Determine las temperaturas en °C.
+6
+
+SECCIÓN: ppt/slides/slide7.xml
+Problema 3: red hidráulica
+8Q₁ − 2Q₂ − Q₃ = 30
+−2Q₁ + 7Q₂ − Q₃ = 10
+−Q₁ − Q₂ + 6Q₃ = 20
+Calcule los caudales en L/s.
+7
+
+SECCIÓN: ppt/slides/slide8.xml
+Problema 4: estructura
+6F₁ − F₂ + F₃ = 20
+−F₁ + 8F₂ − 2F₃ = 15
+F₁ − 2F₂ + 7F₃ = 25
+Determine las fuerzas en kN.
+8
+
+SECCIÓN: ppt/slides/slide9.xml
+Problema 5: reactores
+12C₁ − C₂ + C₃ = 120
+−C₁ + 10C₂ − C₃ = 90
+C₁ − C₂ + 11C₃ = 150
+Determine las concentraciones en mol/L.
+9
+
+SECCIÓN: ppt/slides/slide10.xml
+Problema 6: elementos finitos
+7u₁ − 2u₂ = 5
+−2u₁ + 8u₂ − u₃ = 10
+−u₂ + 6u₃ = 8
+Determine los desplazamientos en mm.
+10
+
+SECCIÓN: ppt/slides/slide11.xml
+Problema 7: sistema eléctrico
+15V₁ − 2V₂ − V₃ = 100
+−2V₁ + 12V₂ − 2V₃ = 80
+−V₁ − 2V₂ + 10V₃ = 60
+Determine los potenciales en V.
+11
+
+SECCIÓN: ppt/slides/slide12.xml
+Problema 8: medio poroso
+5h₁ − h₂ = 20
+−h₁ + 5h₂ − h₃ = 30
+−h₂ + 5h₃ − h₄ = 40
+−h₃ + 4h₄ = 50
+Determine las cargas en m.
+12
+
+SECCIÓN: ppt/slides/slide13.xml
+Problema 9: calibración
+4a + b + c = 15
+a + 6b − c = 20
+a − b + 5c = 12
+Determine los coeficientes.
+13
+
+SECCIÓN: ppt/slides/slide14.xml
+Problema 10: mezcla
+9m₁ − m₂ − 2m₃ = 70
+−m₁ + 8m₂ − m₃ = 50
+−2m₁ − m₂ + 10m₃ = 90
+Determine las tasas en kg/h.
+14
+
+SECCIÓN: ppt/slides/slide15.xml
+Problema 11: robot
+5Δq₁ + Δq₂ = 12
+Δq₁ + 6Δq₂ − Δq₃ = 18
+−Δq₂ + 7Δq₃ = 14
+Determine las correcciones en radianes.
+15
+
+SECCIÓN: ppt/slides/slide16.xml
+Problema 12: materiales
+10x₁ − x₂ + x₃ = 100
+−2x₁ + 9x₂ − x₃ = 80
+x₁ − x₂ + 8x₃ = 90
+Determine las cantidades en kg.
+16
+
+SECCIÓN: ppt/slides/slide17.xml
+Problema 13: vibraciones
+6y₁ − y₂ + y₃ = 5
+−y₁ + 7y₂ − 2y₃ = 8
+y₁ − 2y₂ + 9y₃ = 12
+Determine las amplitudes.
+17
+
+SECCIÓN: ppt/slides/slide18.xml
+Problema 14: transporte
+11f₁ − f₂ − f₃ = 50
+−f₁ + 10f₂ − 2f₃ = 35
+−2f₁ − f₂ + 12f₃ = 60
+Determine los flujos en unidades/h.
+18
+
+SECCIÓN: ppt/slides/slide19.xml
+Problema 15: control
+8z₁ − z₂ + z₃ = 30
+−z₁ + 9z₂ − z₃ = 40
+z₁ − 2z₂ + 10z₃ = 50
+Determine los valores de control.
+19
+
+SECCIÓN: ppt/slides/slide20.xml
+Formato de entrega
+Por cada problema entregue: definición de variables, sistema, matriz A y vector b, dominancia diagonal, Jacobi, Gauss-Seidel, Doolittle, residuos y conclusión física.
+20
+
+SECCIÓN: ppt/slides/slide21.xml
+Soluciones finales 1–5
+Problema 1: 1.49519, 2.19231, 2.62019
+Problema 2: 87.50000, 112.50000, 137.50000, 162.50000
+Problema 3: 5.25597, 3.61775, 4.81229
+Problema 4: 3.20598, 3.28904, 4.05316
+Problema 5: 9.79829, 11.35764, 13.77812
+Las soluciones son las mismas para los tres métodos, salvo redondeo. Jacobi y Gauss-Seidel deben detenerse con la tolerancia establecida; Doolittle usa LU.
+21
+
+SECCIÓN: ppt/slides/slide22.xml
+Soluciones finales 6–10
+Problema 6: 1.21639, 1.75738, 1.62623
+Problema 7: 8.52381, 9.54762, 8.76190
+Problema 8: 5.96330, 9.81651, 13.11927, 15.77982
+Problema 9: 2.24272, 3.39806, 2.63107
+Problema 10: 11.51880, 9.21805, 12.22556
+Las soluciones son las mismas para los tres métodos, salvo redondeo. Jacobi y Gauss-Seidel deben detenerse con la tolerancia establecida; Doolittle usa LU.
+22
+
+SECCIÓN: ppt/slides/slide23.xml
+Soluciones finales 11–15
+Problema 11: 1.77778, 3.11111, 2.44444
+Problema 12: 10.08721, 12.41279, 11.54070
+Problema 13: 0.85088, 1.72807, 1.62281
+Problema 14: 5.61063, 5.33703, 6.37986
+Problema 15: 3.72093, 5.49419, 5.72674
+Las soluciones son las mismas para los tres métodos, salvo redondeo. Jacobi y Gauss-Seidel deben detenerse con la tolerancia establecida; Doolittle usa LU.
+23
+
+SECCIÓN: ppt/slides/slide24.xml
+Tabla para completar
+Método | Solución | Iteraciones | Error final | ||A𝒙−𝒃||∞
+Jacobi | … | … | … | …
+Gauss-Seidel | … | … | … | …
+Doolittle | … | No iterativo | — | …
+Complete la tabla para cada problema con los resultados del programa.
+24
+
+SECCIÓN: ppt/slides/slide25.xml
+Preguntas de reflexión
+1. ¿Cuál método necesitó menos iteraciones?
+2. ¿Todas las matrices son diagonalmente dominantes?
+3. ¿Qué ocurre al reducir la tolerancia?
+4. ¿Por qué Doolittle no requiere iteraciones?
+5. ¿Qué método elegiría para varios vectores b con la misma matriz A?
+25
+
+METADATOS:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title></dc:title><dc:subject></dc:subject><dc:creator></dc:creator><cp:keywords></cp:keywords><dc:description>generated using python-pptx</dc:description><cp:lastModifiedBy>jaime perez</cp:lastModifiedBy><cp:revision>2</cp:revision><dcterms:created xsi:type="dcterms:W3CDTF">2013-01-27T09:14:16Z</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">2026-10-07T10:41:53Z</dcterms:modified><cp:category></cp:category></cp:coreProperties>
+
+RECURSOS EMBEBIDOS:

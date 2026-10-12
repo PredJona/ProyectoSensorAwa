@@ -1,0 +1,70 @@
+FUENTE: QR_CON_FUNCIONES/CLASES Y PROYECTOS/CLASE PROYECTOS  JACOBI_GAUSS-SEIDEL/Clases Método de Gauss-Seidel.pptx
+
+SECCIÓN: ppt/slides/slide1.xml
+Método de Gauss-Seidel
+El método de Gauss-Seidel, reescribe las expresiones del sistema de ecuaciones, despejando la incógnita de la diagonal en cada ecuación.
+
+SECCIÓN: ppt/slides/slide2.xml
+Método de Gauss-Seidel
+
+SECCIÓN: ppt/slides/slide3.xml
+Considere el siguiente sistema de ecuaciones A.X=B dado por:
+Luego del pivoteo parcial por filas, el sistema de ecuaciones a usar para el método de Jacobi es:
+Realice el pivoteo parcial por filas, de tal manera que la diagonal de A sea estrictamente dominante.
+Método de Gauss-Seidel
+
+SECCIÓN: ppt/slides/slide4.xml
+Método de Gauss-Seidel
+
+SECCIÓN: ppt/slides/slide5.xml
+Desarrolle el ejercicio usando el método de Gaus-Seidel, tomando como vector inicial X0=[0,0,0] y tolerancia de 0.0001.
+Se despejan la incógnita de la diagonal en cada ecuación
+Método de Gauss-Seidel
+
+SECCIÓN: ppt/slides/slide6.xml
+El vector inicial X0=[0,0,0] representa un punto de partida, valores estimados o semilla para buscar la solución a las variables x0,y0,z0.
+Como las ecuaciones son el comportamiento del 'sistema', se usan con  X0 para obtener un nuevo y mejor valor estimado para la solución.
+itera = 0
+Método de Gauss-Seidel
+
+SECCIÓN: ppt/slides/slide7.xml
+Para revisar si se está más cerca de la solución, se calculan las diferencias, tramos o desplazamientos entre los valores nuevos y anteriores
+Método de Gauss-Seidel
+
+SECCIÓN: ppt/slides/slide8.xml
+Método de Gauss-Seidel
+
+SECCIÓN: ppt/slides/slide9.xml
+Al comparar el valor errado con la tolerancia, se observa que el error aún es mayor que lo tolerado. Por lo que se continúa con otra iteración.
+Método de Gauss-Seidel
+
+SECCIÓN: ppt/slides/slide10.xml
+Al comparar el valor errado con la tolerancia, se observa que el error aún es mayor que lo tolerado. Por lo que se continúa con otra iteración.
+Método de Gauss-Seidel
+
+METADATOS:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title></dc:title><dc:subject></dc:subject><dc:creator></dc:creator><cp:keywords></cp:keywords><dc:description>generated using python-pptx</dc:description><cp:lastModifiedBy>jaime perez</cp:lastModifiedBy><cp:revision>14</cp:revision><dcterms:created xsi:type="dcterms:W3CDTF">2013-01-27T09:14:16Z</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">2026-10-05T12:53:11Z</dcterms:modified><cp:category></cp:category></cp:coreProperties>
+
+RECURSOS EMBEBIDOS:
+ppt/media/image1.png
+ppt/media/image2.png
+ppt/media/image3.png
+ppt/media/image4.png
+ppt/media/image5.png
+ppt/media/image6.png
+ppt/media/image7.png
+ppt/media/image8.png
+ppt/media/image19.png
+ppt/media/image20.png
+ppt/media/image10.png
+ppt/media/image12.png
+ppt/media/image11.png
+ppt/media/image13.png
+ppt/media/image14.png
+ppt/media/image15.png
+ppt/media/image9.png
+ppt/media/image16.png
+ppt/media/image17.png
+ppt/media/image18.png
+ppt/media/image21.png

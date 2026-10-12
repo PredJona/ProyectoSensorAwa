@@ -1,0 +1,51 @@
+FUENTE: QR_CON_FUNCIONES/PROBLEMAS DE PRACTICAS.docx
+
+SECCIÓN: word/document.xml
+PROBLEMAS DE PRACTICAS – JACOBI Y GAUSS-SEIDEL
+Profesor: Jaime Pérez
+Problema 1. Circuito de tres mallas
+Un circuito tiene tres mallas recorridas en sentido horario. Las resistencias totales de las mallas son 10, 12 y 15 ohmios. Las resistencias compartidas entre las mallas 1-2, 1-3 y 2-3 son 2, 1 y 3 ohmios. Las fuentes netas, positivas en el sentido elegido, son 13, 29, 4 V, respectivamente. Aplique la ley de voltajes de Kirchhoff y determine las tres corrientes.
+Sistema y matriz
+Incognitas: I1, I2, I3. Unidad: A.10 I1 -2 I2 -1 I3 = 13-2 I1 +12 I2 -3 I3 = 29-1 I1 -3 I2 +15 I3 = 4A = [[10.0, -2.0, -1.0], [-2.0, 12.0, -3.0], [-1.0, -3.0, 15.0]]b = [13.0, 29.0, 4.0]
+Problema 2. Voltajes de tres nodos
+Una red tiene conductancias entre los nodos 1-2, 1-3 y 2-3 de 2, 1 y 2 mS. Las conductancias hacia tierra de los nodos 1, 2 y 3 son 5, 5 y 4 mS. Se inyectan corrientes de 29, 20, 8 mA, respectivamente. Aplique el balance de corriente en cada nodo y determine sus voltajes respecto de tierra.
+Sistema y matriz
+Incognitas: V1, V2, V3. Unidad: V.8 V1 -2 V2 -1 V3 = 29-2 V1 +9 V2 -2 V3 = 20-1 V1 -2 V2 +7 V3 = 8A = [[8.0, -2.0, -1.0], [-2.0, 9.0, -2.0], [-1.0, -2.0, 7.0]]b = [29.0, 20.0, 8.0]
+Problema 3. Temperaturas en tres zonas
+Tres zonas termicas intercambian calor. Las conductancias entre zonas 1-2, 1-3 y 2-3 son 2, 1 y 2 W/K. Las conductancias hacia un ambiente a 25 grados C son 4, 4 y 3 W/K. Las potencias de calefaccion son 28, 76, 32 W. Determine las elevaciones de temperatura theta_i = T_i - 25 y las temperaturas absolutas en grados C, suponiendo regimen estacionario.
+Sistema y matriz
+Incognitas: theta1, theta2, theta3. Unidad: grados C sobre el ambiente.7 theta1 -2 theta2 -1 theta3 = 28-2 theta1 +8 theta2 -2 theta3 = 76-1 theta1 -2 theta2 +6 theta3 = 32A = [[7.0, -2.0, -1.0], [-2.0, 8.0, -2.0], [-1.0, -2.0, 6.0]]b = [28.0, 76.0, 32.0]
+Problema 4. Calibracion de sensores termicos
+Tres canales de un sistema de medicion presentan acoplamiento lineal. El canal 1 registra diez veces T1 mas T2 mas T3; el canal 2 registra T1 mas doce veces T2 mas dos veces T3; el canal 3 registra T1 mas dos veces T2 mas quince veces T3. Las lecturas compuestas son 300, 424, 560, en unidades equivalentes a grados C. Determine las temperaturas corregidas. Los coeficientes son una calibracion academica supuesta, no especificaciones de un sensor comercial.
+Sistema y matriz
+Incognitas: T1, T2, T3. Unidad: grados C.10 T1 +1 T2 +1 T3 = 3001 T1 +12 T2 +2 T3 = 4241 T1 +2 T2 +15 T3 = 560A = [[10.0, 1.0, 1.0], [1.0, 12.0, 2.0], [1.0, 2.0, 15.0]]b = [300.0, 424.0, 560.0]
+Problema 5. Desplazamientos de una estructura
+Tres puntos de una estructura se modelan con resortes. Las rigideces de acoplamiento 1-2, 1-3 y 2-3 son 3, 2 y 4 N/mm. Las rigideces hacia soportes fijos son 7, 8 y 12 N/mm. Las fuerzas externas en la direccion positiva son 3, 21, 17 N. Establezca los balances de fuerzas y determine los desplazamientos.
+Sistema y matriz
+Incognitas: u1, u2, u3. Unidad: mm.12 u1 -3 u2 -2 u3 = 3-3 u1 +15 u2 -4 u3 = 21-2 u1 -4 u2 +18 u3 = 17A = [[12.0, -3.0, -2.0], [-3.0, 15.0, -4.0], [-2.0, -4.0, 18.0]]b = [3.0, 21.0, 17.0]
+Problema 6. Presiones en una red hidraulica
+Una red hidraulica linealizada tiene conductancias 1-2, 1-3 y 2-3 de 2, 1 y 3 L/(min kPa). Las conductancias hacia un deposito de presion manometrica cero son 6, 5 y 4 L/(min kPa). Los caudales externos inyectados son 17, 28, 1 L/min. Use q_ij = g_ij(p_i-p_j), balancee caudales y determine las presiones manometricas.
+Sistema y matriz
+Incognitas: p1, p2, p3. Unidad: kPa.9 p1 -2 p2 -1 p3 = 17-2 p1 +10 p2 -3 p3 = 28-1 p1 -3 p2 +8 p3 = 1A = [[9.0, -2.0, -1.0], [-2.0, 10.0, -3.0], [-1.0, -3.0, 8.0]]b = [17.0, 28.0, 1.0]
+Problema 7. Concentraciones en tres tanques
+Tres tanques perfectamente mezclados intercambian soluto mediante un modelo lineal simetrico de transporte: los coeficientes entre tanques 1-2, 1-3 y 2-3 son 2, 1 y 2 L/min. Los coeficientes de remocion hacia un medio libre de soluto son 7, 7 y 6 L/min. Las tasas externas de aporte de soluto son 10, 21, 28 mg/min. En estado estacionario, cada aporte iguala la remocion mas la suma de transportes g_ij(c_i-c_j). Determine las concentraciones.
+Sistema y matriz
+Incognitas: c1, c2, c3. Unidad: mg/L.10 c1 -2 c2 -1 c3 = 10-2 c1 +11 c2 -2 c3 = 21-1 c1 -2 c2 +9 c3 = 28A = [[10.0, -2.0, -1.0], [-2.0, 11.0, -2.0], [-1.0, -2.0, 9.0]]b = [10.0, 21.0, 28.0]
+Problema 8. Correccion de tres celdas de carga
+Tres celdas de carga presentan interferencia cruzada. El primer canal mide ocho veces F1 mas F2 mas F3; el segundo mide F1 mas diez veces F2 mas dos veces F3; el tercero mide F1 mas dos veces F2 mas doce veces F3. Las lecturas compuestas son 54, 97, 93, en unidades equivalentes a N. Deduzca el sistema y determine las fuerzas corregidas. La matriz corresponde a un modelo didactico de calibracion.
+Sistema y matriz
+Incognitas: F1, F2, F3. Unidad: N.8 F1 +1 F2 +1 F3 = 541 F1 +10 F2 +2 F3 = 971 F1 +2 F2 +12 F3 = 93A = [[8.0, 1.0, 1.0], [1.0, 10.0, 2.0], [1.0, 2.0, 12.0]]b = [54.0, 97.0, 93.0]
+Problema 9. Difusion en una barra
+Una barra se discretiza en tres nodos interiores. La conductancia entre nodos vecinos y entre cada extremo interior y su frontera es 1 W/K. Cada nodo pierde calor al ambiente con conductancia 2 W/K. Las dos fronteras y el ambiente estan a 20 grados C. Las potencias internas son 28, 30, 20 W. Balancee cada nodo usando theta_i = T_i - 20, determine las elevaciones y las temperaturas.
+Sistema y matriz
+Incognitas: theta1, theta2, theta3. Unidad: grados C sobre el ambiente.4 theta1 -1 theta2 = 28-1 theta1 +4 theta2 -1 theta3 = 30-1 theta2 +4 theta3 = 20A = [[4.0, -1.0, 0.0], [-1.0, 4.0, -1.0], [0.0, -1.0, 4.0]]b = [28.0, 30.0, 20.0]
+Problema 10. Separacion de tres senales opticas
+Un instrumento optico tiene tres componentes normalizadas. El canal 1 responde a seis veces s1 mas s2 mas s3; el canal 2 a s1 mas siete veces s2 mas s3; el canal 3 a s1 mas s2 mas ocho veces s3. Las lecturas son 3.8, 5.4, 7.4 unidades compuestas. Determine las componentes originales. Los coeficientes son datos sinteticos de una calibracion lineal, no una ley universal del sensor.
+Sistema y matriz
+Incognitas: s1, s2, s3. Unidad: unidad normalizada.6 s1 +1 s2 +1 s3 = 3.81 s1 +7 s2 +1 s3 = 5.41 s1 +1 s2 +8 s3 = 7.4A = [[6.0, 1.0, 1.0], [1.0, 7.0, 1.0], [1.0, 1.0, 8.0]]b = [3.8, 5.4, 7.4]
+
+METADATOS:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title></dc:title><dc:subject></dc:subject><dc:creator>jaime perez</dc:creator><cp:keywords></cp:keywords><dc:description></dc:description><cp:lastModifiedBy>jaime perez</cp:lastModifiedBy><cp:revision>2</cp:revision><dcterms:created xsi:type="dcterms:W3CDTF">2026-10-07T10:19:00Z</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">2026-10-07T10:36:00Z</dcterms:modified></cp:coreProperties>
+
+RECURSOS EMBEBIDOS:

@@ -1,0 +1,106 @@
+{
+  "origen": "academico",
+  "A": [
+    [
+      5.0,
+      -1.0,
+      0.0
+    ],
+    [
+      -1.0,
+      5.0,
+      -1.0
+    ],
+    [
+      0.0,
+      -1.0,
+      4.0
+    ]
+  ],
+  "b": [
+    20.0,
+    30.0,
+    25.0
+  ],
+  "parametros": {
+    "x0": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "tol": 0.001,
+    "max_iter": 100,
+    "criterio": "||h(k)-h(k-1)||inf < tol"
+  },
+  "dominancia_estricta": true,
+  "referencia_numpy": [
+    5.769230769230769,
+    8.846153846153847,
+    8.461538461538462
+  ],
+  "metodos": [
+    {
+      "metodo": "Jacobi",
+      "solucion": [
+        5.76911469,
+        8.84596711,
+        8.4613933625
+      ],
+      "iteraciones": 9,
+      "converge": true,
+      "motivo": "Cambio menor que tol.",
+      "residuo": [
+        -0.00039366000000029544,
+        -0.0006725024999987284,
+        -0.0003936599999967427
+      ],
+      "residuo_inf": 0.0006725024999987284,
+      "diferencia_numpy_inf": 0.00018673615384656728,
+      "error_final": 0.00039366000000029544
+    },
+    {
+      "metodo": "Gauss-Seidel",
+      "solucion": [
+        5.769203919600001,
+        8.84614176382,
+        8.461535440955
+      ],
+      "iteraciones": 6,
+      "converge": true,
+      "motivo": "Cambio menor que tol.",
+      "residuo": [
+        -0.00012216581999524578,
+        -3.05414550005878e-05,
+        0.0
+      ],
+      "residuo_inf": 0.00012216581999524578,
+      "diferencia_numpy_inf": 2.6849630768488453e-05,
+      "error_final": 0.00027147960000117877
+    },
+    {
+      "metodo": "Gauss-Jordan",
+      "solucion": [
+        5.769230769230769,
+        8.846153846153847,
+        8.461538461538462
+      ],
+      "iteraciones": null,
+      "converge": true,
+      "motivo": "Residuo verificado.",
+      "residuo": [
+        0.0,
+        7.105427357601002e-15,
+        0.0
+      ],
+      "residuo_inf": 7.105427357601002e-15,
+      "diferencia_numpy_inf": 0.0,
+      "error_final": null
+    }
+  ],
+  "graficas": [
+    "/home/jules/Documentos/proyectoun/metnum/Proyecto1/graficas/convergencia.png",
+    "/home/jules/Documentos/proyectoun/metnum/Proyecto1/graficas/residuos.png",
+    "/home/jules/Documentos/proyectoun/metnum/Proyecto1/graficas/niveles_iteraciones.png",
+    "/home/jules/Documentos/proyectoun/metnum/Proyecto1/graficas/comparacion_metodos.png"
+  ]
+}

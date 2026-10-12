@@ -1,0 +1,2 @@
+# Opcional: lectura y comprobación de QR como en lector_qr.py del profesor.
+opencv-python-headless>=4.8
