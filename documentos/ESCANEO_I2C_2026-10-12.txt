@@ -1,0 +1,75 @@
+Escaneo I2C real — Proyecto 1 — 2026-10-12
+Registro terminado: 2026-10-12 21:48:33 UTC
+Placa: Arduino UNO R4 WiFi
+Puerto: /dev/ttyACM0
+FQBN: arduino:renesas_uno:unor4wifi
+
+Cableado informado como corregido por el usuario:
+sensor 1 A0, sensor 2 A2, sensor 3 A3; LCD SDA A4, SCL A5.
+Alimentación indicada por el usuario: 5 V y GND compartido.
+El agente no inspeccionó visualmente ni cambió los cables.
+
+Compilación ejecutada, salida 0:
+XDG_CACHE_HOME=/tmp/proyecto1-r4-cache arduino-cli compile --fqbn arduino:renesas_uno:unor4wifi --build-path /tmp/proyecto1-escaner-i2c-build arduino/EscanerI2C
+Sketch uses 58164 bytes (22%) of program storage space. Maximum is 262144 bytes.
+Global variables use 8988 bytes (27%) of dynamic memory, leaving 23780 bytes for local variables. Maximum is 32768 bytes.
+
+Carga ejecutada con autorización, salida 0:
+arduino-cli upload --fqbn arduino:renesas_uno:unor4wifi --port /dev/ttyACM0 --input-dir /tmp/proyecto1-escaner-i2c-build arduino/EscanerI2C
+Write 58172 bytes to flash (15 pages)
+100% (15/15 pages)
+Done in 3.834 seconds
+New upload port: /dev/ttyACM0 (serial)
+
+Monitor abierto y cerrado con Ctrl+C, salida 0:
+arduino-cli monitor --port /dev/ttyACM0 --config baudrate=115200
+
+Resultado: una dirección con ACK, 0x27, repetida en seis recorridos completos
+legibles. Cada recorrido informó Dispositivos: 1; errores: 0.
+Hubo caracteres ilegibles al abrir el monitor; luego la salida fue estable.
+El ACK no identifica el modelo: falta verificar texto en la LCD.
+No se probaron los sensores ni los LED ni se cargó el firmware principal.
+La placa queda ejecutando EscanerI2C; el puerto del monitor está cerrado.
+
+Salida capturada del monitor (saltos de línea normalizados):
+Monitor port settings:
+  baudrate=115200
+  bits=8
+  dtr=on
+  parity=none
+  rts=on
+  stop_bits=1
+
+Connecting to /dev/ttyACM0. Press CTRL-C to exit.
+������枘����������怘�������������������怘��枞�枘���������������������枞�枆���������枆������憘������憞���������������������������怘�怘�������枘����������怘�������������������怘��枞�枘���������������������枞�枆���������枆������憘������憞���������������������������怘�怘�������枘����������怘�������������������怘��枞�枘���������������������枞�枆���������枆������憘������憞���������������������������怘�怘�������枘����������怘�������������������怘��枞�枘���������������������枞�枆���������枆������憘������憞���������������������������怘�怘�Escaneo Wire: SDA/A4, SCL/A5; direcciones 0x01..0x7E
+Dispositivo I2C encontrado en 0x27
+Dispositivos: 1; errores: 0
+Un ACK identifica una direccion; confirmar que sea la LCD.
+
+Escaneo Wire: SDA/A4, SCL/A5; direcciones 0x01..0x7E
+Dispositivo I2C encontrado en 0x27
+Dispositivos: 1; errores: 0
+Un ACK identifica una direccion; confirmar que sea la LCD.
+
+Escaneo Wire: SDA/A4, SCL/A5; direcciones 0x01..0x7E
+Dispositivo I2C encontrado en 0x27
+Dispositivos: 1; errores: 0
+Un ACK identifica una direccion; confirmar que sea la LCD.
+
+Escaneo Wire: SDA/A4, SCL/A5; direcciones 0x01..0x7E
+Dispositivo I2C encontrado en 0x27
+Dispositivos: 1; errores: 0
+Un ACK identifica una direccion; confirmar que sea la LCD.
+
+Escaneo Wire: SDA/A4, SCL/A5; direcciones 0x01..0x7E
+Dispositivo I2C encontrado en 0x27
+Dispositivos: 1; errores: 0
+Un ACK identifica una direccion; confirmar que sea la LCD.
+
+Escaneo Wire: SDA/A4, SCL/A5; direcciones 0x01..0x7E
+Dispositivo I2C encontrado en 0x27
+Dispositivos: 1; errores: 0
+Un ACK identifica una direccion; confirmar que sea la LCD.
+
+^C
+

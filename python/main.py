@@ -74,6 +74,8 @@ def parser():
     c.add_argument('--puerto',help='Ej.: /dev/ttyACM0 o COM3; autodetecta si existe solo uno')
     c.add_argument('--muestras',type=int,default=100)
     c.add_argument('--duracion',type=float,default=60.)
+    c.add_argument('--baudios',type=int,default=115200,
+                   help='USB UNO R4: 115200 (sketch anterior: 9600)')
     c.add_argument('--salida',type=Path,required=True,help='CSV nuevo; nunca sobrescribe capturas')
     g=sub.add_parser('graficar',help='Graficar CSV de adquisición')
     g.add_argument('--csv',type=Path,required=True)
@@ -95,7 +97,8 @@ def main(argv=None):
             for puerto,descripcion in puertos_disponibles(): print(f'{puerto}: {descripcion}')
         elif args.comando=='capturar':
             from .comunicacion import capturar
-            n,invalidos=capturar(args.puerto,args.salida,args.muestras,args.duracion)
+            n,invalidos=capturar(args.puerto,args.salida,args.muestras,args.duracion,
+                                baudios=args.baudios)
             print(f'Muestras: {n}; líneas inválidas: {invalidos}; CSV: {args.salida}')
             if n==0: return 2
         elif args.comando=='graficar':

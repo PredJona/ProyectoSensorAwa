@@ -1,0 +1,43 @@
+{
+  "csv": "datos/mediciones/ensayo_r4_2026-10-12_verificacion_final.csv",
+  "muestras": 10,
+  "origen": "experimental",
+  "puerto": "/dev/ttyACM0",
+  "baudios": 115200,
+  "pines_sensores": {
+    "adc1": "A0",
+    "adc2": "A2",
+    "adc3": "A3"
+  },
+  "lcd": {
+    "direccion": "0x27",
+    "sda": "A4",
+    "scl": "A5",
+    "verificacion_visual": "pendiente"
+  },
+  "condicion_agua": "no documentada; no constituye calibracion",
+  "primer_timestamp_utc": "2026-10-12T21:58:02.078177+00:00",
+  "ultimo_timestamp_utc": "2026-10-12T21:58:06.593163+00:00",
+  "intervalos_arduino_ms": [
+    500
+  ],
+  "adc": {
+    "adc1": {
+      "min": 9,
+      "max": 10
+    },
+    "adc2": {
+      "min": 9,
+      "max": 10
+    },
+    "adc3": {
+      "min": 1,
+      "max": 14
+    }
+  },
+  "sha256": {
+    "datos/mediciones/ensayo_r4_2026-10-12_verificacion_final.csv": "a6cb73316ac89e13c92abe5da34d5fa2478dab7899eff44dc96ac3ec34e0ec11",
+    "arduino/NivelAguaR4/NivelAguaR4.ino": "b579ad55cf63ad188b203fd1cdfbc0129db1a6eb74d4b3fc5098adf772351131",
+    "arduino/NivelAguaR4/ColoresNivel.h": "da146d969e901041a15ed9c14b717d5adfd775ff42fb2f8131eabb6bbb22598e"
+  }
+}

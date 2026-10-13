@@ -87,7 +87,7 @@ def mediciones(ruta_csv,ruta_png,calibracion=None):
     for i in range(1,4):
         adc=np.array([int(f[f'adc{i}']) for f in filas])
         valores=convertir(adc,cal['sensores'][f'adc{i}']) if cal else adc
-        ax.plot(tiempos,valores,'o-',label=f'Sensor {i} / A{i-1}')
+        ax.plot(tiempos,valores,'o-',label=f'Sensor {i}')
     etiqueta='Mediciones experimentales' if origenes=={'experimental'} else 'Prueba controlada — NO experimental'
     ax.set(title=etiqueta,xlabel='Tiempo desde primera recepción UTC [s]',
            ylabel=f'Nivel [{unidad}]' if cal else f'Lectura [{unidad}]')

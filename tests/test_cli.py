@@ -40,6 +40,12 @@ class CliTest(unittest.TestCase):
         self.assertEqual(r.returncode,2)
         self.assertIn('positiva',r.stderr)
 
+    def test_captura_baudios_r4_y_opcion_legacy(self):
+        from python.main import parser
+        argumentos=['capturar','--salida','sin_hardware.csv']
+        self.assertEqual(parser().parse_args(argumentos).baudios,115200)
+        self.assertEqual(parser().parse_args(argumentos+['--baudios','9600']).baudios,9600)
+
     def test_qr_exige_contenido_explicito(self):
         q=importlib.import_module('python.qr')
         with tempfile.TemporaryDirectory() as d:

@@ -22,6 +22,20 @@ class AdquisicionTest(unittest.TestCase):
         self.assertEqual(self.c.parsear_linea(b'1000,0,512,1023\r\n'), (1000,0,512,1023))
         self.assertIsNone(self.c.parsear_linea('t_ms,adc1,adc2,adc3'))
 
+    def test_cabecera_r4_y_registro_compatible_con_graficas(self):
+        self.assertIsNone(self.c.parsear_linea(b'tiempo_ms,sensor1,sensor2,sensor3\r\n'))
+        entradas=io.BytesIO(b'tiempo_ms,sensor1,sensor2,sensor3\r\n'
+                            b'500,0,512,1023\r\n1000,1023,1,0\r\n')
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)/'r4.csv'
+            self.assertEqual(self.c.registrar(entradas,p,max_muestras=2,
+                             origen='prueba_controlada'),(2,0))
+            with p.open() as f: filas=list(csv.DictReader(f))
+            self.assertEqual(set(filas[0]),
+                             {'timestamp_utc','t_ms','adc1','adc2','adc3','origen'})
+            self.assertEqual([filas[0][c] for c in ('t_ms','adc1','adc2','adc3')],
+                             ['500','0','512','1023'])
+
     def test_parser_rechaza_invalidos(self):
         for s in ('1,2,3', '1,2,3,4,5', '1,2.5,3,4', '-1,1,2,3',
                   '1,1024,2,3', '1,-1,2,3', 'nan,1,2,3', '4294967296,1,2,3', b'\xff'):

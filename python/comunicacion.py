@@ -1,11 +1,12 @@
-"""Protocolo Arduino: t_ms,adc1,adc2,adc3\n a 9600 baudios."""
+"""USB UNO R4 a 115200: tiempo_ms,sensor1,sensor2,sensor3; admite cabecera anterior."""
 import csv
 import io
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-CABECERA='t_ms,adc1,adc2,adc3'
+CABECERA='tiempo_ms,sensor1,sensor2,sensor3'
+CABECERA_LEGACY='t_ms,adc1,adc2,adc3'
 
 
 def parsear_linea(linea):
@@ -13,7 +14,7 @@ def parsear_linea(linea):
         try: linea=linea.decode('ascii')
         except UnicodeDecodeError as e: raise ValueError('La línea no es ASCII.') from e
     linea=linea.strip()
-    if linea==CABECERA: return None
+    if linea in (CABECERA,CABECERA_LEGACY): return None
     partes=linea.split(',')
     if len(partes)!=4 or any(not p.isascii() or not p.isdigit() for p in partes):
         raise ValueError('Se requieren cuatro enteros sin signo separados por comas.')
@@ -84,7 +85,7 @@ def registrar(fuente,ruta,max_muestras=100,duracion=60.,origen='experimental'):
     return n,invalidos
 
 
-def capturar(puerto,ruta,max_muestras=100,duracion=60.,baudios=9600):
+def capturar(puerto,ruta,max_muestras=100,duracion=60.,baudios=115200):
     import serial
     if puerto is None:
         disponibles=puertos_disponibles()

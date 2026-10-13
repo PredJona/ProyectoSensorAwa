@@ -1,0 +1,45 @@
+Proyecto 1 - Verificación sin hardware - 2026-10-12
+Directorio de trabajo: Proyecto1
+arduino-cli 1.5.1
+Core: arduino:renesas_uno 1.6.0 (ya instalado)
+FQBN: arduino:renesas_uno:unor4wifi
+
+1. Configuración predeterminada; LCD y LED desactivados
+
+XDG_CACHE_HOME=/tmp/proyecto1-r4-cache arduino-cli compile --fqbn arduino:renesas_uno:unor4wifi --build-path /tmp/proyecto1-r4-build arduino/NivelAguaR4
+
+Código de salida: 0
+Sketch uses 52336 bytes (19%) of program storage space. Maximum is 262144 bytes.
+Global variables use 6744 bytes (20%) of dynamic memory, leaving 26024 bytes for local variables. Maximum is 32768 bytes.
+
+2. Variante LCD; biblioteca LiquidCrystal_I2C 2.0.0 ya instalada
+
+XDG_CACHE_HOME=/tmp/proyecto1-r4-cache arduino-cli compile --fqbn arduino:renesas_uno:unor4wifi --build-path /tmp/proyecto1-r4-lcd-build --build-property 'compiler.cpp.extra_flags=-DNIVEL_AGUA_LCD=1 -DNIVEL_AGUA_LCD_DIRECCION=0x27' arduino/NivelAguaR4
+
+0x27 es un dato controlado SOLO para comprobar compilación.
+No se conoce la dirección real ni se ha cargado esta variante.
+Código de salida: 0
+WARNING: library LiquidCrystal_I2C claims to run on all architecture(s) and may be incompatible with your current board which runs on renesas_uno architecture(s).
+Sketch uses 59000 bytes (22%) of program storage space. Maximum is 262144 bytes.
+Global variables use 9020 bytes (27%) of dynamic memory, leaving 23748 bytes for local variables. Maximum is 32768 bytes.
+
+El metadato de la biblioteca instalada es architectures=all.
+Se conserva el aviso y no se modifica la biblioteca fuera del repositorio.
+Compilar la API no valida el chip ni el mapeo del backpack del circuito real.
+
+3. Suite completa Python y ejecución nativa simulada del sketch
+
+.venv/bin/python -m unittest discover -s tests -v
+
+Ran 32 tests in 3.922s
+OK (skipped=1)
+31 aprobadas; test_qr_roundtrip_real omitido: qrcode y OpenCV no disponibles.
+
+La prueba nativa usa g++ con E/S simulada; verifica CSV, muestreo de 500 ms,
+orden A0/A1/A2, resolución de 10 bits, desbordamiento de millis() y ausencia
+de salidas LED. Entrega el CSV a Python y genera PNG con prueba_controlada.
+Las demás pruebas incluyen compatibilidad con la cabecera anterior y nueva,
+opción --baudios, captura, calibración, métodos numéricos y gráficas.
+
+No se instaló software, no se cargó firmware y no se cambiaron conexiones.
+No se efectuó ninguna prueba física del circuito.

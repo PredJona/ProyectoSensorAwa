@@ -1,5 +1,71 @@
 # Informe de avance real — 12 octubre 2026
 
+## Actualización: circuito conectado y captura real
+
+Asignación RGB actualizada por el usuario: LED 1 R2/G3/B4, LED 2
+R7/G6/B5, LED 3 R10/G9/B8, al conservar el orden de colores indicado para
+cada terna. Se resolvió el D4 compartido en la asignación; falta verificar
+la conexión física de D5/D6/D7 con el orden azul/verde/rojo.
+El firmware incorpora un rechazo de pines faltantes, compartidos entre LED o
+ocupados por sensores/LCD. Los nueve pines ya están configurados en el
+sketch; los LED quedan apagados porque faltan límites ADC medidos.
+Esta versión compila para UNO R4 WiFi y la suite completa pasó (36 casos:
+35 aprobados, uno omitido). Después se detectó la placa en `/dev/ttyACM0`,
+se cargó la nueva asignación y Python recibió 10 muestras válidas cada
+500 ms. Los ADC estuvieron cerca de 994 en los tres sensores; el estado del
+agua no se documentó, así que estas lecturas no son calibración. Falta
+verificar visualmente la LCD y la respuesta de cada sensor al variar el agua.
+Detalles en [CONEXIONES_LED.md](CONEXIONES_LED.md).
+
+Después del cambio de cableado confirmado por el usuario, se midió una
+dirección I²C real, 0x27, en seis recorridos con cero errores. El registro está
+en [ESCANEO_I2C_2026-10-12.txt](ESCANEO_I2C_2026-10-12.txt).
+
+Se adaptó y cargó el firmware principal: sensores A0/A2/A3, ADC de 10 bits,
+LCD habilitada en 0x27 sobre SDA/A4 y SCL/A5, y CSV USB a 115200 cada 500 ms.
+Python guardó 20 muestras reales sin líneas inválidas y generó su gráfica.
+La pantalla necesita confirmación visual, y aún no se verificó la respuesta
+de cada sensor a alturas conocidas.
+
+Los RGB de cátodo común tienen la lógica de colores implementada (vacío
+morado, bajo verde, medio amarillo, alto rojo). Los límites ADC medidos
+siguen sin definir, por lo que ninguna salida LED llega a HIGH. Se añadió
+un protocolo de calibración y una plantilla vacía de puntos físicos.
+
+La suite final tiene 35 casos: 34 aprobados y uno omitido por qrcode/OpenCV.
+La compilación Renesas pasó con el aviso de arquitectura ya conocido de la
+biblioteca LCD. Detalles en
+[INTEGRACION_R4_2026-10-12.md](INTEGRACION_R4_2026-10-12.md).
+
+Los apartados siguientes son registros históricos de preparación; las
+afirmaciones de falta de hardware o firmware sin cargar corresponden a esas
+etapas anteriores.
+
+## Actualización: firmware UNO R4 WiFi
+
+La placa confirmada por el equipo es **UNO R4 WiFi**. El firmware actual está
+en [NivelAguaR4.ino](../arduino/NivelAguaR4/NivelAguaR4.ino), con su
+[guía de compilación y montaje](../arduino/NivelAguaR4/README.md).
+Conserva el sketch previo, fija el ADC a 10 bits y transmite
+`tiempo_ms,sensor1,sensor2,sensor3` a 115200 baudios. A0/A1/A2 siguen siendo
+provisionales. LCD y LED permanecen desactivados; sus conexiones, dirección,
+tipo de LED, colores, umbrales y calibración requieren confirmación física.
+
+Python acepta ambas cabeceras y ofrece `capturar --baudios`, con 115200 por
+defecto y 9600 para el sketch anterior. Mantiene las columnas de captura
+existentes para gráficas y calibración. La suite actual tiene **32 casos:
+31 aprobados y uno omitido** (QR sin qrcode/OpenCV), sin fallos. Una prueba
+nueva ejecuta el sketch con E/S simulada y recorre CSV → receptor → PNG.
+
+Se compiló con core Renesas 1.6.0 para `arduino:renesas_uno:unor4wifi`, tanto
+la adquisición base como la variante LCD con la biblioteca instalada
+LiquidCrystal_I2C 2.0.0. Esta última emitió un aviso de arquitectura que se
+conserva en [COMPILACION_ARDUINO_R4.txt](COMPILACION_ARDUINO_R4.txt).
+No se instaló software, cargó firmware, cambió cableado ni probó hardware.
+
+Los apartados siguientes conservan el registro de la implementación inicial;
+su compilación AVR corresponde únicamente al sketch anterior.
+
 Las fases matemáticas y de gráficas están implementadas y ejecutadas.
 Arduino, captura y calibración están preparados; la validación física sigue
 pendiente. Se trabajó en la carpeta Proyecto1 existente, sin modificar las
