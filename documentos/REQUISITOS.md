@@ -4,8 +4,8 @@
 de material y sus conclusiones en ese momento. El equipo informó después que
 la LCD funciona visualmente, los sensores se probaron físicamente, se
 observaron distintas lecturas ADC y los tres recipientes están unidos por
-tubos. También informó que existen fotografías, todavía no incorporadas a
-`documentos/evidencias/`. La calibración por alturas reales sigue pendiente.
+tubos. Las [fotografías](evidencias/LEEME.md) se incorporaron y revisaron
+posteriormente; la calibración por alturas reales sigue pendiente.
 Véase [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md); las filas históricas inferiores no
 se deben interpretar como estado vigente del circuito.
 

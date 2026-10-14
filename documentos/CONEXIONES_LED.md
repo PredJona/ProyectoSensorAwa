@@ -1,8 +1,8 @@
 # Asignación de los tres LED RGB
 
 El equipo indicó tres LED RGB de cátodo común y resistencias «220».
-Las fotografías comunicadas muestran luces encendidas, pero aún no están
-disponibles aquí para revisión. Esa observación no verifica qué canal RGB
+Las [fotografías incorporadas](evidencias/LEEME.md) muestran puntos
+luminosos. Esa observación no verifica qué canal RGB
 corresponde a cada pin ni la respuesta a los niveles de agua.
 También acordó los colores: vacío morado, bajo verde, medio amarillo y alto
 rojo. Falta confirmar la unidad de las resistencias, que haya una por canal

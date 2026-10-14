@@ -202,6 +202,7 @@ Para repetir el inventario: `.venv/bin/python documentos/inspeccionar_fuentes.py
 
 La próxima actividad física es medir la geometría, comprobar el intercambio
 hidráulico entre compartimentos y registrar una calibración independiente para
-cada sensor. Existen fotografías del montaje, pero aún deben agregarse a
-`documentos/evidencias/` para poder revisarlas y citarlas. No se requiere
-repetir la carga del firmware para documentar el funcionamiento ya observado.
+cada sensor. Las [fotografías del montaje](documentos/evidencias/LEEME.md)
+ya están incorporadas y revisadas; no proporcionan alturas de calibración.
+No se requiere repetir la carga del firmware para documentar el funcionamiento
+ya observado.

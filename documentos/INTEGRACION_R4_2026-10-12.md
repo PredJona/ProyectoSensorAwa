@@ -4,7 +4,8 @@
 quedó superada por la confirmación del equipo: la pantalla sí muestra lecturas;
 el problema era reconocer el fin de la carga de firmware. También se
 comunicaron ensayos físicos de sensores y montaje de tres recipientes unidos
-por tubos. Las fotografías aún no están disponibles en este repositorio.
+por tubos. Las [fotografías](evidencias/LEEME.md) se incorporaron después
+de este registro y respaldan el montaje visible y la LCD con caracteres.
 Los valores ADC y marcas UTC de las capturas siguientes pertenecen solo a
 esos archivos: no se atribuyen a fotos ni a alturas reales. La observación
 de luces no valida cada color LED. Véase [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md).

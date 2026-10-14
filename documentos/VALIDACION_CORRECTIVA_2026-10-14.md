@@ -61,5 +61,15 @@ la condición física exacta durante la captura.
   `DIAGNOSTICO_LCD_2026-10-12.md`, `INTEGRACION_R4_2026-10-12.md`,
   `MODELO.md`, `PLAN.md`, `REQUISITOS.md`, `ESTADO_ACTUAL.md` y este registro.
 
-No existe `documentos/evidencias/` en esta copia. Las fotografías deben
-agregarse allí antes de revisarlas y describirlas con evidencia directa.
+Al cerrar esta validación todavía no existía `documentos/evidencias/` en la
+copia inspeccionada. Posteriormente se recibieron dos fotografías y se
+conservaron en esa carpeta; su inspección está en
+[evidencias/LEEME.md](evidencias/LEEME.md). No se repitieron pruebas de
+hardware ni se cargó firmware por recibir las imágenes.
+En esa actualización se añadieron los dos PNG originales y
+`documentos/evidencias/LEEME.md`, y se corrigieron las referencias en
+`README.md`, `documentos/AVANCE.md`, `REQUISITOS.md`,
+`INTEGRACION_R4_2026-10-12.md`, `CONEXIONES_LED.md` y `ESTADO_ACTUAL.md`.
+`file` confirmó ambos PNG; `sha256sum` produjo las huellas publicadas en el
+índice de evidencias. La inspección visual no equivale a una prueba física
+nueva ni a una calibración.

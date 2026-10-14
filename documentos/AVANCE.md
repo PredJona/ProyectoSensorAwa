@@ -6,8 +6,8 @@ El equipo confirmó visualmente la LCD en funcionamiento; el diagnóstico
 anterior de pantalla en blanco se debió a no identificar el fin de la carga
 del firmware. Se realizaron pruebas físicas de sensores y se observaron
 lecturas ADC distintas. Hay tres recipientes montados y conectados por tubos.
-Existen fotografías del montaje, pero no están aún en
-`documentos/evidencias/` y no se han inspeccionado aquí. Luces encendidas en
+Las [fotografías del montaje](evidencias/LEEME.md) ya están incorporadas y
+revisadas. Luces encendidas en
 el montaje no verifican la secuencia ni los colores de los tres LED RGB.
 Faltan alturas reales documentadas para calibrar sensores y fijar límites LED.
 El estado técnico y las pruebas recientes constan en

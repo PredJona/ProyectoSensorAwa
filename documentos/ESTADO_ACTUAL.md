@@ -7,8 +7,9 @@ USB a 115200 baudios y LCD I²C 16×2 en 0x27. El equipo confirmó que la
 LCD muestra lecturas: la aparente falla anterior se debió a no reconocer
 cuándo terminó la carga del firmware. El equipo también informó pruebas
 físicas de los tres sensores, lecturas ADC diferentes y tres recipientes
-montados con tubos. Existen fotografías, pero `documentos/evidencias/`
-todavía no está disponible en este repositorio. No se asignan a esas fotos
+montados con tubos. Las dos [fotografías recibidas](evidencias/LEEME.md)
+están incorporadas y se revisaron visualmente: muestran los tres recipientes,
+tubos, LCD con caracteres y puntos luminosos. No se asignan a esas fotos
 fechas, alturas, lecturas ni condiciones de inmersión.
 
 Las capturas CSV locales conservan cuentas ADC reales y horas de recepción
@@ -23,8 +24,8 @@ estaba cargado y el cableado antes de interpretar las luces.
 |---|---|
 | Implementado | Tres métodos académicos, CSV y PNG, receptor serial, interpolación por sensor, política LED y LCD. |
 | Probado con datos controlados | Métodos, casos límite, parser serial, muestreo, LCD y colores mediante simulación nativa del sketch. |
-| Comprobado físicamente o comunicado por el equipo | Placa y escaneo I²C 0x27 registrados; capturas ADC por USB; LCD visible, pruebas de sensores y montaje con tubos confirmados por el equipo. |
-| Pendiente | Fotografías en el repositorio, alturas medidas, calibración independiente, respuesta de cada sensor a niveles conocidos, colores RGB por pin y validación del modelo académico frente al circuito. |
+| Comprobado físicamente o comunicado por el equipo | Placa y escaneo I²C 0x27 registrados; capturas ADC por USB; fotografías del montaje y LCD visible; pruebas de sensores comunicadas por el equipo. |
+| Pendiente | Alturas medidas, calibración independiente, respuesta de cada sensor a niveles conocidos, colores RGB por pin y validación del modelo académico frente al circuito. |
 
 ## Procedencia y reproducibilidad
 
@@ -52,8 +53,8 @@ unidades y parámetros medidos para relacionar A y b con el circuito.
 
 Prioridad para el equipo:
 
-1. Agregar fotografías originales a `documentos/evidencias/` e indicar qué
-   ensayo muestran, sin inferir valores de la imagen.
+1. Identificar qué ensayo corresponde a cada fotografía, si el equipo
+   conserva esa información; no inferir condiciones a partir de la imagen.
 2. Verificar físicamente cada sensor A0/A2/A3 al variar solo su recipiente;
    anotar alimentación, montaje y respuesta observada.
 3. Definir el origen y la unidad de altura; medir varias alturas reales con
@@ -70,8 +71,8 @@ Prioridad para el equipo:
    necesidad de eliminación de Gauss o Doolittle, función del QR y formato
    de la entrega.
 
-El trabajo delegable sin circuito incluye revisar fotografías una vez
-agregadas, validar los CSV y pares ADC-altura que entregue el equipo, generar
+El trabajo delegable sin circuito incluye validar los CSV y pares ADC-altura
+que entregue el equipo, generar
 gráficas calibradas, comparar mediciones con un modelo físico justificado y
 preparar el informe final. Los registros fechados anteriores permanecen
 como historia de las etapas de integración.
