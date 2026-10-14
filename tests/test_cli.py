@@ -24,6 +24,7 @@ class CliTest(unittest.TestCase):
             self.assertEqual(resumen['origen'],'academico')
             self.assertEqual(resumen['parametros']['tol'],.001)
             self.assertEqual(len(resumen['metodos']),3)
+            self.assertEqual(resumen['graficas'][0], 'graficas/convergencia.png')
             self.assertTrue(all(m['converge'] for m in resumen['metodos']))
             self.assertEqual(len(list((p/'graficas').glob('*.png'))),4)
             self.assertTrue((p/'datos/resultados/gauss_jordan_operaciones.csv').exists())

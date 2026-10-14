@@ -34,5 +34,21 @@ class GraficasTest(unittest.TestCase):
                 p=Path(d)/'vacio.csv'; p.write_text(contenido)
                 with self.assertRaises(ValueError): self.g.mediciones(p,Path(d)/'no.png')
 
+    def test_timestamp_utc_no_acepta_otra_zona(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)/'otra_zona.csv'
+            p.write_text('timestamp_utc,t_ms,adc1,adc2,adc3,origen\n'
+                         '2026-10-12T00:00:00+05:00,1,1,2,3,experimental\n')
+            with self.assertRaisesRegex(ValueError,'UTC'):
+                self.g.mediciones(p,Path(d)/'no.png')
+
+    def test_rechaza_columnas_extra_en_mediciones(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)/'columna_extra.csv'
+            p.write_text('timestamp_utc,t_ms,adc1,adc2,adc3,origen\n'
+                         '2026-10-12T00:00:00+00:00,1,1,2,3,experimental,extra\n')
+            with self.assertRaisesRegex(ValueError,'columnas'):
+                self.g.mediciones(p,Path(d)/'no.png')
+
 
 if __name__=='__main__': unittest.main()

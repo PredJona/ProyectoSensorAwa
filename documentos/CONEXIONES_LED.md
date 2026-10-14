@@ -1,6 +1,9 @@
 # Asignación de los tres LED RGB
 
 El equipo indicó tres LED RGB de cátodo común y resistencias «220».
+Las fotografías comunicadas muestran luces encendidas, pero aún no están
+disponibles aquí para revisión. Esa observación no verifica qué canal RGB
+corresponde a cada pin ni la respuesta a los niveles de agua.
 También acordó los colores: vacío morado, bajo verde, medio amarillo y alto
 rojo. Falta confirmar la unidad de las resistencias, que haya una por canal
 de color y los límites medidos de nivel. El usuario acaba de confirmar que los
@@ -25,7 +28,7 @@ La tabla del firmware usa el orden R/G/B para cada LED.
 en LOW, que corresponde a apagado para los RGB de cátodo común indicados.
 Los colores permanecen apagados porque los límites ADC de cada sensor siguen
 sin medir y `LIMITES_ADC_LED` conserva -1.
-El firmware comprueba que los nueve pines estén completos, sean distintos
+El firmware comprueba que los nueve pines estén en D2..D10, completos, distintos
 entre sí y no ocupen A0/A2/A3 (sensores) ni SDA/A4 o SCL/A5 (LCD). Una
 configuración inválida mantiene los LED apagados. Esta comprobación se probó
 con los pines comunicados, además de casos controlados de pines compartidos,

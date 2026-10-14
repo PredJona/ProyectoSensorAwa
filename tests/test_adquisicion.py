@@ -7,6 +7,7 @@ import threading
 import time
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 import numpy as np
@@ -72,6 +73,18 @@ class AdquisicionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             self.assertEqual(self.c.registrar(Vacio(),Path(d)/'vacio.csv',
                              duracion=.01,origen='prueba_controlada'),(0,0))
+
+    def test_argumentos_invalidos_no_abren_el_puerto(self):
+        with tempfile.TemporaryDirectory() as d, patch('serial.Serial',side_effect=AssertionError('Puerto abierto')) as abrir:
+            for indice,argumentos in enumerate(({'max_muestras':0}, {'duracion':True},
+                               {'duracion':float('nan')}, {'baudios':0},
+                               {'baudios':True})):
+                destino=Path(d)/f'invalido_{indice}.csv'
+                with self.subTest(argumentos=argumentos):
+                    with self.assertRaises(ValueError):
+                        self.c.capturar('/dev/puerto-prueba',destino,**argumentos)
+                    self.assertFalse(destino.exists())
+            abrir.assert_not_called()
 
     def test_desconexion_conserva_archivo(self):
         class Desconectado:

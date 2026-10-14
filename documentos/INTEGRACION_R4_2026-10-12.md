@@ -1,5 +1,14 @@
 # Integración y prueba real — 12 octubre 2026
 
+**Nota posterior:** la afirmación histórica de LCD sin verificación visual
+quedó superada por la confirmación del equipo: la pantalla sí muestra lecturas;
+el problema era reconocer el fin de la carga de firmware. También se
+comunicaron ensayos físicos de sensores y montaje de tres recipientes unidos
+por tubos. Las fotografías aún no están disponibles en este repositorio.
+Los valores ADC y marcas UTC de las capturas siguientes pertenecen solo a
+esos archivos: no se atribuyen a fotos ni a alturas reales. La observación
+de luces no valida cada color LED. Véase [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md).
+
 Se cargó el firmware principal de UNO R4 WiFi con sensores en A0/A2/A3,
 LCD habilitada en 0x27 sobre SDA/A4 y SCL/A5, resolución ADC de 10 bits y
 salida CSV a 115200 baudios cada 500 ms. El usuario confirmó el cambio de

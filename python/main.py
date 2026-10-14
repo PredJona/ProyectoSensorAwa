@@ -54,7 +54,8 @@ def resolver(args):
     resumen['graficas']=[]
     if not args.sin_graficas:
         from .graficas import academicas
-        resumen['graficas']=[str(p) for p in academicas(resultados,Path(args.salida)/'graficas')]
+        resumen['graficas']=[p.relative_to(args.salida).as_posix()
+                            for p in academicas(resultados,Path(args.salida)/'graficas')]
     (carpeta/'resumen.json').write_text(json.dumps(resumen,indent=2,ensure_ascii=False,allow_nan=False)+'\n',encoding='utf-8')
     print(f'Resultados académicos guardados en {carpeta}')
     return 0 if all(r.converge for r in resultados) else 2

@@ -1,5 +1,14 @@
 # Requisitos comprobados y procedencia
 
+**Actualización posterior:** este inventario describe la inspección original
+de material y sus conclusiones en ese momento. El equipo informó después que
+la LCD funciona visualmente, los sensores se probaron físicamente, se
+observaron distintas lecturas ADC y los tres recipientes están unidos por
+tubos. También informó que existen fotografías, todavía no incorporadas a
+`documentos/evidencias/`. La calibración por alturas reales sigue pendiente.
+Véase [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md); las filas históricas inferiores no
+se deben interpretar como estado vigente del circuito.
+
 Inspección realizada el 12 de octubre de 2026. El inventario reproducible
 contiene 84 archivos originales de trabajo: 54 Python, 15 Arduino, 4 DOCX,
 3 PPTX, 3 PDF, un ZIP y cuatro documentos de texto/Markdown/troff.

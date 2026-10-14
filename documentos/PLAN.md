@@ -1,5 +1,9 @@
 # Plan y decisiones de implementación — 12 octubre 2026
 
+Este plan conserva decisiones históricas de la primera implementación. El
+estado actual del circuito, el cableado A0/A2/A3 y el trabajo experimental
+pendiente constan en [ESTADO_ACTUAL.md](ESTADO_ACTUAL.md).
+
 Objetivo: completar las fases independientes del circuito del Problema 11,
 con los tres métodos solicitados, evidencia numérica y documentación trazable.
 La especificación de esta ejecución es el encargo del usuario y los dos

@@ -1,5 +1,19 @@
 # Informe de avance real — 12 octubre 2026
 
+## Estado actual comunicado por el equipo
+
+El equipo confirmó visualmente la LCD en funcionamiento; el diagnóstico
+anterior de pantalla en blanco se debió a no identificar el fin de la carga
+del firmware. Se realizaron pruebas físicas de sensores y se observaron
+lecturas ADC distintas. Hay tres recipientes montados y conectados por tubos.
+Existen fotografías del montaje, pero no están aún en
+`documentos/evidencias/` y no se han inspeccionado aquí. Luces encendidas en
+el montaje no verifican la secuencia ni los colores de los tres LED RGB.
+Faltan alturas reales documentadas para calibrar sensores y fijar límites LED.
+El estado técnico y las pruebas recientes constan en
+[ESTADO_ACTUAL.md](ESTADO_ACTUAL.md). Los apartados posteriores se conservan
+como registro histórico de lo conocido en cada etapa.
+
 ## Actualización: circuito conectado y captura real
 
 Asignación RGB actualizada por el usuario: LED 1 R2/G3/B4, LED 2

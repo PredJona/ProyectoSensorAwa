@@ -1,7 +1,7 @@
 # Proyecto 1 — Métodos Numéricos: nivel de agua
 
 Universidad Tecnológica de Panamá. Problema 11. Implementación académica
-verificada; integración física pendiente. Todos los archivos originales de
+verificada; integración física parcial. Todos los archivos originales de
 clase se conservan fuera de esta carpeta.
 
 ## Ejecutar ahora
@@ -55,7 +55,7 @@ En `graficas/` guarda `convergencia.png`, `residuos.png`,
 sin unidades físicas asignadas. Cada ejecución vuelve a generar estos archivos
 derivados; use `--salida` para conservar una ejecución distinta.
 
-## Arduino y captura real, cuando esté disponible
+## Arduino y captura real
 
 El firmware actual es [NivelAguaR4.ino](arduino/NivelAguaR4/NivelAguaR4.ino),
 para **Arduino UNO R4 WiFi**, FQBN `arduino:renesas_uno:unor4wifi`.
@@ -64,18 +64,20 @@ con cabecera `tiempo_ms,sensor1,sensor2,sensor3` y cuatro enteros por línea.
 El cableado confirmado es sensor 1 en **A0**, sensor 2 en **A2** y sensor 3
 en **A3**, con alimentación indicada de 5 V y GND compartido.
 Los canales se leen consecutivamente cada 500 ms, no simultáneamente.
-La LCD está habilitada en **0x27**, SDA/A4 y SCL/A5. Su lectura visual requiere
-confirmación del usuario. Los LED RGB de cátodo común tienen la lógica de
-colores preparada, pero siguen apagados por falta de límites ADC medidos
-por sensor.
+La LCD está habilitada en **0x27**, SDA/A4 y SCL/A5, y el equipo confirmó
+visualmente que muestra lecturas. El problema anterior se debió a no identificar
+cuándo terminaba la carga del firmware. Los LED RGB tienen la lógica de
+colores preparada, pero la versión actual ordena mantener sus canales apagados
+porque faltan límites ADC medidos por sensor.
 
 El usuario asignó las ternas D2/D3/D4, D5/D6/D7 y D8/D9/D10; al conservar
 los órdenes de color indicados, quedan LED 1 R2/G3/B4, LED 2 R7/G6/B5 y
 LED 3 R10/G9/B8.
 [Las conexiones LED](documentos/CONEXIONES_LED.md) están anotadas;
 el usuario confirmó los tres grupos de pines y falta comprobar visualmente
-la correspondencia de cada color. El firmware
-rechaza pines LED repetidos o compartidos con sensores/LCD y mantiene
+la correspondencia de cada color. Las luces encendidas visibles en el montaje
+no prueban por sí solas el control correcto de los tres RGB. El firmware
+rechaza pines LED fuera de D2..D10, repetidos o compartidos con sensores/LCD y mantiene
 los canales apagados hasta registrar los límites ADC reales.
 
 Consulte [la guía del firmware](arduino/NivelAguaR4/README.md) para compilar,
@@ -120,12 +122,14 @@ y se detectó **un dispositivo en 0x27**, con cero errores en seis recorridos
 completos legibles. Hubo caracteres ilegibles iniciales al conectar el monitor;
 la salida posterior fue estable. El escáner se conserva como diagnóstico
 independiente. Después se cargó el firmware principal con estos pines y LCD
-habilitada; falta la confirmación visual de la pantalla.
+habilitada; el equipo confirmó posteriormente su funcionamiento visual.
 Registro: [escaneo real](documentos/ESCANEO_I2C_2026-10-12.txt).
 
 ## Calibración pendiente
 
-Ya se registró una primera captura real de 20 muestras sin líneas inválidas,
+Se realizaron pruebas físicas de los sensores y se observaron lecturas ADC
+diferentes. Los tres recipientes están montados y conectados mediante tubos,
+según la actualización del equipo. Ya se registró una primera captura real de 20 muestras sin líneas inválidas,
 con intervalos Arduino de 500 ms. No se documentó la altura del agua durante
 esa captura, por lo que no se usa como calibración. Véanse el
 [registro de integración](documentos/INTEGRACION_R4_2026-10-12.md), la
@@ -190,10 +194,14 @@ Proyecto1/
 
 Consulte [requisitos y fuentes](documentos/REQUISITOS.md),
 [deducción matemática](documentos/MODELO.md) e
-[informe de avance](documentos/AVANCE.md).
+[informe de avance](documentos/AVANCE.md). El
+[estado actual](documentos/ESTADO_ACTUAL.md) y el
+[registro de validación](documentos/VALIDACION_CORRECTIVA_2026-10-14.md)
+separan las conclusiones recientes de los registros históricos.
 Para repetir el inventario: `.venv/bin/python documentos/inspeccionar_fuentes.py`.
 
-La próxima actividad física es medir la geometría y confirmar la comunicación
-entre compartimentos, cargar el sketch y registrar una calibración independiente
-para cada sensor. La fotografía del montaje y las conclusiones experimentales
-solo se completan después de hacerlo.
+La próxima actividad física es medir la geometría, comprobar el intercambio
+hidráulico entre compartimentos y registrar una calibración independiente para
+cada sensor. Existen fotografías del montaje, pero aún deben agregarse a
+`documentos/evidencias/` para poder revisarlas y citarlas. No se requiere
+repetir la carga del firmware para documentar el funcionamiento ya observado.

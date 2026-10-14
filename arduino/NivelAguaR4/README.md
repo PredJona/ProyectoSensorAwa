@@ -15,7 +15,7 @@ porcentaje o volumen. La calibración física sigue separada en Python.
 | ADC | `analogReadResolution(10)`, 0..1023 | Resolución, no extremos de calibración |
 | USB serial | `Serial.begin(115200)` | Captura real con Python |
 | Muestreo | `INTERVALO_MS = 500` | Captura con intervalos de 500 ms |
-| LCD | Habilitada, dirección `0x27`, SDA/A4 y SCL/A5 | Dirección medida con escáner; lectura visual pendiente |
+| LCD | Habilitada, dirección `0x27`, SDA/A4 y SCL/A5 | Dirección medida con escáner; funcionamiento visual confirmado por el equipo |
 | LED RGB | Cátodo común; LED 1 R2/G3/B4, LED 2 R7/G6/B5, LED 3 R10/G9/B8 | Grupos de pines confirmados por usuario; comprobar cada color |
 
 El ADC se envía como `tiempo_ms,sensor1,sensor2,sensor3`, seguido de cuatro
@@ -38,14 +38,14 @@ XDG_CACHE_HOME=/tmp/proyecto1-r4-cache arduino-cli compile --fqbn arduino:renesa
 arduino-cli upload --fqbn arduino:renesas_uno:unor4wifi --port /dev/ttyACM0 --input-dir /tmp/proyecto1-r4-build arduino/NivelAguaR4
 ```
 
-El usuario autorizó continuar con la integración y la prueba. Repetir la carga
+La carga del firmware requiere autorización específica del equipo. Repetirla
 solo cuando se quiera ejecutar esta versión, cerrando antes cualquier monitor
 o captura. Sustituir el puerto si cambia. Compilar por sí solo no carga nada.
 No usar `arduino:avr:uno`; el sketch rechaza placas distintas de UNO R4 WiFi.
 En una comprobación anterior la placa no estaba conectada. Después apareció
 como `/dev/ttyACM0`, se cargó esta versión con las tres ternas LED y Python
-recibió 10 muestras CSV válidas. La respuesta física de LCD, sensores y LED
-todavía debe comprobarse en el circuito.
+recibió 10 muestras CSV válidas. El equipo confirmó después la LCD visible y
+pruebas físicas de sensores; el control de cada canal/color LED sigue pendiente.
 En IDE abrir `NivelAguaR4.ino`, seleccionar UNO R4 WiFi y el puerto detectado.
 Las herramientas y bibliotecas utilizadas ya estaban instaladas por usuario;
 la caché y los productos de compilación van a `/tmp`.
@@ -72,7 +72,8 @@ se fija en 25000 microsegundos; no hay reconexión automática de la LCD.
 La biblioteca instalada declara literalmente `architectures=all`; el CLI
 emite un aviso sobre Renesas, aunque compila correctamente. No se modificó
 la biblioteca para ocultar el aviso. Un ACK y la compilación no sustituyen
-la comprobación visual de texto: sigue pendiente que el usuario la confirme.
+la comprobación visual de texto; esa comprobación fue comunicada después por
+el equipo. No se atribuye la observación a la compilación.
 
 Para compilar sin LCD, sin editar el archivo:
 
@@ -92,8 +93,8 @@ La asignación actual es LED 1 R2/G3/B4, LED 2 R7/G6/B5 y LED 3
 R10/G9/B8. La [tabla de conexiones](../../documentos/CONEXIONES_LED.md)
 registra el orden de colores inferido de la descripción anterior y lo que
 falta comprobar visualmente.
-`pinesLedValidos()` rechaza conjuntos incompletos, duplicados o que utilicen
-los pines de sensores/LCD antes de configurar salidas.
+`pinesLedValidos()` rechaza conjuntos fuera de D2..D10, incompletos,
+duplicados o que utilicen los pines de sensores/LCD antes de configurar salidas.
 
 `ColoresNivel.h` implementa la política acordada con canales digitales:
 vacío morado (R+B), bajo verde (G), medio amarillo (R+G), alto rojo (R).

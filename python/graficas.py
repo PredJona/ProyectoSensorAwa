@@ -1,7 +1,7 @@
 """Figuras PNG sin interfaz gráfica; datos académicos y experimentales separados."""
 import csv
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import numpy as np
@@ -69,6 +69,8 @@ def mediciones(ruta_csv,ruta_png,calibracion=None):
     requeridas={'timestamp_utc','t_ms','adc1','adc2','adc3','origen'}
     if not filas or not requeridas.issubset(filas[0]):
         raise ValueError('CSV vacío o sin columnas de adquisición.')
+    if any(None in fila or any(valor is None for valor in fila.values()) for fila in filas):
+        raise ValueError('CSV con columnas faltantes o adicionales.')
     origenes={f['origen'] for f in filas}
     if len(origenes)!=1 or not origenes.issubset({'experimental','prueba_controlada'}):
         raise ValueError('El archivo debe tener un único origen conocido.')
@@ -76,10 +78,11 @@ def mediciones(ruta_csv,ruta_png,calibracion=None):
         parsear_linea(','.join(fila[c] for c in ('t_ms','adc1','adc2','adc3')))
     try:
         fechas=[datetime.fromisoformat(f['timestamp_utc']) for f in filas]
-        if any(t.tzinfo is None for t in fechas): raise ValueError('Se requiere zona horaria UTC.')
-        tiempos=np.array([(t-fechas[0]).total_seconds() for t in fechas])
     except (ValueError,TypeError) as e:
         raise ValueError('Marcas de tiempo inválidas.') from e
+    if any(t.tzinfo is None or t.utcoffset()!=timedelta(0) for t in fechas):
+        raise ValueError('Se requiere zona horaria UTC.')
+    tiempos=np.array([(t-fechas[0]).total_seconds() for t in fechas])
     if np.any(np.diff(tiempos)<0): raise ValueError('Marcas de tiempo no ordenadas.')
     cal=cargar(calibracion) if calibracion else None
     unidad=cal['unidad'] if cal else 'cuentas ADC, sin calibrar'

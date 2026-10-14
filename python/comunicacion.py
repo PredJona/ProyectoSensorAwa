@@ -9,6 +9,13 @@ CABECERA='tiempo_ms,sensor1,sensor2,sensor3'
 CABECERA_LEGACY='t_ms,adc1,adc2,adc3'
 
 
+def _validar_captura(max_muestras,duracion):
+    if not isinstance(max_muestras,int) or isinstance(max_muestras,bool) or max_muestras<=0:
+        raise ValueError('max_muestras debe ser un entero positivo.')
+    if isinstance(duracion,bool) or not isinstance(duracion,(float,int)) or not 0<duracion<float('inf'):
+        raise ValueError('duracion debe ser positiva y finita.')
+
+
 def parsear_linea(linea):
     if isinstance(linea,bytes):
         try: linea=linea.decode('ascii')
@@ -36,10 +43,7 @@ def registrar(fuente,ruta,max_muestras=100,duracion=60.,origen='experimental'):
     hasta newline. Un límite temporal impide esperas indefinidas. Cada fila se
     vacía a disco; si ocurre OSError/SerialException, el CSV parcial se conserva.
     """
-    if not isinstance(max_muestras,int) or isinstance(max_muestras,bool) or max_muestras<=0:
-        raise ValueError('max_muestras debe ser un entero positivo.')
-    if not isinstance(duracion,(float,int)) or not 0<duracion<float('inf'):
-        raise ValueError('duracion debe ser positiva y finita.')
+    _validar_captura(max_muestras,duracion)
     if origen not in ('experimental','prueba_controlada'):
         raise ValueError('Origen desconocido.')
     ruta=Path(ruta)
@@ -86,6 +90,9 @@ def registrar(fuente,ruta,max_muestras=100,duracion=60.,origen='experimental'):
 
 
 def capturar(puerto,ruta,max_muestras=100,duracion=60.,baudios=115200):
+    _validar_captura(max_muestras,duracion)
+    if isinstance(baudios,bool) or not isinstance(baudios,int) or baudios<=0:
+        raise ValueError('baudios debe ser un entero positivo.')
     import serial
     if puerto is None:
         disponibles=puertos_disponibles()

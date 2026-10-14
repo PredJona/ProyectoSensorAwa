@@ -6,7 +6,10 @@ del agua; no es una calibración. La verificación de la versión final está en
 `ensayo_r4_2026-10-12_verificacion_final.csv`.
 
 El protocolo de calibración está en `documentos/CALIBRACION_CIRCUITO.md`.
-La exclusión Git de los CSV ya existía; estos archivos permanecen localmente.
+Las cinco capturas históricas presentes se incluyen de forma explícita en Git
+para que sus gráficas y registros puedan reproducirse. Los nuevos CSV siguen
+excluidos por defecto hasta revisar su procedencia y decidir su publicación.
+Las lecturas de estas capturas son cuentas ADC, no alturas ni umbrales LED.
 
 Las entradas controladas de tests se generan en carpetas temporales y se marcan
 `prueba_controlada`. Nunca presentarlas como resultados experimentales.

@@ -98,9 +98,9 @@
     }
   ],
   "graficas": [
-    "/home/jules/Documentos/proyectoun/metnum/Proyecto1/graficas/convergencia.png",
-    "/home/jules/Documentos/proyectoun/metnum/Proyecto1/graficas/residuos.png",
-    "/home/jules/Documentos/proyectoun/metnum/Proyecto1/graficas/niveles_iteraciones.png",
-    "/home/jules/Documentos/proyectoun/metnum/Proyecto1/graficas/comparacion_metodos.png"
+    "graficas/convergencia.png",
+    "graficas/residuos.png",
+    "graficas/niveles_iteraciones.png",
+    "graficas/comparacion_metodos.png"
   ]
 }

@@ -5,8 +5,8 @@
 | Variable | Compartimento | Canal | Magnitud |
 |---|---|---|---|
 | h1 | 1 | A0 | Altura del agua respecto de un origen común |
-| h2 | 2 | A1 | Altura del agua respecto de ese origen |
-| h3 | 3 | A2 | Altura del agua respecto de ese origen |
+| h2 | 2 | A2 | Altura del agua respecto de ese origen |
+| h3 | 3 | A3 | Altura del agua respecto de ese origen |
 
 El sensor mide una respuesta eléctrica que Arduino convierte a cuentas ADC
 (enteros 0..1023). No mide directamente centímetros. La función de calibración
@@ -186,4 +186,6 @@ desbordamiento de millis, con la limitación temporal ya indicada.
 
 Los tests de esa función utilizan datos controlados temporales con origen
 `prueba_controlada`; la figura los identifica como no experimentales.
-No hay una curva experimental publicada ni mediciones reales en esta entrega.
+Hay gráficas experimentales de cuentas ADC sin calibrar, obtenidas de capturas
+reales. No hay todavía curvas de altura física ni una validación experimental
+de la matriz académica A y el vector b para este montaje.

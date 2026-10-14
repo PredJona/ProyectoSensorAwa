@@ -1,5 +1,11 @@
 # Diagnóstico de LCD en blanco — 12 octubre 2026
 
+**Resolución posterior comunicada por el equipo:** la LCD funciona y muestra
+lecturas. La interpretación inicial de pantalla en blanco ocurrió porque no
+se identificó correctamente cuándo terminaba la carga del firmware. Se
+conserva debajo el diagnóstico histórico, sin atribuir la observación visual
+al escáner I²C ni a este registro serial.
+
 El usuario informó que la LCD no muestra nada. El firmware principal sí
 seguía enviando CSV por USB a 115200: seis muestras válidas, sin líneas
 inválidas. En esa captura S1 marcó 464..466, S2 3..4 y S3 3..4; estos

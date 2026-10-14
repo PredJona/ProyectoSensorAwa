@@ -14,7 +14,8 @@ inline bool pinesLedValidos(const int pines[3][3], const int reservados[5]) {
   for (uint8_t i = 0; i < 3; ++i) {
     for (uint8_t canal = 0; canal < 3; ++canal) {
       const int pin = pines[i][canal];
-      if (pin < 0) return false;
+      // Esta instalación reserva D2..D10 para los nueve canales RGB.
+      if (pin < 2 || pin > 10) return false;
       for (uint8_t r = 0; r < 5; ++r) {
         if (pin == reservados[r]) return false;
       }

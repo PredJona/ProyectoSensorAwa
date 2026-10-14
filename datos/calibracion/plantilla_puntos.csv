@@ -1,4 +1,4 @@
-sensor,altura,unidad,adc_1,adc_2,adc_3,observaciones
-adc1,,,,,,
-adc2,,,,,,
-adc3,,,,,,
+sensor,altura,unidad,adc_1,adc_2,adc_3,csv_origen,condicion_montaje,observaciones
+adc1,,,,,,,,
+adc2,,,,,,,,
+adc3,,,,,,,,

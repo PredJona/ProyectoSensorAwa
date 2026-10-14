@@ -3,4 +3,9 @@ __pycache__/
 *.pyc
 .mplconfig/
 datos/mediciones/*.csv
+!datos/mediciones/diagnostico_lcd_2026-10-12.csv
+!datos/mediciones/ensayo_r4_2026-10-12_2153UTC.csv
+!datos/mediciones/ensayo_r4_2026-10-12_verificacion_final.csv
+!datos/mediciones/ensayo_r4_led_pines_2026-10-12.csv
+!datos/mediciones/prueba_sensor2_estado_inicial_2026-10-12.csv
 

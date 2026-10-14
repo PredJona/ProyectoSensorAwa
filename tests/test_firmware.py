@@ -70,6 +70,8 @@ int main() {
     if (pinesLedValidos(sensor,reservados)) return 3;
     if (pinesLedValidos(bus,reservados)) return 4;
     if (!pinesLedValidos(distintos,reservados)) return 5;
+    const int fueraDelMontaje[3][3]={{2,3,11},{7,6,5},{10,9,8}};
+    if (pinesLedValidos(fueraDelMontaje,reservados)) return 6;
 }
 ''')
             r=subprocess.run(['g++','-std=c++11',str(p/'main.cpp'),'-o',str(p/'pines')],

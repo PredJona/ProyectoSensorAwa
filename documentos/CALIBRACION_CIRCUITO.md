@@ -2,7 +2,9 @@
 
 El circuito usa sensor 1 en A0, sensor 2 en A2 y sensor 3 en A3. LCD en
 0x27 sobre SDA/A4 y SCL/A5. Los ADC se conservan siempre sin transformar.
-No hay todavía pares ADC-altura ni umbrales físicos confirmados.
+No hay todavía suficientes pares ADC-altura documentados ni umbrales físicos
+confirmados. Las pruebas físicas y las lecturas ADC diferentes comunicadas
+por el equipo demuestran adquisición, no una calibración completa.
 
 **Para el equipo:** los números D2, D3, D4, etc. identifican cables de los LED.
 La calibración consiste en observar qué número ADC entrega cada Water Level
@@ -24,7 +26,8 @@ tiene estado de agua documentado y no se usa para fijar límites.
    alturas conocidas; no deducirlas a partir del máximo ADC 1023.
 3. Mantener orientación, montaje, agua y alimentación consistentes. Para
    cada sensor, registrar varias lecturas repetidas en cada altura conocida.
-   Registrar también la condición seca por separado y el estado del montaje.
+   Registrar también la condición seca por separado y el estado del montaje;
+   anotar el identificador del CSV de origen de cada conjunto de repeticiones.
 4. Repetir con varias alturas que cubran el intervalo que se quiere medir.
    Usar un CSV de captura distinto por condición, anotando a qué altura y
    sensor corresponde. No mezclar condiciones sin anotarlas.
@@ -44,8 +47,10 @@ Captura por condición, usando un nombre nuevo cada vez:
 ```
 
 Al terminar una condición, anotar en la plantilla altura real, unidad,
-sensor, lecturas repetidas y nombre del CSV. El usuario debe realizar la
+sensor, lecturas repetidas, nombre del CSV y condición del montaje. El usuario debe realizar la
 medición física; el programa no puede determinar por sí solo la altura.
+Para evitar atribuciones erróneas, no reutilizar como puntos de calibración
+las capturas históricas que carecen de altura y condición documentadas.
 
 ## Preparar la conversión a altura
 
