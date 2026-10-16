@@ -68,15 +68,21 @@ conversión a centímetros ni porcentajes para uso final.
 ## Gráficas y reproducibilidad
 
 Se reutiliza `python.graficas.mediciones` para siete PNG de los tres canales,
-y se añade una comparación de 7 ensayos × 3 canales. Las escalas se comparten
-por columna; ADC1 y ADC2/3 tienen escalas diferentes para ver su variación.
-Todos los ejes son cuentas ADC frente a tiempo de recepción, sin altura inferida.
+se añade una comparación de 7 ensayos × 3 canales y la curva exploratoria de S1
+frente a las dos comprobaciones de 25 mm. Las escalas de la comparativa se
+comparten por columna; ADC1 y ADC2/3 tienen escalas diferentes para apreciar su
+variación.
 
 ![Comparación de las lecturas ADC](../datos/calibracion/sesion_2026-10-16_01/analisis_rgb_02/comparacion_tres_canales.png)
 
+![Curva exploratoria y discrepancia en 25 mm](../datos/calibracion/sesion_2026-10-16_01/analisis_rgb_02/curva_exploratoria_sensor1.png)
+
 - [Estadísticas de los 30 conjuntos ensayo/canal](../datos/calibracion/sesion_2026-10-16_01/analisis_rgb_02/estadisticas.csv).
 - [Auditoría con recuentos, estados y huellas SHA-256](../datos/calibracion/sesion_2026-10-16_01/analisis_rgb_02/auditoria.json).
+- [Curva exploratoria y validación en 25 mm de S1](../datos/calibracion/sesion_2026-10-16_01/analisis_rgb_02/curva_exploratoria_sensor1.png).
 - [Detalle temporal de la repetición inestable](../datos/calibracion/sesion_2026-10-16_01/analisis_rgb_02/adc_s1_25mm_validacion_02.png).
+
+*(Nota de auditoría: se eliminó la carpeta duplicada `analisis_rgb_01` —que tenía idénticos SHA-256 en datos y gráficas individuales y difería solo en el margen superior de `comparacion_tres_canales.png`— y se corrigió `python/analisis_sesion.py` para exportar rutas relativas portables desde la raíz del repositorio en lugar de rutas absolutas de la máquina local).*
 
 Para reproducir, elegir un directorio de salida **nuevo**:
 
@@ -84,10 +90,9 @@ Para reproducir, elegir un directorio de salida **nuevo**:
 .venv/bin/python -m python.analisis_sesion --sesion datos/calibracion/sesion_2026-10-16_01/sesion.json --salida /tmp/awa-analisis-reproduccion
 ```
 
-El analizador valida columnas, ADC, marcas UTC, orden y SHA-256 disponible,
-rechaza fuentes duplicadas y no sobrescribe el destino ni CSV originales.
-El resumen antiguo conserva sus estadísticas correctas de ADC1; se corrigió
-su descripción de recuentos y se enlazó esta ampliación a los otros canales.
+El analizador valida columnas, ADC, marcas UTC, orden, recuento esperado y
+SHA-256 disponible, rechaza fuentes o contenidos duplicados y no sobrescribe el
+destino ni CSV originales.
 
 ## Firmware RGB y validación de software
 
@@ -102,30 +107,34 @@ su descripción de recuentos y se enlazó esta ampliación a los otros canales.
 `ColoresNivel.h` añade azul y sustituye los límites anteriores por la función
 de un argumento `colorParaAdc(adc)`. `NivelAguaR4.ino` mantiene LED1 R2/G3/B4,
 LED2 R7/G6/B5 y LED3 R10/G9/B8, con lectura independiente por sensor. El
-arranque mantiene los nueve canales apagados. `NIVEL_AGUA_LED=0` es el valor
+arranque configura los nueve pines en `OUTPUT` `LOW` (0 V activo para cátodo común,
+distinto de alta impedancia `INPUT`). `NIVEL_AGUA_LED=0` es el valor
 predeterminado hasta revisar corriente y resistencias; con 1 se aplica la tabla.
 
-Las nuevas pruebas fallaron con la lógica anterior y pasaron con la nueva.
-Cubren 0..1023 completo, fronteras 49/50, 149/150 y 299/300 en ambos sentidos,
-valores negativos y superiores a 1023, cambio entre colores sin canales
-residuales e independencia por LED. Se prueba serial con LED activos y LCD
-con LED activos/desactivados mediante E/S simulada. La trama CSV, los pines
-ADC, resolución, cadencia, desbordamiento de millis y texto LCD se conservan.
-No hay prueba física del nuevo firmware porque no se ha cargado.
+Las pruebas cubren 0..1023 completo, fronteras 49/50, 149/150 y 299/300 en ambos
+sentidos, valores negativos y superiores a 1023, las 25 transiciones entre
+los 5 estados de color sin canales residuales e independencia por LED. Se prueba
+serial con LED activos y LCD con LED activos/desactivados mediante E/S simulada.
+La trama CSV, los pines ADC, resolución, cadencia, desbordamiento de millis y
+texto LCD se conservan. No hay prueba física del nuevo firmware porque no se ha
+cargado.
 
-La suite completa ejecutó **47 casos: 46 aprobados y 1 omitido** por ausencia
-de qrcode/OpenCV. Comando: `.venv/bin/python -m unittest discover -s tests -v`.
+Tras integrar las pruebas de portabilidad del analizador, transiciones RGB y
+publicación HTTP ThingsBoard, la suite completa ejecuta **55 casos: 54 aprobados
+y 1 omitido** por ausencia de `qrcode`/OpenCV. Comando:
+`.venv/bin/python -m unittest discover -s tests -v`.
 
-Compilaciones UNO R4 WiFi, core instalado, salida 0:
+Compilaciones UNO R4 WiFi (`arduino:renesas_uno:unor4wifi`), core 1.6.0 instalado, salida 0:
 
-| Variante | Programa | Variables globales | Directorio |
+| Variante | Programa | Variables globales | Flag |
 |---|---:|---:|---|
-| LED deshabilitados | 59232 bytes | 9020 bytes | `/tmp/awa-rgb-20261016-default` |
-| LED habilitados | 59280 bytes | 9020 bytes | `/tmp/awa-rgb-20261016-enabled` |
+| LED deshabilitados (`NIVEL_AGUA_LED=0`) | 59304 bytes | 9020 bytes | Por defecto |
+| LED habilitados (`NIVEL_AGUA_LED=1`) | 59352 bytes | 9020 bytes | `-DNIVEL_AGUA_LED=1` |
 
 Se conserva el aviso conocido de arquitectura de LiquidCrystal_I2C, sin fallo
 de compilación. Los comandos de compilación se documentan en la guía del
 firmware; no se ejecutó ningún comando de carga.
+
 
 ## Qué falta antes de activar
 

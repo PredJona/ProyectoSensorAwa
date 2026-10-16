@@ -1,0 +1,11 @@
+{
+  "csv_origen": "datos/mediciones/cloud_real_20261016T190452_080262Z.csv",
+  "configuracion_sha256": "7d3b14a9e136d51a35fe577b88dabd3cf2d458b78e81fd50521f7f2aa93dbf2c",
+  "filas_totales_vistas": 6,
+  "filas_enviadas": 6,
+  "sha256_prefijo": "cc36834ca865961f3620c17427e8898f5906911e816401ffab7c83c0bfee951e",
+  "modo_transmision": "en_vivo",
+  "calibracion_valida": false,
+  "endpoint_redactado": "https://thingsboard.cloud/api/v1/***/telemetry",
+  "actualizado_utc": "2026-10-16T19:04:57.474525+00:00"
+}

@@ -58,6 +58,9 @@ void escribirCanalLed(uint8_t indicador, uint8_t canal, bool encendido) {
 }
 
 void inicializarLeds() {
+  // Con NIVEL_AGUA_LED=0 se configuran los 9 pines en OUTPUT LOW (0 V activo),
+  // no en alta impedancia (INPUT). Esto mantiene apagados LED de cátodo común
+  // a GND, pero drenaría corriente si existiera conexión a +5 V (ánodo común).
   if (!pinesLedValidos(PINES_LED, PINES_RESERVADOS_LED)) return;
   for (uint8_t indicador = 0; indicador < 3; ++indicador) {
     if (NIVELES_ACTIVOS_LED[indicador] != HIGH &&
@@ -70,6 +73,7 @@ void inicializarLeds() {
     }
   }
 }
+
 
 void actualizarLeds(const int lecturas[3]) {
   // Cada canal ADC controla su RGB: verde, azul, morado o rojo.

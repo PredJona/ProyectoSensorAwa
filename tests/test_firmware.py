@@ -142,9 +142,23 @@ int main() {
             actualizarLeds(adc);
             if (!comprobar(color)) return 20+led;
         }
-    reloj=500; loop();
-    std::cout << Serial.datos.str();
-}
+        // Recorrer todas las 25 transiciones entre los 5 estados en cada LED sin canales residuales.
+        const int representantes[5]={-1, 0, 50, 150, 300};
+        const int mascaras[5]={0, 2, 4, 5, 1};
+        for (int led=0;led<3;++led)
+            for (int origen=0;origen<5;++origen)
+                for (int destino=0;destino<5;++destino) {
+                    int adc[3]={0,50,300}, color[3]={2,4,1};
+                    adc[led]=representantes[origen]; color[led]=mascaras[origen];
+                    actualizarLeds(adc);
+                    if (!comprobar(color)) return 30+led;
+                    adc[led]=representantes[destino]; color[led]=mascaras[destino];
+                    actualizarLeds(adc);
+                    if (!comprobar(color)) return 40+led;
+                }
+        reloj=500; loop();
+        std::cout << Serial.datos.str();
+    }
 ''')
             r=subprocess.run(['g++','-std=c++11','-DARDUINO_UNOR4_WIFI',
                               '-DNIVEL_AGUA_LCD=0','-DNIVEL_AGUA_LED=1','-I',d,
@@ -162,9 +176,14 @@ int main() {
             (p/'main.cpp').write_text('#include "'+str(sketch)+'"\n'+r'''
 int main() {
     setup();
+    if (salidas!=9 || encendidos!=0) return 1;
+    for (int pin=2;pin<=10;++pin)
+        if (!pinesConfigurados[pin] || nivelesPin[pin]!=LOW) return 2;
     const int entradas[][3]={{0,50,150},{300,1023,49},{-1,1024,150}};
     for (const auto& adc : entradas) actualizarLeds(adc);
-    for (int pin=2;pin<=10;++pin) if (nivelesPin[pin]!=LOW) return 1;
+    for (int pin=2;pin<=10;++pin)
+        if (!pinesConfigurados[pin] || nivelesPin[pin]!=LOW) return 3;
+    if (encendidos!=0) return 4;
 }
 ''')
             r=subprocess.run(['g++','-std=c++11','-DARDUINO_UNOR4_WIFI','-DNIVEL_AGUA_LCD=0',
@@ -172,6 +191,7 @@ int main() {
             self.assertEqual(r.returncode,0,r.stderr)
             r=subprocess.run([str(p/'apagados')],capture_output=True)
             self.assertEqual(r.returncode,0,r.stderr)
+
 
     def test_muestreo_csv_desborde_y_salidas_desactivadas(self):
         with tempfile.TemporaryDirectory() as d:

@@ -18,10 +18,11 @@ from .comunicacion import parsear_linea
 def _guardar(fig,ruta):
     ruta=Path(ruta)
     ruta.parent.mkdir(parents=True,exist_ok=True)
-    fig.tight_layout()
+    fig.tight_layout(rect=(0,0,1,.96) if fig._suptitle else None)
     fig.savefig(ruta,dpi=160)
     plt.close(fig)
     return ruta
+
 
 
 def academicas(resultados,carpeta):

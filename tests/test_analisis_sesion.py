@@ -85,7 +85,7 @@ class AnalisisSesionTest(unittest.TestCase):
         self.assertTrue(result['ensayos'][0]['incluido_resumen_preliminar'])
         self.assertFalse(result['ensayos'][1]['incluido_resumen_preliminar'])
 
-    def test_exporta_sin_sobrescribir_fuentes_ni_destino(self):
+    def test_exporta_sin_sobrescribir_fuentes_ni_destino_y_usa_rutas_portables(self):
         a=self.fuente('a',[1,2,3])
         p=self.sesion([('a',a,'pendiente')])
         before=hashlib.sha256(a.read_bytes()).hexdigest()
@@ -93,7 +93,65 @@ class AnalisisSesionTest(unittest.TestCase):
         output=self.folder/'salida'
         self.mod.exportar(result,output)
         self.assertEqual(hashlib.sha256(a.read_bytes()).hexdigest(),before)
-        self.assertEqual(json.loads((output/'auditoria.json').read_text())['filas_csv_principales'],3)
+        auditoria_txt=(output/'auditoria.json').read_text(encoding='utf-8')
+        estadisticas_txt=(output/'estadisticas.csv').read_text(encoding='utf-8')
+        self.assertNotIn(str(self.folder),auditoria_txt)
+        self.assertNotIn(str(self.folder),estadisticas_txt)
+        self.assertNotIn('/home/',auditoria_txt)
+        self.assertNotIn('/home/',estadisticas_txt)
+        auditoria=json.loads(auditoria_txt)
+        self.assertEqual(auditoria['filas_csv_principales'],3)
+        self.assertEqual(auditoria['ensayos'][0]['csv_origen'],'a.csv')
         self.assertEqual((output/'adc_a.png').read_bytes()[:8],b'\x89PNG\r\n\x1a\n')
         self.assertGreater((output/'adc_a.png').stat().st_size,5000)
         with self.assertRaises(FileExistsError): self.mod.exportar(result,output)
+
+    def test_ejecucion_desde_ubicacion_distinta_con_datos_controlados(self):
+        import subprocess, sys
+        raiz=Path(__file__).resolve().parents[1]
+        a=self.fuente('ensayo_ctrl',[10,20,30,40])
+        sesion_path=self.folder/'sesion.json'
+        sesion_path.write_text(json.dumps({
+            'ensayos':[{'id':'ctrl_01','csv':'ensayo_ctrl.csv','sensor':'adc1',
+                        'altura_inmersion':15,'unidad':'mm','estado':'pendiente'}]
+        }),encoding='utf-8')
+        with tempfile.TemporaryDirectory() as otro_cwd:
+            salida=Path(otro_cwd)/'resultado_externo'
+            env={'PYTHONPATH':str(raiz),'MPLCONFIGDIR':str(raiz/'.mplconfig')}
+            r=subprocess.run([sys.executable,'-m','python.analisis_sesion',
+                              '--sesion',str(sesion_path),'--salida',str(salida)],
+                             cwd=otro_cwd,env=env,capture_output=True,text=True)
+            self.assertEqual(r.returncode,0,r.stderr)
+            auditoria_txt=(salida/'auditoria.json').read_text(encoding='utf-8')
+            self.assertNotIn(str(self.folder),auditoria_txt)
+            self.assertNotIn('/home/',auditoria_txt)
+            datos=json.loads(auditoria_txt)
+            self.assertEqual(datos['filas_csv_principales'],4)
+            self.assertEqual(datos['lecturas_adc_principales'],12)
+            self.assertEqual(datos['ensayos'][0]['csv_origen'],'ensayo_ctrl.csv')
+            self.assertTrue((salida/'comparacion_tres_canales.png').exists())
+
+    def test_rechaza_csv_vacio_muestras_incompletas_contenido_duplicado_y_ruta_inexistente(self):
+        vacio=self.folder/'vacio.csv'
+        vacio.write_text('timestamp_utc,t_ms,adc1,adc2,adc3,origen\n',encoding='utf-8')
+        p_vacio=self.sesion([('vacio',vacio,'pendiente')])
+        with self.assertRaisesRegex(ValueError,'sin muestras'):
+            self.mod.auditar_sesion(p_vacio)
+
+        a=self.fuente('incompleto',[1,2,3])
+        p_inc=self.sesion([('inc',a,'pendiente')])
+        d=json.loads(p_inc.read_text())
+        d['ensayos'][0]['muestras_validas']=20
+        p_inc.write_text(json.dumps(d))
+        with self.assertRaisesRegex(ValueError,'Recuento de muestras'):
+            self.mod.auditar_sesion(p_inc)
+
+        copia=self.folder/'copia.csv'
+        copia.write_bytes(a.read_bytes())
+        p_dup=self.sesion([('orig',a,'pendiente'),('copia',copia,'pendiente')])
+        with self.assertRaisesRegex(ValueError,'duplicado'):
+            self.mod.auditar_sesion(p_dup)
+
+        with self.assertRaises(FileNotFoundError):
+            self.mod.auditar_sesion(self.folder/'no_existe.json')
+

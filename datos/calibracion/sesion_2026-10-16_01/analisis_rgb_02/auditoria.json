@@ -1,5 +1,5 @@
 {
-  "sesion": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/calibracion/sesion_2026-10-16_01/sesion.json",
+  "sesion": "datos/calibracion/sesion_2026-10-16_01/sesion.json",
   "sha256_indice": "47ac2ba3ad0a6a167bfd5cfa7b38242940c0a039347a703e4095773771421cc3",
   "filas_csv_principales": 181,
   "lecturas_adc_principales": 543,
@@ -10,9 +10,10 @@
   "ensayos": [
     {
       "id": "s1_seco_01",
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_01.csv",
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_01.csv",
       "sha256": "9ad5912361f1a06619ca6e6c579ecfabb504fd9f50b26368bc7881edc216c446",
       "estado": "excluido_de_calibracion",
+      "rol": null,
       "incluido_resumen_preliminar": false,
       "sensor_con_altura_comunicada": "adc1",
       "altura_comunicada": 0,
@@ -64,9 +65,10 @@
     },
     {
       "id": "s1_seco_02",
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_02.csv",
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_02.csv",
       "sha256": "eb38772564399fb0554645c317133f1e792142ce69b2ceb2e3a724afbe6b960b",
       "estado": "excluido_de_calibracion",
+      "rol": null,
       "incluido_resumen_preliminar": false,
       "sensor_con_altura_comunicada": null,
       "altura_comunicada": null,
@@ -116,9 +118,10 @@
     },
     {
       "id": "s1_seco_03",
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_03.csv",
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_03.csv",
       "sha256": "36373b2495652cb4bc9f61e6beb29feeeca9a59647cc92bcdba8e5ebd801cc20",
       "estado": "referencia_seca_capturada_pendiente_validacion_curva",
+      "rol": null,
       "incluido_resumen_preliminar": true,
       "sensor_con_altura_comunicada": "adc1",
       "altura_comunicada": 0,
@@ -170,9 +173,10 @@
     },
     {
       "id": "s1_10mm_01",
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/mediciones/calibracion_sesion_2026-10-16_01_s1_10mm_01.csv",
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_10mm_01.csv",
       "sha256": "dba3bfb27c494ccb396d42c60220ccbac38e769ba687e6d708fc84ca16e21656",
       "estado": "captura_completa_pendiente_validacion_curva",
+      "rol": null,
       "incluido_resumen_preliminar": true,
       "sensor_con_altura_comunicada": "adc1",
       "altura_comunicada": 10,
@@ -224,9 +228,10 @@
     },
     {
       "id": "s1_20mm_01",
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/mediciones/calibracion_sesion_2026-10-16_01_s1_20mm_01.csv",
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_20mm_01.csv",
       "sha256": "060ce3161571d52bf20b9aad2208648563759181b0422fe6cd8bb2f054030426",
       "estado": "excluido_de_curva_por_salto_temporal_inicial",
+      "rol": null,
       "incluido_resumen_preliminar": false,
       "sensor_con_altura_comunicada": "adc1",
       "altura_comunicada": 20,
@@ -279,9 +284,10 @@
     },
     {
       "id": "s1_20mm_02",
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/mediciones/calibracion_sesion_2026-10-16_01_s1_20mm_02.csv",
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_20mm_02.csv",
       "sha256": "cf753ac2159b73bfd6bd0058e27554dc0db336a982e85b1baa9f4fb9878299e1",
       "estado": "captura_completa_pendiente_validacion_curva",
+      "rol": null,
       "incluido_resumen_preliminar": true,
       "sensor_con_altura_comunicada": "adc1",
       "altura_comunicada": 20,
@@ -333,9 +339,10 @@
     },
     {
       "id": "s1_30mm_01",
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/mediciones/calibracion_sesion_2026-10-16_01_s1_30mm_01.csv",
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_30mm_01.csv",
       "sha256": "0bedf353ad2846e12271c268b0dd1f10f9e5df09bc4786921c62b83386ea1494",
       "estado": "captura_completa_pendiente_validacion_curva",
+      "rol": null,
       "incluido_resumen_preliminar": true,
       "sensor_con_altura_comunicada": "adc1",
       "altura_comunicada": 30,
@@ -387,9 +394,10 @@
     },
     {
       "id": "s1_40mm_01",
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/mediciones/calibracion_sesion_2026-10-16_01_s1_40mm_01.csv",
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_40mm_01.csv",
       "sha256": "95f2358ceff711ad79e3b7bc6cc538cbf91937d8f9d73895f70e4dd0592ec19e",
       "estado": "captura_completa_pendiente_validacion_curva",
+      "rol": null,
       "incluido_resumen_preliminar": true,
       "sensor_con_altura_comunicada": "adc1",
       "altura_comunicada": 40,
@@ -441,9 +449,10 @@
     },
     {
       "id": "s1_25mm_validacion_01",
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/mediciones/calibracion_sesion_2026-10-16_01_s1_25mm_validacion_01.csv",
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_25mm_validacion_01.csv",
       "sha256": "6b1e74d8e6e46ffc896b3790d9f93c4ead2c99629461b16681a240caa0301e1c",
       "estado": "captura_completa_pendiente_evaluacion",
+      "rol": "validacion_independiente_no_usar_como_nodo",
       "incluido_resumen_preliminar": true,
       "sensor_con_altura_comunicada": "adc1",
       "altura_comunicada": 25,
@@ -495,9 +504,10 @@
     },
     {
       "id": "s1_25mm_validacion_02",
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/mediciones/calibracion_sesion_2026-10-16_01_s1_25mm_validacion_02.csv",
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_25mm_validacion_02.csv",
       "sha256": "d74875cbcb812baa4b2819d5b2731e54cd7396122c7a53e36d786c1670295418",
       "estado": "no_apto_para_validacion_estatica_por_inestabilidad",
+      "rol": "validacion_independiente_no_usar_como_nodo",
       "incluido_resumen_preliminar": true,
       "sensor_con_altura_comunicada": "adc1",
       "altura_comunicada": 25,
@@ -550,27 +560,27 @@
   ],
   "preparacion": [
     {
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/calibracion/sesion_2026-10-16_01/s1_20mm_02_preparacion.csv",
+      "csv_origen": "datos/calibracion/sesion_2026-10-16_01/s1_20mm_02_preparacion.csv",
       "filas": 4,
       "sha256": "90a83964d190db7ee10116eb80394386d6380f93d1eb360996de1926fd39b42d"
     },
     {
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/calibracion/sesion_2026-10-16_01/s1_25mm_validacion_01_preparacion.csv",
+      "csv_origen": "datos/calibracion/sesion_2026-10-16_01/s1_25mm_validacion_01_preparacion.csv",
       "filas": 4,
       "sha256": "55b1805d2be6f751f2a7b2caa5e40492a4e8b3d4b9a037b748ad9b7f84a565a2"
     },
     {
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/calibracion/sesion_2026-10-16_01/s1_25mm_validacion_02_preparacion.csv",
+      "csv_origen": "datos/calibracion/sesion_2026-10-16_01/s1_25mm_validacion_02_preparacion.csv",
       "filas": 4,
       "sha256": "8bf085e5404f561886ab83ff944999452a386a84151e1fb4a7cd4275c97a5464"
     },
     {
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/calibracion/sesion_2026-10-16_01/s1_30mm_01_preparacion.csv",
+      "csv_origen": "datos/calibracion/sesion_2026-10-16_01/s1_30mm_01_preparacion.csv",
       "filas": 4,
       "sha256": "ec6cf6d9566696b3a79e0f3a4a852663d94ff02555fc5da15b070446c75f00fc"
     },
     {
-      "csv_origen": "/home/jules/Documentos/proyectoun/metnum/Proyecto1/datos/calibracion/sesion_2026-10-16_01/s1_40mm_01_preparacion.csv",
+      "csv_origen": "datos/calibracion/sesion_2026-10-16_01/s1_40mm_01_preparacion.csv",
       "filas": 4,
       "sha256": "a01a23958344e4b2d2e8c52cf8b8f6890d1925220e7221a790597345b16e2e77"
     }

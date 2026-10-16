@@ -74,19 +74,24 @@ fuera del rango calibrado. No sobrescribe el CSV ADC original.
 
 ## Establecer los estados de los LED
 
-El equipo debe definir qué alturas representan vacío, bajo, medio y alto.
-Con la calibración por sensor, elegir tres límites ADC crecientes que separen
-esos estados. No dividir 0..1023 en partes iguales ni convertir ADC/1023 en
-porcentaje de agua sin calibración.
+En la versión vigente del firmware (`arduino/NivelAguaR4/ColoresNivel.h`),
+`colorParaAdc(adc)` clasifica cada canal de forma independiente en cuentas ADC
+provisionales (sustituyendo el arreglo inicial `LIMITES_ADC_LED` y el color amarillo):
 
-El firmware usa por sensor los máximos ADC de vacío, bajo y medio en
-`LIMITES_ADC_LED`. Las fronteras pertenecen al estado inferior: hasta el
-límite de vacío es morado; después, hasta bajo es verde; después, hasta medio
-es amarillo; por encima es rojo. Los límites siguen en -1 mientras falten datos.
-Los nueve pines en `PINES_LED` ya tienen asignación: LED 1 R2/G3/B4, LED 2
-R7/G6/B5 y LED 3 R10/G9/B8. Los canales siguen apagados hasta rellenar los
-límites medidos. Antes de activarlos, se debe verificar el cableado físico y
-una resistencia por canal.
+- **0–49**: Verde (canal G)
+- **50–149**: Azul (canal B)
+- **150–299**: Morado (canales R+B)
+- **300–1023**: Rojo (canal R)
+- **Fuera de 0..1023**: Apagado
 
-Queda pendiente probar cambios de color reales, incluido el comportamiento
-cerca de las fronteras; la política actual no incorpora histéresis.
+Los nueve pines en `PINES_LED` tienen la asignación: LED 1 R2/G3/B4, LED 2
+R7/G6/B5 y LED 3 R10/G9/B8. Por defecto `NIVEL_AGUA_LED=0` mantiene las nueve
+salidas en `OUTPUT` con nivel `LOW` (0 V activo para cátodo común, distinto de
+alta impedancia). Antes de compilar con `-DNIVEL_AGUA_LED=1` y cargar a la placa,
+se debe verificar físicamente el cátodo común, el cableado de cada color y una
+resistencia adecuada por canal que respete el límite de 8 mA por GPIO del UNO R4 WiFi.
+
+Queda pendiente probar cambios de color reales en el hardware, incluido el
+comportamiento cerca de las fronteras (49/50, 149/150, 299/300); la política
+actual no incorpora histéresis.
+

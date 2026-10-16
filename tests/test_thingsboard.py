@@ -374,6 +374,27 @@ class ThingsBoardTest(unittest.TestCase):
         self.assertEqual(len(srv.recibidos), 1)
         self.assertEqual(len(srv.recibidos[0]), 2)
 
+    def test_cli_thingsboard_acepta_intervalo_de_seguimiento(self):
+        """La demostración puede espaciar publicaciones sin rechazar el comando."""
+        srv = _ServidorSimulado()
+        self.addCleanup(srv.cerrar)
+        csv_path = self._crear_csv(filas=1)
+        cfg_path = self.carpeta / 'tb_intervalo.local.json'
+        cfg_path.write_text(json.dumps({
+            'servidor': srv.url,
+            'token': 'cli_intervalo_777',
+            'dashboard_url': 'https://tb.utp.ac.pa/dashboards/agua'
+        }), encoding='utf-8')
+        cursor_path = self.carpeta / 'cli_intervalo_cursor.json'
+        r = subprocess.run(
+            [sys.executable, '-m', 'python.main', 'thingsboard',
+             '--csv', str(csv_path), '--config', str(cfg_path),
+             '--modo', 'en_vivo', '--seguir', '--duracion', '0.01',
+             '--intervalo', '2', '--cursor', str(cursor_path)],
+            cwd=RAIZ, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(len(srv.recibidos), 1)
+
     @unittest.skipUnless(os.name=='posix','Requiere pseudoterminal POSIX')
     def test_flujo_serial_csv_http_lento_no_pierde_muestras(self):
         """Integración SINTÉTICA completa: no usa Arduino ni ThingsBoard reales."""

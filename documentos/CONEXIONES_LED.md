@@ -64,8 +64,25 @@ dependen del LED. Confirmar modelo, caída directa, corriente real y límites
 agregados del RA4M1 antes de habilitar. Si se necesita más corriente, requiere
 etapa de manejo externa diseñada para ello, no elevar la corriente del GPIO.
 
+**Distinción eléctrica entre `OUTPUT LOW` (`NIVEL_AGUA_LED=0`) y alta impedancia (`INPUT`):**
+- Con `NIVEL_AGUA_LED=0`, `inicializarLeds()` y `actualizarLeds()` configuran los
+  nueve pines D2..D10 como `OUTPUT` y escriben `LOW` (0 V activo conectado a GND
+  a través del transistor inferior del GPIO).
+- Si los tres LED RGB son efectivamente de **cátodo común** conectado a GND,
+  aplicar 0 V en los ánodos produce diferencia de potencial nula (0 V) y corriente
+  cero.
+- Sin embargo, poner un pin en `OUTPUT LOW` **no equivale a dejarlo en alta
+  impedancia (`INPUT` / Hi-Z)**: si en el montaje físico algún LED fuera por error
+  de **ánodo común** conectado a +5 V (o si un cable tocara +5 V), el pin en
+  `OUTPUT LOW` actuaría como sumidero de corriente (*current sink*) hacia tierra,
+  encendiendo el canal y pudiendo superar los 8 mA por GPIO si la resistencia es
+  de 220 Ω o falta. Por ello, incluso con `NIVEL_AGUA_LED=0` no debe asumirse que
+  cualquier circuito físico arbitrario es eléctricamente neutro sin antes
+  inspeccionar en frío el cátodo común y las nueve resistencias.
+
 No se inspeccionaron ni cambiaron resistencias ni conexiones en esta tarea.
 No se recomienda activar la variante con LED hasta completar esa revisión.
+
 
 ## Comprobación física posterior
 

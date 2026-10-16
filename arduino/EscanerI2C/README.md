@@ -74,10 +74,11 @@ este escáner sobre Wire. El firmware principal permanece sin modificar:
 para la siguiente integración necesitará ajustar sus sensores a A0/A2/A3 si
 se adopta esta propuesta. La dirección LCD sigue pendiente de medición.
 
-El usuario también indicó LED RGB de cátodo común, resistencia «220»
-(confirmar ohmios y una resistencia por canal) y estados: vacío morado,
-bajo verde, medio amarillo, alto rojo. Faltan pines RGB y umbrales medidos.
-Estos datos se reservan para la siguiente integración, no para el escáner.
+El usuario también indicó en la etapa inicial LED RGB de cátodo común, resistencia «220»
+(confirmar ohmios y una resistencia por canal) y una propuesta preliminar de colores
+(sustituida el 16 de octubre por la política ADC vigente en `ColoresNivel.h`:
+0–49 verde, 50–149 azul, 150–299 morado y 300–1023 rojo, con `NIVEL_AGUA_LED=0` por defecto).
+Estos datos corresponden al firmware principal (`NivelAguaR4`), no al escáner.
 
 ## Comandos en la terminal integrada de VS Code
 
@@ -140,8 +141,8 @@ XDG_CACHE_HOME=/tmp/proyecto1-r4-cache arduino-cli compile --fqbn arduino:renesa
 arduino-cli upload --fqbn arduino:renesas_uno:unor4wifi --port /dev/ttyACM0 --input-dir /tmp/proyecto1-r4-build arduino/NivelAguaR4
 ```
 
-El principal todavía tiene A0/A1/A2 provisionales y LCD/LED desactivados;
-restaurarlo no resuelve las conexiones pendientes.
+*(Nota histórica: en el momento de redactar esta guía previa al escaneo, el sketch principal aún tenía A0/A1/A2; actualmente `NivelAguaR4` ya usa A0/A2/A3, LCD `0x27` activa y LED RGB en D2..D10 con `NIVEL_AGUA_LED=0` por defecto).*
+
 
 ## Registro previo de preparación — antes de corregir los cables
 

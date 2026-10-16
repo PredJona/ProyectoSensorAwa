@@ -1,0 +1,6 @@
+{
+  "_comentario": "Plantilla sin credenciales. Copie a config/thingsboard.local.json (ignorado por Git) y complete sus datos reales.",
+  "servidor": "",
+  "token": "",
+  "dashboard_url": ""
+}

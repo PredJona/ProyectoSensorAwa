@@ -84,8 +84,11 @@ XDG_CACHE_HOME=/tmp/proyecto1-r4-cache arduino-cli compile --fqbn arduino:renesa
 ## LED RGB: intervalos ADC provisionales
 
 `PINES_LED[3][3]` usa el orden **R, G, B** para cada LED. Los nueve pines
-asignados se configuran como salidas y se mantienen en LOW (apagados) por
-defecto (`NIVEL_AGUA_LED=0`), hasta comprobar la seguridad eléctrica.
+asignados se configuran como salidas (`OUTPUT`) y se mantienen en `LOW` (0 V activo)
+por defecto (`NIVEL_AGUA_LED=0`), hasta comprobar la seguridad eléctrica.
+Nótese que `OUTPUT LOW` difiere de alta impedancia (`INPUT`): mantiene apagados
+los LED de cátodo común a GND (0 V entre ánodo y cátodo), pero actuaría como
+sumidero de corriente (*sink*) si un canal estuviese conectado a +5 V (ánodo común).
 `NIVELES_ACTIVOS_LED` usa HIGH para los RGB de cátodo común confirmados.
 El usuario indicó resistencias «220»; falta confirmar 220 Ω y una por canal.
 
@@ -95,6 +98,7 @@ registra el orden de colores inferido de la descripción anterior y lo que
 falta comprobar visualmente.
 `pinesLedValidos()` rechaza conjuntos fuera de D2..D10, incompletos,
 duplicados o que utilicen los pines de sensores/LCD antes de configurar salidas.
+
 
 `colorParaAdc(adc)` sustituye la política anterior y los límites por sensor:
 

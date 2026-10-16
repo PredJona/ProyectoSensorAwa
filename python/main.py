@@ -100,6 +100,8 @@ def parser():
     t.add_argument('--reintentos',type=int,default=3)
     t.add_argument('--seguir',action='store_true',help='Seguir filas completas de un CSV que crece')
     t.add_argument('--duracion',type=float,default=60.,help='Segundos de seguimiento; reiniciar con el mismo cursor para continuar')
+    t.add_argument('--intervalo',type=float,default=.25,
+                   help='Segundos entre revisiones del CSV al usar --seguir (predeterminado: 0.25)')
     q=sub.add_parser('qr',help='Generar QR solo con contenido o URL configurada explícitamente')
     q.add_argument('--contenido',help='Texto o URL explícita del QR')
     q.add_argument('--config',type=Path,help='Configuración local con dashboard_url')
@@ -138,7 +140,7 @@ def main(argv=None):
             res=publicar_csv(args.csv,cfg['servidor'],cfg['token'],modo=args.modo,
                              ruta_cursor=args.cursor,calibracion=args.calibracion,
                              tamano_lote=args.lote,timeout=args.timeout,reintentos=args.reintentos,
-                             seguir=args.seguir,duracion=args.duracion)
+                             seguir=args.seguir,duracion=args.duracion,intervalo_s=args.intervalo)
             print(f"Publicado ({res['modo_transmision']}): {res['filas_enviadas']}/{res['filas_totales']} "
                   f"filas en {res['lotes_enviados']} lotes hacia {res['endpoint_redactado']}")
         elif args.comando=='qr':
