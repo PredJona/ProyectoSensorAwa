@@ -48,7 +48,7 @@ En Windows use `.venv\Scripts\python.exe` en lugar de `.venv/bin/python`. Las pr
 | **Analizador estadístico de sesión** (`analisis_sesion.py`) | **Completado y portable** (rutas relativas, 0 rutas absolutas locales) | [`python/analisis_sesion.py`](python/analisis_sesion.py), [`tests/test_analisis_sesion.py`](tests/test_analisis_sesion.py) |
 | **Calibración física ADC → altura** | **Exploratoria en Sensor 1 (no validada); pendiente en Sensores 2 y 3** | [`documentos/CALIBRACION_SESION_2026-10-16.md`](documentos/CALIBRACION_SESION_2026-10-16.md) |
 | **LED RGB por sensor** (`ColoresNivel.h`) | **Lógica verificada en software; apagados por defecto (`NIVEL_AGUA_LED=0`)** | [`documentos/CONEXIONES_LED.md`](documentos/CONEXIONES_LED.md) |
-| **Integración ThingsBoard y QR** (`thingsboard.py`, `qr.py`) | **Software terminado y probado con servidor HTTP simulado; falta servidor/token real** | [`python/thingsboard.py`](python/thingsboard.py), [`tests/test_thingsboard.py`](tests/test_thingsboard.py) |
+| **Integración ThingsBoard y QR** (`thingsboard.py`, `qr.py`) | **6 muestras reales aceptadas por ThingsBoard Cloud en 4 lotes HTTP 2xx; dashboard y QR pendientes** | [`documentos/SENSOR_AWA_THINGSBOARD_CLOUD.md`](documentos/SENSOR_AWA_THINGSBOARD_CLOUD.md), [`tests/test_thingsboard.py`](tests/test_thingsboard.py) |
 
 ---
 
@@ -191,9 +191,10 @@ Publica `adc1`, `adc2`, `adc3` con UTC de recepción y conserva `t_ms` separado.
 Sin calibración validada se omiten alturas. Las filas atrasadas se publican como
 históricas con su UTC original. Un CSV cerrado utiliza `--modo historico`.
 La red trabaja en otro proceso y el cursor permite recuperar pendientes.
-**Dispositivo, dashboard y QR definitivo siguen requiriendo configuración real.**
-Las instrucciones completas para crearlos, acceso desde teléfono y recuperación
-están en [ThingsBoard y QR](documentos/THINGSBOARD_QR_PREPARACION.md).
+El dispositivo y dashboard ya existen. El envío real a Cloud se verificó con
+6 muestras y cuatro lotes HTTP 2xx. Quedan por comprobar los datos almacenados
+desde la cuenta, terminar el dashboard privado y generar el QR con su URL real.
+Las instrucciones están en [Sensor Awa en Cloud](documentos/SENSOR_AWA_THINGSBOARD_CLOUD.md).
 
 ---
 
@@ -225,8 +226,9 @@ Los LED RGB y sus resistencias fueron retirados por el equipo; no se requiere
 activarlos ni modificar firmware. La calibración exploratoria sigue sin validar,
 por lo que la demostración usa cuentas ADC. No se repiten mediciones con agua.
 El equipo ya creó dispositivo y dashboard en ThingsBoard Cloud; se comprobó la
-captura corregida en el USB real (6 muestras, mediana 501,128 ms). Falta introducir
-el token privado y verificar envío, vista del dashboard y URL desde el teléfono.
+captura corregida en el USB real y un envío de 6 muestras nuevas a Cloud con
+respuestas HTTP 2xx. Falta verificar almacenamiento desde la cuenta, vista del
+dashboard y URL desde el teléfono.
 Continuar con [Sensor Awa en Cloud](documentos/SENSOR_AWA_THINGSBOARD_CLOUD.md).
 La generación y lectura
 de QR de prueba ya se verifican en el entorno virtual.

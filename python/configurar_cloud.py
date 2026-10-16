@@ -21,6 +21,8 @@ CONFIG=Path.home()/'.config/proyectosensorawa/thingsboard.json'
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config',type=Path,default=CONFIG)
+    parser.add_argument('--reemplazar-token',action='store_true',
+                        help='Sustituir de forma oculta el token local después de regenerarlo en Cloud')
     args=parser.parse_args(argv)
     try:
         ruta=args.config.expanduser()
@@ -34,12 +36,13 @@ def main(argv=None):
             contenido=json.loads(ruta.read_text(encoding='utf-8'))
             if not isinstance(contenido,dict): raise ValueError('Configuración inválida.')
             datos.update(contenido)
-        cfg=cargar_configuracion(servidor=datos['servidor'],token=datos.get('token') or '')
+        cfg=cargar_configuracion(servidor=datos['servidor'],
+                                token='' if args.reemplazar_token else datos.get('token') or '')
         if cfg['servidor']!=CLOUD: raise ValueError('Servidor distinto de ThingsBoard Cloud.')
         ruta.parent.mkdir(mode=0o700,parents=True,exist_ok=True)
         ruta.parent.chmod(0o700)
+        if ruta.exists(): ruta.chmod(0o600)
         if cfg['token']:
-            ruta.chmod(0o600)
             print('Ya existe un token configurado; se conserva sin mostrarlo.')
             return 0
         # getpass no puede degradarse silenciosamente a entrada con eco.

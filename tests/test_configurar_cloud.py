@@ -52,6 +52,27 @@ class ConfigurarCloudTest(unittest.TestCase):
         entrada.assert_not_called()
         self.assertEqual(self.ruta.read_text(),anterior)
 
+    def test_reemplazo_explicito_es_privado_y_conserva_dashboard(self):
+        self.ruta.parent.mkdir()
+        self.ruta.write_text(json.dumps({'servidor':'https://thingsboard.cloud',
+            'token':self.secreto,'dashboard_url':'https://thingsboard.cloud/dashboard/SINTETICO',
+            'dashboard':'Proyecto Sensor de Agua'}))
+        nuevo='SINTETICO_token_rotado_654'
+        salida=io.StringIO()
+        with patch('sys.stdin.isatty',return_value=True), \
+             patch('getpass.getpass',return_value=nuevo) as entrada, \
+             redirect_stdout(salida),redirect_stderr(salida):
+            codigo=c.main(['--config',str(self.ruta),'--reemplazar-token'])
+        self.assertEqual(codigo,0)
+        entrada.assert_called_once()
+        datos=json.loads(self.ruta.read_text())
+        self.assertEqual(datos['token'],nuevo)
+        self.assertEqual(datos['dashboard'],'Proyecto Sensor de Agua')
+        self.assertEqual(datos['dashboard_url'],'https://thingsboard.cloud/dashboard/SINTETICO')
+        self.assertEqual(stat.S_IMODE(self.ruta.stat().st_mode),0o600)
+        self.assertNotIn(self.secreto,salida.getvalue())
+        self.assertNotIn(nuevo,salida.getvalue())
+
     def test_rechaza_destino_dentro_del_repo_antes_de_pedir_token(self):
         self.ruta=Path(c.RAIZ)/'config'/'NO_CREAR.local.json'
         codigo,entrada,_=self.ejecutar()

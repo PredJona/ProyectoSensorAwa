@@ -1,0 +1,46 @@
+{
+  "fecha_utc": "2026-10-16",
+  "servidor": "https://thingsboard.cloud",
+  "puerto": "/dev/ttyACM0",
+  "baudios": 115200,
+  "csv": "datos/mediciones/cloud_real_20261016T190452_080262Z.csv",
+  "csv_sha256": "7bf25852a2fccc3ecd6bc0f810a8718ec8a224dcc29981ab8b9808f991def626",
+  "muestras_reales": 6,
+  "lineas_invalidas": 0,
+  "sincronizacion_confirmada": true,
+  "lineas_descartadas_durante_sincronizacion": 460,
+  "recepcion_ms": {
+    "min": 500.229,
+    "mediana": 501.834,
+    "max": 503.991
+  },
+  "arduino_ms": {
+    "min": 500,
+    "mediana": 500,
+    "max": 500
+  },
+  "discontinuidades": 0,
+  "publicacion": {
+    "endpoint_redactado": "https://thingsboard.cloud/api/v1/***/telemetry",
+    "modo_solicitado": "en_vivo",
+    "filas_confirmadas": 6,
+    "lotes_confirmados": 4,
+    "respuesta_http": "2xx en cada lote; códigos exactos no registrados",
+    "cursor": "datos/resultados/cloud_real_20261016T190452_080262Z.tb.cursor.json",
+    "cursor_filas_enviadas": 6,
+    "calibracion_valida": false,
+    "adc1_adc2_adc3_presentes": true,
+    "alturas_publicadas": false,
+    "marcas_temporales_desde_utc_csv": true
+  },
+  "almacenamiento_confirmado_por_consulta": false,
+  "dashboard_inspeccionado": false,
+  "qr_final_generado": false,
+  "token_incluido": false,
+  "pruebas": {
+    "suite_total": 89,
+    "errores": 0,
+    "registro": "documentos/PRUEBAS_ENVIO_REAL_2026-10-16.log",
+    "ejecucion_sandbox_con_sockets_bloqueados": "documentos/PRUEBAS_ENVIO_REAL_SANDBOX_2026-10-16.log"
+  }
+}

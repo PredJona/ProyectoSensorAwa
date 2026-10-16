@@ -26,20 +26,46 @@ No se crearon duplicados ni se cambió su privacidad.
   a las `2026-10-16T18:39:35Z`. Esto demuestra conectividad, no autenticación,
   recepción de telemetría ni almacenamiento.
 - Se preparó `~/.config/proyectosensorawa/thingsboard.json`, permisos **0600**,
-  directorio **0700**, con servidor real y token vacío. Está fuera del árbol Git.
+  directorio **0700**. El equipo introdujo el token directamente en el archivo
+  privado. Está fuera del árbol Git y su valor no aparece en este documento.
   Además, `git check-ignore -v` confirmó la regla `*.local.json` de respaldo para
   archivos locales dentro del proyecto. No se muestra el contenido privado.
 - Los 87 archivos previos inventariados de firmware/datos conservan sus SHA-256.
-  No se activaron LED, modificaron métodos numéricos ni se hizo push.
+  No se activaron LED ni se modificaron métodos numéricos. El código de
+  adquisición e integración se subió en el commit `1e3cfc2`.
 
-**Bloqueo actual:** falta introducir el Access Token localmente. No se ha enviado
-telemetría a Cloud ni se dispone de autorización de consulta/edición de la cuenta.
-El dashboard y su URL no se han podido inspeccionar desde esta sesión.
+### Envío real confirmado
 
-Verificación final: **88 pruebas aprobadas, sin errores ni omisiones**, incluidas
-7 pruebas nuevas del ingreso privado de credenciales sintéticas. Registro:
-[PRUEBAS_THINGSBOARD_CLOUD_2026-10-16.log](PRUEBAS_THINGSBOARD_CLOUD_2026-10-16.log).
-Resumen verificable sin credenciales:
+Se hizo una captura nueva de **6 muestras** en el CSV local
+`datos/mediciones/cloud_real_20261016T190452_080262Z.csv`, sin líneas inválidas.
+El CSV conserva SHA-256
+`7bf25852a2fccc3ecd6bc0f810a8718ec8a224dcc29981ab8b9808f991def626`.
+El primer UTC coincide con el inicio efectivo de la sincronización. Durante la
+preparación se descartaron 460 líneas completas, incluidas las necesarias para
+validar la cadencia. Los intervalos de recepción fueron **500,229–503,991 ms**,
+mediana **501,834 ms**; `t_ms` avanzó siempre 500 ms. No hubo discontinuidades.
+
+El publicador siguió el CSV y confirmó **6/6 filas en cuatro lotes** hacia
+`https://thingsboard.cloud/api/v1/***/telemetry`. Cada lote pasó la comprobación
+HTTP **2xx** del cliente; el código exacto de cada respuesta no se registró.
+El cursor local de la sesión quedó en seis filas, modo `en_vivo`, con
+`calibracion_valida=false`. La transformación usa los UTC del CSV, publica
+`adc1`, `adc2`, `adc3` y **no genera ninguna altura**. Las filas que envejecen más
+de tres segundos durante el envío se etiquetan como históricas; el ACK por sí
+solo no permite confirmar la etiqueta almacenada de cada fila.
+
+**Pendiente:** consultar los valores almacenados con autorización de cuenta o
+verlos en **Latest telemetry**, configurar los widgets del dashboard privado y
+comprobar su URL desde el teléfono. El token de dispositivo autoriza el envío,
+pero no da acceso de lectura o edición al dashboard. No se ha generado QR final.
+Resumen sin credenciales: [VERIFICACION_ENVIO_REAL_2026-10-16.json](VERIFICACION_ENVIO_REAL_2026-10-16.json).
+
+Verificación final: **89 pruebas aprobadas**, incluidas las de ingreso y reemplazo
+privado de credenciales sintéticas. Registro:
+[PRUEBAS_ENVIO_REAL_2026-10-16.log](PRUEBAS_ENVIO_REAL_2026-10-16.log).
+La primera ejecución dentro del sandbox no pudo abrir sockets locales; su
+[registro](PRUEBAS_ENVIO_REAL_SANDBOX_2026-10-16.log) se conserva. Al repetirla
+con acceso a sockets, las 89 pruebas pasaron. Resumen previo sin credenciales:
 [VERIFICACION_THINGSBOARD_CLOUD_2026-10-16.json](VERIFICACION_THINGSBOARD_CLOUD_2026-10-16.json).
 
 ## Introducir únicamente el token, sin historial ni eco
@@ -59,6 +85,18 @@ si ya existe un token válido no lo sobrescribe. No usa credenciales de usuario 
 cambia el dashboard. No añadir el token a `.env` ni pasarlo con `--token`.
 
 Una vez completado, basta comunicar **“token guardado”**. No comunicar su valor.
+
+Si se regenera el token del dispositivo en ThingsBoard Cloud (por ejemplo, porque
+el anterior apareció en un chat), sustituir el valor local desde la terminal:
+
+```bash
+.venv/bin/python -m python.configurar_cloud --reemplazar-token
+```
+
+El nuevo token se introduce con eco oculto y el archivo previo permanece intacto
+si la entrada falla. La rotación invalida el token anterior; usar un cursor nuevo
+para capturas futuras. Si había un envío interrumpido con el cursor anterior,
+revisar las filas ya confirmadas antes de reanudarlo con otra credencial.
 
 ## Transmisión con el publicador existente
 

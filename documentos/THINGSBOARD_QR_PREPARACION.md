@@ -8,9 +8,10 @@ sin eco y completar el dashboard existente conservando su privacidad.
 Los pasos genéricos siguientes se conservan como referencia; no crear duplicados.
 
 El software está probado con HTTP local simulado, pseudoterminales y QR decodificado.
-**El dashboard creado por el equipo todavía no se ha podido inspeccionar.** Faltan
-token de dispositivo privado y URL de dashboard accesible desde el teléfono.
-No se ha publicado nada hacia una cuenta externa. No se requieren nuevas pruebas
+Además, se aceptaron **6 muestras reales** en ThingsBoard Cloud mediante cuatro
+lotes HTTP 2xx. **El dashboard creado por el equipo todavía no se ha podido
+inspeccionar.** Faltan la consulta de datos almacenados desde la cuenta, los
+widgets y una URL comprobada desde el teléfono. No se requieren nuevas pruebas
 con agua, LED ni cambios de firmware para demostrar los tres ADC.
 
 ## Flujo y datos
