@@ -1,0 +1,10 @@
+{
+  "csv": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_40mm_01.csv",
+  "muestras": 20,
+  "invalidas": 0,
+  "segundos_captura": 10.02047974800007,
+  "bytes_arranque_conservados": 4571,
+  "preparacion_csv": "datos/calibracion/sesion_2026-10-16_01/s1_40mm_01_preparacion.csv",
+  "preparacion_muestras": 4,
+  "preparacion_invalidas": 0
+}

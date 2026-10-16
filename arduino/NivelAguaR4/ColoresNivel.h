@@ -6,7 +6,7 @@ enum ColorNivel : uint8_t {
   COLOR_APAGADO = 0,
   COLOR_ROJO = 1,
   COLOR_VERDE = 2,
-  COLOR_AMARILLO = 3,
+  COLOR_AZUL = 4,
   COLOR_MORADO = 5
 };
 
@@ -27,14 +27,11 @@ inline bool pinesLedValidos(const int pines[3][3], const int reservados[5]) {
   return true;
 }
 
-inline uint8_t colorParaAdc(int adc, const int limites[3]) {
-  // Máximos ADC de vacío, bajo y medio, medidos por sensor.
-  // Esta política requiere una respuesta creciente con el nivel de agua.
-  if (adc < 0 || adc > 1023 || limites[0] < 0 ||
-      limites[0] >= limites[1] || limites[1] >= limites[2] ||
-      limites[2] > 1023) return COLOR_APAGADO;
-  if (adc <= limites[0]) return COLOR_MORADO;
-  if (adc <= limites[1]) return COLOR_VERDE;
-  if (adc <= limites[2]) return COLOR_AMARILLO;
+inline uint8_t colorParaAdc(int adc) {
+  // Clasificación provisional en cuentas ADC; no expresa altura ni porcentaje.
+  if (adc < 0 || adc > 1023) return COLOR_APAGADO;
+  if (adc < 50) return COLOR_VERDE;
+  if (adc < 150) return COLOR_AZUL;
+  if (adc < 300) return COLOR_MORADO;
   return COLOR_ROJO;
 }

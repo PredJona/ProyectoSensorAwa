@@ -1,5 +1,15 @@
 # Estado actual y cierre de la auditoría correctiva
 
+**Actualización del 16 de octubre:** la sesión USB quedó resuelta y se
+adquirieron ensayos exploratorios con los tres canales, con alturas comunicadas
+solo para sensor 1. La calibración sigue sin validar por profundidad variable.
+La política RGB actual del repositorio es 0–49 verde, 50–149 azul, 150–299
+morado, 300–1023 rojo; sustituye `LIMITES_ADC_LED`. Está probada y compilada,
+pero no cargada y con `NIVEL_AGUA_LED=0` por defecto hasta revisar resistencias.
+Véase [ANALISIS_ADC_Y_RGB_2026-10-16.md](ANALISIS_ADC_Y_RGB_2026-10-16.md).
+Las referencias a límites en -1 y ausencia de ensayos de los apartados siguientes
+describen el estado previo, no la implementación vigente del repositorio.
+
 ## Alcance de la evidencia
 
 El firmware principal de UNO R4 WiFi usa A0/A2/A3, ADC de 10 bits,

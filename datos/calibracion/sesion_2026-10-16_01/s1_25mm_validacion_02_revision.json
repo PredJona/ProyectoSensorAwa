@@ -1,0 +1,6 @@
+{
+  "id": "s1_25mm_validacion_02",
+  "estado": "no_apto_para_validacion_estatica_por_inestabilidad",
+  "motivo": "Secuencia asciende de zona 228..233 a 258..261 durante 9.52 s; no se demostro estado estacionario. Conservar datos sin filtrar.",
+  "siguiente_paso": "Aclarar sujecion fisica y estabilizar sensor y agua antes de repetir."
+}

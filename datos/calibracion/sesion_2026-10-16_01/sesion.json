@@ -1,0 +1,146 @@
+{
+  "creada_utc": "2026-10-16T06:53:59.148593+00:00",
+  "estado": "ensayos_fisicos_detenidos_por_peticion_usuario_resultados_preliminares",
+  "unidad_propuesta": "mm",
+  "referencia_propuesta": "Profundidad vertical desde extremo inferior del sensor hasta superficie del agua; cero seco separado de condiciones humedas",
+  "ensayos": [
+    {
+      "id": "s1_seco_01",
+      "metadatos": "datos/calibracion/sesion_2026-10-16_01/s1_seco_01.json",
+      "csv": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_01.csv",
+      "sensor": "adc1",
+      "altura_inmersion": 0,
+      "unidad": "mm",
+      "condicion": "seco",
+      "estado": "excluido_de_calibracion",
+      "revision": "datos/calibracion/sesion_2026-10-16_01/s1_seco_01_revision.json"
+    },
+    {
+      "id": "s1_seco_02",
+      "estado": "excluido_de_calibracion",
+      "motivo": "01: lecturas recibidas en rafaga, antiguedad no asegurada; 02: captura incompleta por timeout interpretado como EOF en PySerial",
+      "muestras_validas": 1,
+      "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_02.csv",
+      "sha256": "eb38772564399fb0554645c317133f1e792142ce69b2ceb2e3a724afbe6b960b"
+    },
+    {
+      "id": "s1_seco_03",
+      "sensor": "adc1",
+      "altura_inmersion": 0,
+      "unidad": "mm",
+      "condicion": "seco",
+      "metadatos": "datos/calibracion/sesion_2026-10-16_01/s1_seco_03.json",
+      "csv": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_03.csv",
+      "estado": "referencia_seca_capturada_pendiente_validacion_curva"
+    },
+    {
+      "id": "s1_10mm_01",
+      "sensor": "adc1",
+      "altura_inmersion": 10,
+      "unidad": "mm",
+      "condicion": "humedo",
+      "metadatos": "datos/calibracion/sesion_2026-10-16_01/s1_10mm_01.json",
+      "csv": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_10mm_01.csv",
+      "estado": "captura_completa_pendiente_validacion_curva"
+    },
+    {
+      "id": "s1_20mm_01",
+      "sensor": "adc1",
+      "altura_inmersion": 20,
+      "unidad": "mm",
+      "condicion": "humedo",
+      "metadatos": "datos/calibracion/sesion_2026-10-16_01/s1_20mm_01.json",
+      "csv": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_20mm_01.csv",
+      "estado": "excluido_de_curva_por_salto_temporal_inicial"
+    },
+    {
+      "id": "s1_20mm_02",
+      "sensor": "adc1",
+      "altura_inmersion": 20,
+      "unidad": "mm",
+      "condicion": "humedo",
+      "metadatos": "datos/calibracion/sesion_2026-10-16_01/s1_20mm_02.json",
+      "csv": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_20mm_02.csv",
+      "estado": "captura_completa_pendiente_validacion_curva"
+    },
+    {
+      "id": "s1_30mm_01",
+      "sensor": "adc1",
+      "altura_inmersion": 30,
+      "unidad": "mm",
+      "condicion": "humedo",
+      "metadatos": "datos/calibracion/sesion_2026-10-16_01/s1_30mm_01.json",
+      "csv": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_30mm_01.csv",
+      "estado": "captura_completa_pendiente_validacion_curva"
+    },
+    {
+      "id": "s1_40mm_01",
+      "sensor": "adc1",
+      "altura_inmersion": 40,
+      "unidad": "mm",
+      "condicion": "humedo",
+      "metadatos": "datos/calibracion/sesion_2026-10-16_01/s1_40mm_01.json",
+      "csv": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_40mm_01.csv",
+      "estado": "captura_completa_pendiente_validacion_curva"
+    },
+    {
+      "id": "s1_25mm_validacion_01",
+      "sensor": "adc1",
+      "altura_inmersion": 25,
+      "unidad": "mm",
+      "condicion": "humedo_descendente",
+      "rol": "validacion_independiente_no_usar_como_nodo",
+      "metadatos": "datos/calibracion/sesion_2026-10-16_01/s1_25mm_validacion_01.json",
+      "csv": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_25mm_validacion_01.csv",
+      "estado": "captura_completa_pendiente_evaluacion"
+    },
+    {
+      "id": "s1_25mm_validacion_02",
+      "sensor": "adc1",
+      "altura_inmersion": 25,
+      "unidad": "mm",
+      "condicion": "humedo_descendente_repeticion",
+      "rol": "validacion_independiente_no_usar_como_nodo",
+      "metadatos": "datos/calibracion/sesion_2026-10-16_01/s1_25mm_validacion_02.json",
+      "csv": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_25mm_validacion_02.csv",
+      "estado": "no_apto_para_validacion_estatica_por_inestabilidad",
+      "revision": "datos/calibracion/sesion_2026-10-16_01/s1_25mm_validacion_02_revision.json"
+    }
+  ],
+  "verificacion_comunicacion": {
+    "csv": "datos/mediciones/verificacion_precalibracion_2026-10-16_01.csv",
+    "sha256": "6040a706ac52beb8a57f44f83c5d24414f3e0670e080e6451e8b38d48b94dbaa",
+    "muestras_validas": 10,
+    "lineas_invalidas": 1,
+    "intervalos_ms": [
+      500,
+      500,
+      500,
+      500,
+      500,
+      500,
+      500,
+      500,
+      500
+    ],
+    "apto_como_punto_calibracion": false
+  },
+  "protocolo": "documentos/CALIBRACION_SESION_2026-10-16.md",
+  "geometria_reportada_sensor1": {
+    "zona_sensible_longitud_mm": 44,
+    "valor_original_usuario": "4.4 cm",
+    "fuente": "medicion comunicada por el usuario en la conversacion",
+    "division_regla_mm": null,
+    "observaciones": "Longitud reportada, no altura de inmersion ni punto de calibracion. No se presupone que toda esa longitud pueda sumergirse de forma segura; componentes y conector deben quedar secos."
+  },
+  "calibracion_adc1_habilitada": false,
+  "motivo_adc1_no_habilitada": "Discrepancia de validacion y repeticion a 25 mm inestable; revisar sujecion y estabilidad antes de aceptar curva.",
+  "actualizacion_utc": "2026-10-16T07:21:47.463082+00:00",
+  "observaciones_usuario": {
+    "sujecion": "El sensor se mueve un poco lateral y verticalmente; no se cuantifico el desplazamiento.",
+    "motivo_detener_ensayos": "Usuario cansado; indica entrega el sabado a las 8.",
+    "interpretacion": "Se detienen capturas; no se considera validada la conversion ADC-altura.",
+    "plazo_reportado": "sabado a las 8; no se especifico manana o tarde"
+  },
+  "resumen_preliminar": "datos/calibracion/sesion_2026-10-16_01/resumen_preliminar_sensor1_01.csv"
+}

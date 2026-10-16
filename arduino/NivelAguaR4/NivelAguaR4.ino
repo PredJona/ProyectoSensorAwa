@@ -40,8 +40,14 @@ bool lcdDisponible = false;
 const int PINES_LED[3][3] = {{2, 3, 4}, {7, 6, 5}, {10, 9, 8}};
 const int PINES_RESERVADOS_LED[5] = {A0, A2, A3, SDA, SCL};
 const int NIVELES_ACTIVOS_LED[3] = {HIGH, HIGH, HIGH};
-// Por sensor: máximos ADC para vacío, bajo y medio. -1 = sin medir/desactivado.
-const int LIMITES_ADC_LED[3][3] = {{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
+// Activar solo tras verificar cátodo común, resistencias y corriente por canal.
+// Compilar con -DNIVEL_AGUA_LED=1 para la prueba física autorizada posterior.
+#ifndef NIVEL_AGUA_LED
+#define NIVEL_AGUA_LED 0
+#endif
+#if NIVEL_AGUA_LED != 0 && NIVEL_AGUA_LED != 1
+#error "NIVEL_AGUA_LED debe ser 0 o 1."
+#endif
 
 void escribirCanalLed(uint8_t indicador, uint8_t canal, bool encendido) {
   if (indicador >= 3 || canal >= 3) return;
@@ -66,10 +72,11 @@ void inicializarLeds() {
 }
 
 void actualizarLeds(const int lecturas[3]) {
-  // Colores acordados: vacío morado, bajo verde, medio amarillo, alto rojo.
+  // Cada canal ADC controla su RGB: verde, azul, morado o rojo.
   if (!pinesLedValidos(PINES_LED, PINES_RESERVADOS_LED)) return;
   for (uint8_t indicador = 0; indicador < 3; ++indicador) {
-    const uint8_t color = colorParaAdc(lecturas[indicador], LIMITES_ADC_LED[indicador]);
+    const uint8_t color = NIVEL_AGUA_LED ? colorParaAdc(lecturas[indicador])
+                                        : static_cast<uint8_t>(COLOR_APAGADO);
     for (uint8_t canal = 0; canal < 3; ++canal) {
       escribirCanalLed(indicador, canal, (color & (1u << canal)) != 0);
     }

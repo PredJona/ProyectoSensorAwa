@@ -115,6 +115,37 @@ class AdquisicionTest(unittest.TestCase):
             with self.assertRaises(ValueError): self.cal.cargar(p)
 
     @unittest.skipUnless(os.name=='posix','Pseudo terminal solo disponible en POSIX')
+    def test_serial_timeout_antes_de_muestras_no_es_fin_de_archivo(self):
+        import pty
+        import serial
+        master,slave=pty.openpty()
+        parar=threading.Event()
+
+        def emitir():
+            if parar.wait(.06): return
+            os.write(master,b'500,2,3,4\n')
+            if parar.wait(.06): return
+            os.write(master,b'1000,3,4,5\n')
+
+        hilo=None
+        try:
+            with serial.Serial(os.ttyname(slave),115200,timeout=.01) as puerto:
+                hilo=threading.Thread(target=emitir)
+                hilo.start()
+                with tempfile.TemporaryDirectory() as d:
+                    destino=Path(d)/'serial.csv'
+                    self.assertEqual(self.c.registrar(puerto,destino,max_muestras=2,
+                                     duracion=1,origen='prueba_controlada'),(2,0))
+                    with destino.open() as archivo:
+                        filas=list(csv.DictReader(archivo))
+                    self.assertEqual([f['t_ms'] for f in filas],['500','1000'])
+        finally:
+            parar.set()
+            if hilo: hilo.join(timeout=1)
+            os.close(master)
+            os.close(slave)
+
+    @unittest.skipUnless(os.name=='posix','Pseudo terminal solo disponible en POSIX')
     def test_serial_real_trama_sin_newline_respeta_limite(self):
         import pty
         import serial

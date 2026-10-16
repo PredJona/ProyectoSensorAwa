@@ -1,5 +1,12 @@
 # Calibración pendiente — tres Water Level
 
+**Actualización 16 octubre:** existen datos exploratorios de S1 con profundidad
+variable, sin calibración validada. La lógica RGB solicitada posteriormente
+usa intervalos ADC provisionales independientes (verde/azul/morado/rojo) y
+`NIVEL_AGUA_LED=0` por defecto hasta revisar seguridad eléctrica. El apartado
+histórico de LED al final de este protocolo ya no describe el código vigente.
+Detalles: [análisis y cambios](ANALISIS_ADC_Y_RGB_2026-10-16.md).
+
 El circuito usa sensor 1 en A0, sensor 2 en A2 y sensor 3 en A3. LCD en
 0x27 sobre SDA/A4 y SCL/A5. Los ADC se conservan siempre sin transformar.
 No hay todavía suficientes pares ADC-altura documentados ni umbrales físicos

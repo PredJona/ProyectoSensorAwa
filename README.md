@@ -65,10 +65,12 @@ El cableado confirmado es sensor 1 en **A0**, sensor 2 en **A2** y sensor 3
 en **A3**, con alimentación indicada de 5 V y GND compartido.
 Los canales se leen consecutivamente cada 500 ms, no simultáneamente.
 La LCD está habilitada en **0x27**, SDA/A4 y SCL/A5, y el equipo confirmó
-visualmente que muestra lecturas. El problema anterior se debió a no identificar
-cuándo terminaba la carga del firmware. Los LED RGB tienen la lógica de
-colores preparada, pero la versión actual ordena mantener sus canales apagados
-porque faltan límites ADC medidos por sensor.
+visualmente que muestra lecturas. La recuperación serial más reciente se
+documenta en [el diagnóstico USB](documentos/DIAGNOSTICO_SERIAL_2026-10-16.md).
+La lógica RGB del repositorio clasifica por sensor: 0–49 verde, 50–149 azul,
+150–299 morado y 300–1023 rojo. Son cuentas ADC provisionales. Las salidas
+permanecen apagadas por defecto (`NIVEL_AGUA_LED=0`) hasta comprobar resistencias
+y corriente; la nueva versión aún no se ha cargado en el Arduino.
 
 El usuario asignó las ternas D2/D3/D4, D5/D6/D7 y D8/D9/D10; al conservar
 los órdenes de color indicados, quedan LED 1 R2/G3/B4, LED 2 R7/G6/B5 y
@@ -78,7 +80,7 @@ el usuario confirmó los tres grupos de pines y falta comprobar visualmente
 la correspondencia de cada color. Las luces encendidas visibles en el montaje
 no prueban por sí solas el control correcto de los tres RGB. El firmware
 rechaza pines LED fuera de D2..D10, repetidos o compartidos con sensores/LCD y mantiene
-los canales apagados hasta registrar los límites ADC reales.
+los canales apagados mientras la habilitación eléctrica esté desactivada.
 
 Consulte [la guía del firmware](arduino/NivelAguaR4/README.md) para compilar,
 cargar, configurar LCD/LED y probar el circuito.

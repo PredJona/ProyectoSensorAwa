@@ -22,6 +22,7 @@ constexpr int HIGH=1, LOW=0, OUTPUT=1, INPUT=0;
 uint32_t reloj=0;
 int resolucion=0, siguientePin=0, lecturas=0, salidas=0, encendidos=0;
 bool pinesConfigurados[14]={false};
+int nivelesPin[14]={0};
 int valoresAdc[3]={0,512,1023};
 uint32_t millis() { return reloj; }
 void analogReadResolution(int bits) { resolucion=bits; }
@@ -32,6 +33,7 @@ void pinMode(int pin, int modo) {
 }
 void digitalWrite(int pin, int nivel) {
     if (pin<2 || pin>10 || (nivel!=LOW && nivel!=HIGH)) std::abort();
+    nivelesPin[pin]=nivel;
     if (nivel==HIGH) ++encendidos;
 }
 int analogRead(int pin) {
@@ -80,27 +82,95 @@ int main() {
             r=subprocess.run([str(p/'pines')],capture_output=True)
             self.assertEqual(r.returncode,0,r.stderr)
 
-    def test_colores_segun_limites_medidos_y_configuracion_incompleta(self):
+    def test_colores_adc_provisionales_todos_los_valores_y_fronteras(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)
             cabecera=RAIZ/'arduino/NivelAguaR4/ColoresNivel.h'
             (p/'main.cpp').write_text('#include "'+str(cabecera)+'"\n'+r'''
+#include <climits>
 int main() {
-    // Datos controlados para probar límites; NO calibración del circuito.
-    const int limites[3]={10,20,30};
-    const int adc[]={0,10,11,20,21,30,31,1023};
-    const int colores[]={5,5,2,2,3,3,1,1}; // R=1, G=2, B=4.
-    for (int i=0;i<8;++i) if (colorParaAdc(adc[i],limites)!=colores[i]) return 1;
-    const int invalidos[][3]={{-1,-1,-1},{20,10,30},{0,0,30},{0,1023,1024}};
-    for (const auto& valores : invalidos)
-        if (colorParaAdc(25,valores)!=0) return 2;
-    if (colorParaAdc(-1,limites)!=0 || colorParaAdc(1024,limites)!=0) return 3;
+    // Máscaras literales R=1, G=2, B=4; cuentas ADC, NO alturas.
+    const int adc[]={0,49,50,149,150,299,300,1023};
+    const int colores[]={2,2,4,4,5,5,1,1};
+    for (int i=0;i<8;++i) if (colorParaAdc(adc[i])!=colores[i]) return 1;
+    for (int v=0;v<=49;++v) if (colorParaAdc(v)!=2) return 2;
+    for (int v=50;v<=149;++v) if (colorParaAdc(v)!=4) return 3;
+    for (int v=150;v<=299;++v) if (colorParaAdc(v)!=5) return 4;
+    for (int v=300;v<=1023;++v) if (colorParaAdc(v)!=1) return 5;
+    const int invalidos[]={INT_MIN,-1024,-1,1024,65535,INT_MAX};
+    for (int valor : invalidos) if (colorParaAdc(valor)!=0) return 6;
+    if (COLOR_AZUL!=4) return 7;
 }
 ''')
             r=subprocess.run(['g++','-std=c++11',str(p/'main.cpp'),'-o',str(p/'colores')],
                              capture_output=True,text=True)
             self.assertEqual(r.returncode,0,r.stderr)
             r=subprocess.run([str(p/'colores')],capture_output=True)
+            self.assertEqual(r.returncode,0,r.stderr)
+
+    def test_led_habilitados_independientes_transiciones_y_adc_invalidos(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)
+            (p/'Arduino.h').write_text(ARDUINO_H)
+            sketch=RAIZ/'arduino/NivelAguaR4/NivelAguaR4.ino'
+            (p/'main.cpp').write_text('#include "'+str(sketch)+'"\n'+r'''
+bool comprobar(const int colores[3]) {
+    const int pines[3][3]={{2,3,4},{7,6,5},{10,9,8}};
+    for (int led=0;led<3;++led)
+        for (int canal=0;canal<3;++canal)
+            if (nivelesPin[pines[led][canal]]!=((colores[led]>>canal)&1)) return false;
+    return true;
+}
+int main() {
+    setup();
+    const int apagados[3]={0,0,0};
+    if (!comprobar(apagados)) return 1;
+    const int entradas[][3]={{49,50,150},{300,149,299},{150,300,0},
+                            {1023,1023,1023},{-1,1024,-5},{0,50,300}};
+    const int colores[][3]={{2,4,5},{1,4,5},{5,1,2},{1,1,1},{0,0,0},{2,4,1}};
+    for (int i=0;i<6;++i) {
+        actualizarLeds(entradas[i]);
+        if (!comprobar(colores[i])) return 2+i;
+    }
+    // Recorrer cada frontera en ambos sentidos para cada LED, manteniendo los otros.
+    const int limites[]={49,50,149,150,299,300,299,150,149,50,49};
+    const int esperados[]={2,4,4,5,5,1,5,5,4,4,2};
+    for (int led=0;led<3;++led)
+        for (int j=0;j<11;++j) {
+            int adc[3]={0,50,300}, color[3]={2,4,1};
+            adc[led]=limites[j]; color[led]=esperados[j];
+            actualizarLeds(adc);
+            if (!comprobar(color)) return 20+led;
+        }
+    reloj=500; loop();
+    std::cout << Serial.datos.str();
+}
+''')
+            r=subprocess.run(['g++','-std=c++11','-DARDUINO_UNOR4_WIFI',
+                              '-DNIVEL_AGUA_LCD=0','-DNIVEL_AGUA_LED=1','-I',d,
+                              str(p/'main.cpp'),'-o',str(p/'led')],capture_output=True,text=True)
+            self.assertEqual(r.returncode,0,r.stderr)
+            r=subprocess.run([str(p/'led')],capture_output=True)
+            self.assertEqual(r.returncode,0,r.stderr)
+            self.assertEqual(r.stdout,b'tiempo_ms,sensor1,sensor2,sensor3\r\n500,0,512,1023\r\n')
+
+    def test_led_deshabilitados_por_defecto_apagan_todos_los_colores(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)
+            (p/'Arduino.h').write_text(ARDUINO_H)
+            sketch=RAIZ/'arduino/NivelAguaR4/NivelAguaR4.ino'
+            (p/'main.cpp').write_text('#include "'+str(sketch)+'"\n'+r'''
+int main() {
+    setup();
+    const int entradas[][3]={{0,50,150},{300,1023,49},{-1,1024,150}};
+    for (const auto& adc : entradas) actualizarLeds(adc);
+    for (int pin=2;pin<=10;++pin) if (nivelesPin[pin]!=LOW) return 1;
+}
+''')
+            r=subprocess.run(['g++','-std=c++11','-DARDUINO_UNOR4_WIFI','-DNIVEL_AGUA_LCD=0',
+                              '-I',d,str(p/'main.cpp'),'-o',str(p/'apagados')],capture_output=True,text=True)
+            self.assertEqual(r.returncode,0,r.stderr)
+            r=subprocess.run([str(p/'apagados')],capture_output=True)
             self.assertEqual(r.returncode,0,r.stderr)
 
     def test_muestreo_csv_desborde_y_salidas_desactivadas(self):
@@ -185,12 +255,20 @@ int main() {
     valoresAdc[0]=valoresAdc[1]=valoresAdc[2]=1;
     reloj=1000; loop();
     if (lcd.filas[0]!="S1:   1 S2:   1 " || lcd.filas[1]!="S3:   1 ADC     ") return 3;
-    if (salidas!=9 || encendidos!=0) return 4;
+    if (salidas!=9 || (!NIVEL_AGUA_LED && encendidos!=0)) return 4;
+    if (NIVEL_AGUA_LED) {
+        // Con ADC=1, los tres canales verdes deben estar encendidos.
+        for (int pin=2;pin<=10;++pin)
+            if (nivelesPin[pin]!=((pin==3 || pin==6 || pin==9) ? HIGH : LOW)) return 5;
+    }
 }
 ''')
-            r=subprocess.run(['g++','-std=c++11','-DARDUINO_UNOR4_WIFI','-I',d,
-                              str(p/'main.cpp'),'-o',str(p/'lcd')],
-                             capture_output=True,text=True)
-            self.assertEqual(r.returncode,0,r.stderr)
-            r=subprocess.run([str(p/'lcd')],capture_output=True)
-            self.assertEqual(r.returncode,0,r.stderr)
+            for enabled in (0,1):
+                with self.subTest(led_habilitados=enabled):
+                    r=subprocess.run(['g++','-std=c++11','-DARDUINO_UNOR4_WIFI',
+                                      f'-DNIVEL_AGUA_LED={enabled}','-I',d,
+                                      str(p/'main.cpp'),'-o',str(p/'lcd')],
+                                     capture_output=True,text=True)
+                    self.assertEqual(r.returncode,0,r.stderr)
+                    r=subprocess.run([str(p/'lcd')],capture_output=True)
+                    self.assertEqual(r.returncode,0,r.stderr)

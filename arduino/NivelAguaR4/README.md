@@ -81,11 +81,11 @@ Para compilar sin LCD, sin editar el archivo:
 XDG_CACHE_HOME=/tmp/proyecto1-r4-cache arduino-cli compile --fqbn arduino:renesas_uno:unor4wifi --build-path /tmp/proyecto1-r4-sin-lcd-build --build-property 'compiler.cpp.extra_flags=-DNIVEL_AGUA_LCD=0' arduino/NivelAguaR4
 ```
 
-## LED RGB y calibración pendiente
+## LED RGB: intervalos ADC provisionales
 
 `PINES_LED[3][3]` usa el orden **R, G, B** para cada LED. Los nueve pines
-asignados se configuran como salidas y se mantienen en LOW (apagados) mientras
-falte la calibración.
+asignados se configuran como salidas y se mantienen en LOW (apagados) por
+defecto (`NIVEL_AGUA_LED=0`), hasta comprobar la seguridad eléctrica.
 `NIVELES_ACTIVOS_LED` usa HIGH para los RGB de cátodo común confirmados.
 El usuario indicó resistencias «220»; falta confirmar 220 Ω y una por canal.
 
@@ -96,21 +96,33 @@ falta comprobar visualmente.
 `pinesLedValidos()` rechaza conjuntos fuera de D2..D10, incompletos,
 duplicados o que utilicen los pines de sensores/LCD antes de configurar salidas.
 
-`ColoresNivel.h` implementa la política acordada con canales digitales:
-vacío morado (R+B), bajo verde (G), medio amarillo (R+G), alto rojo (R).
-No se implementa mezcla PWM ni regulación de brillo.
-`LIMITES_ADC_LED[3][3]` contiene los máximos ADC para vacío, bajo y medio
-de cada sensor. Los tres límites deben estar en 0..1023 y aumentar
-estrictamente; valores superiores al límite de medio se clasifican como alto.
-La política requiere que la respuesta ADC aumente con el agua.
+`colorParaAdc(adc)` sustituye la política anterior y los límites por sensor:
 
-Todos los límites siguen en `-1`, sin inventar valores. Con configuración
-incompleta o inválida, los colores quedan apagados. Rellenar solo los pines
-no activa los avisos: primero medir la calibración.
-Antes de asignarlos, comprobar que sean pines válidos, distintos y no
-compartidos con A0/A2/A3 ni SDA/SCL ni otro periférico.
-El significado de los colores representa la política del proyecto; las alturas
-se calculan por separado a partir de puntos medidos en Python.
+| ADC inclusivo | Color | Canales |
+|---|---|---|
+| 0–49 | Verde | G |
+| 50–149 | Azul | B |
+| 150–299 | Morado | R+B |
+| 300–1023 | Rojo | R |
+| Fuera de 0..1023 | Apagado | Ninguno |
+
+Cada sensor gobierna su LED de forma independiente. Son rangos provisionales
+de cuentas ADC, no niveles calibrados, centímetros ni porcentajes. No hay PWM
+ni histéresis: el mismo ADC produce siempre el mismo color. Se probó el rango
+completo, fronteras en ambos sentidos y apagado ante valores inválidos.
+
+**Antes de habilitar:** confirmar cátodo común y una resistencia adecuada por
+cada canal. UNO R4 WiFi admite 8 mA por GPIO; 220 Ω no garantiza respetarlo.
+Véase [la revisión eléctrica](../../documentos/CONEXIONES_LED.md).
+Para compilar la variante preparada para prueba física, después de esa revisión:
+
+```bash
+XDG_CACHE_HOME=/tmp/proyecto1-r4-cache arduino-cli compile --fqbn arduino:renesas_uno:unor4wifi --build-path /tmp/awa-rgb-20261016-enabled --build-property 'compiler.cpp.extra_flags=-DNIVEL_AGUA_LED=1' arduino/NivelAguaR4
+```
+
+La compilación no carga la placa. En esta actualización se compilaron ambas
+variantes y no se subió ninguna. El firmware que ejecuta el Arduino sigue
+siendo el cargado en la sesión anterior. Cualquier carga requiere autorización.
 
 Protocolo y plantilla: [CALIBRACION_CIRCUITO.md](../../documentos/CALIBRACION_CIRCUITO.md).
 

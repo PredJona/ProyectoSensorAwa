@@ -61,7 +61,8 @@ def registrar(fuente,ruta,max_muestras=100,duracion=60.,origen='experimental'):
             # newline. readline() reinicia esperas internas y puede bloquear.
             fragmento=fuente.read(1)
             if not fragmento:
-                if isinstance(fuente,io.IOBase): break
+                # PySerial también hereda IOBase: un vacío con timeout no es EOF.
+                if isinstance(fuente,io.IOBase) and not hasattr(fuente,'timeout'): break
                 time.sleep(.005)
                 continue
             if not isinstance(fragmento,bytes):

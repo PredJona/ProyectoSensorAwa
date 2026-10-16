@@ -1,0 +1,53 @@
+{
+  "id": "s1_seco_03",
+  "sensor": "adc1",
+  "pin": "A0",
+  "altura_inmersion": 0,
+  "unidad": "mm",
+  "condicion": "seco fuera del agua",
+  "confirmacion_usuario": "ok listo seco; se solicito mantenerlo seco durante repeticiones",
+  "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_03.csv",
+  "sha256": "36373b2495652cb4bc9f61e6beb29feeeca9a59647cc92bcdba8e5ebd801cc20",
+  "fecha_registro_utc": "2026-10-16T07:01:28.864447+00:00",
+  "primera_recepcion_utc": "2026-10-16T07:00:40.472466+00:00",
+  "ultima_recepcion_utc": "2026-10-16T07:00:49.990622+00:00",
+  "muestras_solicitadas": 20,
+  "muestras_validas": 20,
+  "lineas_invalidas": 0,
+  "duracion_recepcion_primera_ultima_s": 9.518156,
+  "duracion_capturador_monotonic_s": 9.8192987919997,
+  "intervalos_arduino_ms": [
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500,
+    500
+  ],
+  "estadisticas_adc1": {
+    "promedio": 7,
+    "desviacion_estandar_muestral": 0.0,
+    "minimo": 7,
+    "maximo": 7
+  },
+  "estado": "referencia_seca_capturada_pendiente_validacion_curva",
+  "arranque_conservado": "datos/calibracion/sesion_2026-10-16_01/s1_seco_03_arranque.bin",
+  "notas": [
+    "Se drenaron 2 segundos antes de capturar; 883 bytes de arranque conservados.",
+    "Los demas canales se conservan, pero no se asocian a alturas.",
+    "Desviacion nula en este ensayo no demuestra ausencia de ruido ni incertidumbre."
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "s1_seco_01",
+  "estado": "excluido_de_calibracion",
+  "motivo": "01: lecturas recibidas en rafaga, antiguedad no asegurada; 02: captura incompleta por timeout interpretado como EOF en PySerial",
+  "muestras_validas": 20,
+  "csv_origen": "datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_01.csv",
+  "sha256": "9ad5912361f1a06619ca6e6c579ecfabb504fd9f50b26368bc7881edc216c446"
+}
