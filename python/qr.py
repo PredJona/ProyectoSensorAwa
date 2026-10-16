@@ -25,3 +25,10 @@ def leer(ruta):
     contenido,_,_=cv2.QRCodeDetector().detectAndDecode(imagen)
     if not contenido: raise ValueError('No se pudo decodificar el QR.')
     return contenido
+
+
+def generar_dashboard(url,ruta,token=None,permitir_local=False):
+    from .thingsboard import validar_url_dashboard
+    limpia=validar_url_dashboard(url,token=token,permitir_local=permitir_local)
+    return generar(limpia,ruta)
+

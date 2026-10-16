@@ -78,12 +78,31 @@ def parser():
     c.add_argument('--baudios',type=int,default=115200,
                    help='USB UNO R4: 115200 (sketch anterior: 9600)')
     c.add_argument('--salida',type=Path,required=True,help='CSV nuevo; nunca sobrescribe capturas')
+    c.add_argument('--timeout-sincronizacion',type=float,default=12.)
+    c.add_argument('--timeout-inactivo',type=float,default=3.)
+    v=sub.add_parser('cadencia',help='Comprobar intervalos UTC y millis sin modificar el CSV')
+    v.add_argument('--csv',type=Path,required=True)
     g=sub.add_parser('graficar',help='Graficar CSV de adquisición')
     g.add_argument('--csv',type=Path,required=True)
     g.add_argument('--calibracion',type=Path)
     g.add_argument('--salida',type=Path,required=True)
-    q=sub.add_parser('qr',help='Generar QR solo con contenido indicado explícitamente')
-    q.add_argument('--contenido',required=True)
+    t=sub.add_parser('thingsboard',help='Publicar CSV adquirido a ThingsBoard por HTTP')
+    t.add_argument('--csv',type=Path,required=True,help='CSV de adquisición ya guardado en disco')
+    t.add_argument('--modo',choices=('historico','en_vivo'),default='historico',
+                   help='Separa reproducción histórica de telemetría en vivo')
+    t.add_argument('--config',type=Path,help='JSON local privado (fuera de Git)')
+    t.add_argument('--servidor',help='URL base ThingsBoard (o THINGSBOARD_URL)')
+    t.add_argument('--token',help='Token del dispositivo (o THINGSBOARD_TOKEN)')
+    t.add_argument('--cursor',type=Path,help='Archivo JSON para reanudar envíos por lotes')
+    t.add_argument('--calibracion',type=Path,help='Calibración validada de 3 sensores (opcional)')
+    t.add_argument('--lote',type=int,default=20)
+    t.add_argument('--timeout',type=float,default=5.)
+    t.add_argument('--reintentos',type=int,default=3)
+    t.add_argument('--seguir',action='store_true',help='Seguir filas completas de un CSV que crece')
+    t.add_argument('--duracion',type=float,default=60.,help='Segundos de seguimiento; reiniciar con el mismo cursor para continuar')
+    q=sub.add_parser('qr',help='Generar QR solo con contenido o URL configurada explícitamente')
+    q.add_argument('--contenido',help='Texto o URL explícita del QR')
+    q.add_argument('--config',type=Path,help='Configuración local con dashboard_url')
     q.add_argument('--salida',type=Path,required=True)
     q.add_argument('--verificar',action='store_true',help='Decodificar y comparar; requiere OpenCV')
     return p
@@ -99,20 +118,53 @@ def main(argv=None):
         elif args.comando=='capturar':
             from .comunicacion import capturar
             n,invalidos=capturar(args.puerto,args.salida,args.muestras,args.duracion,
-                                baudios=args.baudios)
+                                baudios=args.baudios,timeout_sincronizacion=args.timeout_sincronizacion,
+                                timeout_inactivo=args.timeout_inactivo)
             print(f'Muestras: {n}; líneas inválidas: {invalidos}; CSV: {args.salida}')
             if n==0: return 2
+        elif args.comando=='cadencia':
+            from .comunicacion import verificar_cadencia
+            resultado=verificar_cadencia(args.csv)
+            print(json.dumps(resultado,indent=2,ensure_ascii=False))
+            if not resultado['cadencia_compatible']: return 2
         elif args.comando=='graficar':
             from .graficas import mediciones
             print(mediciones(args.csv,args.salida,args.calibracion))
+        elif args.comando=='thingsboard':
+            from .thingsboard import cargar_configuracion,publicar_csv
+            cfg=cargar_configuracion(args.config,args.servidor,args.token)
+            if not cfg['servidor'] or not cfg['token']:
+                raise ValueError('Configure servidor y token mediante --config, variables de entorno o argumentos.')
+            res=publicar_csv(args.csv,cfg['servidor'],cfg['token'],modo=args.modo,
+                             ruta_cursor=args.cursor,calibracion=args.calibracion,
+                             tamano_lote=args.lote,timeout=args.timeout,reintentos=args.reintentos,
+                             seguir=args.seguir,duracion=args.duracion)
+            print(f"Publicado ({res['modo_transmision']}): {res['filas_enviadas']}/{res['filas_totales']} "
+                  f"filas en {res['lotes_enviados']} lotes hacia {res['endpoint_redactado']}")
         elif args.comando=='qr':
-            from .qr import generar,leer
-            ruta=generar(args.contenido,args.salida)
-            if args.verificar and leer(ruta)!=args.contenido:
+            from .qr import generar,generar_dashboard,leer
+            if args.config is not None:
+                from .thingsboard import cargar_configuracion
+                cfg=cargar_configuracion(args.config)
+                contenido=cfg['dashboard_url']
+                if not contenido:
+                    raise ValueError('El archivo --config no define dashboard_url.')
+                ruta=generar_dashboard(contenido,args.salida,token=cfg['token'])
+            else:
+                if args.contenido is None:
+                    raise ValueError('Indique --contenido o --config con dashboard_url.')
+                contenido=args.contenido
+                if contenido.strip().lower().startswith(('http://','https://')):
+                    contenido=contenido.strip()
+                    from .thingsboard import cargar_configuracion
+                    ruta=generar_dashboard(contenido,args.salida,token=cargar_configuracion()['token'])
+                else:
+                    ruta=generar(contenido,args.salida)
+            if args.verificar and leer(ruta)!=contenido:
                 raise ValueError('El contenido decodificado no coincide con el indicado.')
             print(f'QR guardado en {ruta}'+(' y verificado.' if args.verificar else '; decodificación pendiente.'))
         return 0
-    except (ValueError,OSError,ImportError) as e:
+    except (ValueError,OSError,ImportError,RuntimeError) as e:
         print(f'Error: {e}',file=sys.stderr)
         return 2
     except KeyboardInterrupt:

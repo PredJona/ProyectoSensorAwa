@@ -1,0 +1,42 @@
+{
+  "servidor": "https://thingsboard.cloud",
+  "dispositivo": "Sensor Awa - Arduino UNO R4 WiFi",
+  "dashboard": "Proyecto Sensor de Agua",
+  "csv_real": "datos/mediciones/diagnostico_cloud_usb_20261016T183859_627964Z.csv",
+  "sha256_csv": "cf6c99de0bb96d17459f6aa801850b21b32e9acd4282222a8ab0750f47c980bd",
+  "cadencia_real": {
+    "muestras": 6,
+    "recepcion_ms": {
+      "min": 500.25399999999996,
+      "mediana": 501.12800000000004,
+      "max": 504.53099999999995
+    },
+    "arduino_ms": {
+      "min": 500,
+      "mediana": 500,
+      "max": 500
+    },
+    "filas_con_discontinuidad": [],
+    "cadencia_compatible": true
+  },
+  "payload_sin_alturas_validado": true,
+  "conectividad_https_sin_credenciales": {
+    "codigo": 200,
+    "fecha_utc": "2026-10-16T18:39:35Z"
+  },
+  "configuracion_fuera_de_git": true,
+  "permisos_configuracion": "0600",
+  "token_presente": false,
+  "publicacion_cloud_ejecutada": false,
+  "almacenamiento_cloud_verificado": false,
+  "dashboard_inspeccionado": false,
+  "privacidad_dashboard_modificada": false,
+  "qr_definitivo_generado": false,
+  "pruebas": {
+    "total": 88,
+    "fallos": 0,
+    "omitidas": 0,
+    "registro": "documentos/PRUEBAS_THINGSBOARD_CLOUD_2026-10-16.log",
+    "sha256_registro": "78d48fadbb7abd25209b1399cf00e23c1a260de59c371f6358c9df08cb6d261c"
+  }
+}

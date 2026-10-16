@@ -23,66 +23,56 @@ tubos, LCD con caracteres y puntos luminosos. No se asignan a esas fotos
 fechas, alturas, lecturas ni condiciones de inmersión.
 
 Las capturas CSV locales conservan cuentas ADC reales y horas de recepción
-UTC. Sus valores no establecen niveles de agua porque no se anotaron alturas
-ni condiciones de ensayo suficientes. La plantilla de calibración está vacía.
-Las luces observadas en el montaje no demuestran que el firmware controle
-correctamente cada canal de los tres LED RGB. Con `LIMITES_ADC_LED=-1`, la
-versión actual ordena apagar los canales; se debe comprobar qué programa
-estaba cargado y el cableado antes de interpretar las luces.
+UTC. En la sesión del 16 de octubre (`datos/calibracion/sesion_2026-10-16_01/`)
+se adquirieron 10 ensayos principales del sensor 1 (181 filas / 543 lecturas ADC;
+7 ensayos resumidos con 140 filas / 420 lecturas ADC y 3 intentos excluidos con
+41 filas), más 5 archivos de preparación (20 filas). Las alturas comunicadas
+para S1 (0, 10, 20, 30, 40 mm y dos validaciones a 25 mm) mostraron discrepancia
+en 25 mm (+7,10 mm y −10,78 mm) y movimiento físico del sensor, por lo que la
+conversión ADC–altura se mantiene como exploratoria y no validada.
+Las luces observadas en fotografías previas no demuestran el control de los
+tres LED RGB; con `NIVEL_AGUA_LED=0` por defecto, el firmware mantiene los
+nueve pines D2..D10 en `OUTPUT` `LOW`.
 
 | Estado | Funcionalidad y límite de la evidencia |
 |---|---|
-| Implementado | Tres métodos académicos, CSV y PNG, receptor serial, interpolación por sensor, política LED y LCD. |
-| Probado con datos controlados | Métodos, casos límite, parser serial, muestreo, LCD y colores mediante simulación nativa del sketch. |
-| Comprobado físicamente o comunicado por el equipo | Placa y escaneo I²C 0x27 registrados; capturas ADC por USB; fotografías del montaje y LCD visible; pruebas de sensores comunicadas por el equipo. |
-| Pendiente | Alturas medidas, calibración independiente, respuesta de cada sensor a niveles conocidos, colores RGB por pin y validación del modelo académico frente al circuito. |
+| Implementado | Tres métodos académicos (`jacobi`, `gauss_seidel`, `gauss_jordan`), CSV y PNG académicos, receptor serial, interpolación por sensor, analizador reproducible de sesión (`analisis_sesion.py`), publicador HTTP ThingsBoard con cursor y reintentos (`thingsboard.py`), validador de URL QR (`qr.py`), política LED RGB (`ColoresNivel.h`) y LCD (`0x27`). |
+| Probado con datos controlados | Suite ampliada: sincronización serial con reloj virtual y pseudoterminal a 500 ms reales, HTTP simulado con recuperación/cursor, prueba conjunta de red lenta y QR generado/decodificado. Véase [registro final](PRUEBAS_ADQUISICION_2026-10-16.log). Las compilaciones reales de variantes citadas anteriormente son evidencia previa; en esta intervención no se compila/carga firmware a la placa. |
+| Comprobado físicamente o comunicado por el equipo | Placa UNO R4 WiFi y escaneo I²C `0x27`; recuperación USB y carga del firmware base; 10 ensayos exploratorios de S1 y verificaciones del 16 de octubre; fotografías del montaje y LCD visible. |
+| Comprobación actual de Cloud | Captura física corregida en `/dev/ttyACM0`: 6 muestras reales, mediana UTC 501,128 ms; Cloud responde HTTPS 200 sin credenciales. Configuración privada preparada fuera de Git. Véase [procedimiento Cloud](SENSOR_AWA_THINGSBOARD_CLOUD.md). |
+| Pendiente para esta entrega | Introducir el Access Token localmente y comprobar publicación real, almacenamiento, widgets y URL desde el teléfono. Dispositivo y dashboard ya creados por el equipo. La demostración usa ADC sin alturas; los RGB fueron retirados por el equipo. |
 
 ## Procedencia y reproducibilidad
 
-Los cinco CSV históricos en `datos/mediciones/` son capturas experimentales
-sin altura documentada. La excepción explícita en `.gitignore` permite
-conservarlos junto con las gráficas; nuevos CSV permanecen excluidos hasta
-revisar su procedencia. No cambiar los datos originales. El archivo
-`ensayo_r4_2026-10-12_verificacion_final.metadata.json` conserva la huella
-SHA-256 de su CSV; la huella coincide con el archivo disponible.
+En `datos/mediciones/` se versionan explícitamente mediante excepciones en
+`.gitignore` 19 archivos CSV experimentales verificados con SHA-256:
+- Las 5 capturas históricas del 12 de octubre de 2026.
+- Los 10 CSV principales de la sesión `sesion_2026-10-16_01` (`calibracion_sesion_2026-10-16_01_s1_*.csv`).
+- Las 4 capturas de verificación y diagnóstico serial del 16 de octubre de 2026.
+
+Los datos originales nunca se sobrescriben. El analizador
+`python -m python.analisis_sesion` verifica estructura, orden temporal UTC y
+huellas SHA-256, y exporta estadísticas y gráficas usando únicamente rutas
+relativas portables (sin rutas absolutas de la máquina local), incluyendo la
+curva exploratoria y discrepancia de validación en
+`datos/calibracion/sesion_2026-10-16_01/analisis_rgb_02/curva_exploratoria_sensor1.png`.
 
 Las cuatro gráficas académicas se regeneran con `python -m python.main resolver`.
-Las gráficas ADC existentes son experimentales en cuentas ADC, no en altura.
-El resumen académico usa rutas relativas a la carpeta de salida para evitar
-referencias a una computadora concreta. No se ha construido una curva temporal
-de altura experimental.
+El resumen académico y la auditoría de sesión usan rutas relativas portables.
 
 ## Modelo y cierre físico pendiente
 
 La matriz A y el vector b son los del ejercicio del profesor. Jacobi y
-Gauss-Seidel calculan sus aproximaciones; Gauss-Jordan da la solución de
-referencia del sistema. Los residuos verifican las ecuaciones académicas,
+Gauss-Seidel calculan sus aproximaciones; Gauss-Jordan da la solución directa
+de referencia del sistema. Los residuos verifican las ecuaciones académicas,
 no la hidráulica del montaje. Los tubos visibles confirman conexiones de
 montaje según el equipo, pero aún faltan geometría, comportamiento del flujo,
 unidades y parámetros medidos para relacionar A y b con el circuito.
 
-Prioridad para el equipo:
-
-1. Identificar qué ensayo corresponde a cada fotografía, si el equipo
-   conserva esa información; no inferir condiciones a partir de la imagen.
-2. Verificar físicamente cada sensor A0/A2/A3 al variar solo su recipiente;
-   anotar alimentación, montaje y respuesta observada.
-3. Definir el origen y la unidad de altura; medir varias alturas reales con
-   regla y lecturas repetidas para cada sensor. Guardar un CSV nuevo por
-   condición y completar `datos/calibracion/plantilla_puntos.csv`.
-4. Revisar dispersión y monotonicidad; generar el JSON de pares medidos y
-   validar interpolación y ausencia de extrapolación en los tres sensores.
-5. Definir estados de altura y obtener de las mediciones los tres límites
-   ADC por sensor. Comprobar resistencias y cada pin/color RGB. Solo entonces
-   configurar `LIMITES_ADC_LED`, compilar y solicitar autorización antes de
-   cargar firmware.
-6. Medir geometría y comportamiento hidráulico para juzgar si el sistema
-   académico puede representar el montaje. Confirmar con el profesor rúbrica,
-   necesidad de eliminación de Gauss o Doolittle, función del QR y formato
-   de la entrega.
-
-El trabajo delegable sin circuito incluye validar los CSV y pares ADC-altura
-que entregue el equipo, generar
-gráficas calibradas, comparar mediciones con un modelo físico justificado y
-preparar el informe final. Los registros fechados anteriores permanecen
-como historia de las etapas de integración.
+Para la entrega actual no se repiten mediciones con agua ni se activan LED.
+La calibración física sigue fuera de validación; no se publican alturas.
+El capturador sincroniza antes del inicio efectivo y conserva sesiones parciales
+ante fallos. La causa de aceptar ráfagas y sus límites de frescura se documentan en
+[AUDITORIA_ADQUISICION_2026-10-16.md](AUDITORIA_ADQUISICION_2026-10-16.md).
+Configurar credenciales fuera del repositorio y seguir el procedimiento de
+[THINGSBOARD_QR_PREPARACION.md](THINGSBOARD_QR_PREPARACION.md).

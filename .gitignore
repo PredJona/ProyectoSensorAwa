@@ -8,4 +8,21 @@ datos/mediciones/*.csv
 !datos/mediciones/ensayo_r4_2026-10-12_verificacion_final.csv
 !datos/mediciones/ensayo_r4_led_pines_2026-10-12.csv
 !datos/mediciones/prueba_sensor2_estado_inicial_2026-10-12.csv
+!datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_01.csv
+!datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_02.csv
+!datos/mediciones/calibracion_sesion_2026-10-16_01_s1_seco_03.csv
+!datos/mediciones/calibracion_sesion_2026-10-16_01_s1_10mm_01.csv
+!datos/mediciones/calibracion_sesion_2026-10-16_01_s1_20mm_01.csv
+!datos/mediciones/calibracion_sesion_2026-10-16_01_s1_20mm_02.csv
+!datos/mediciones/calibracion_sesion_2026-10-16_01_s1_30mm_01.csv
+!datos/mediciones/calibracion_sesion_2026-10-16_01_s1_40mm_01.csv
+!datos/mediciones/calibracion_sesion_2026-10-16_01_s1_25mm_validacion_01.csv
+!datos/mediciones/calibracion_sesion_2026-10-16_01_s1_25mm_validacion_02.csv
+!datos/mediciones/verificacion_precalibracion_2026-10-16_01.csv
+!datos/mediciones/diagnostico_serial_2026-10-16_cable_nuevo_01.csv
+!datos/mediciones/diagnostico_serial_2026-10-16_cable_nuevo_post_carga_01.csv
+!datos/mediciones/diagnostico_serial_2026-10-16_post_reset_01.csv
+.env
+*.local.json
+*.token
 

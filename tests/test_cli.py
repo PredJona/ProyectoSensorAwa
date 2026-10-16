@@ -63,6 +63,32 @@ class CliTest(unittest.TestCase):
             self.assertEqual(texto.read_text(),'Contenido anterior')
             self.assertFalse(p.exists())
 
+    def test_qr_cli_rechaza_endpoint_de_telemetria(self):
+        with tempfile.TemporaryDirectory() as d:
+            ruta=Path(d)/'no_crear.png'
+            for url in ('https://host.invalid/api/v1/privado/telemetry',
+                        ' \thttps://host.invalid/api/v1/privado/telemetry\n'):
+                with self.subTest(url=url):
+                    r=self.ejecutar('qr','--contenido',url,'--salida',str(ruta))
+                    self.assertEqual(r.returncode,2,r.stderr)
+                    self.assertFalse(ruta.exists())
+                    self.assertNotIn('privado',r.stderr)
+
+    def test_cadencia_cli_distingue_burst_de_recepcion_normal(self):
+        with tempfile.TemporaryDirectory() as d:
+            ruta=Path(d)/'CADENCIA_SINTETICA.csv'
+            texto=('timestamp_utc,t_ms,adc1,adc2,adc3,origen\n'
+                   '2026-01-01T00:00:00+00:00,500,1,2,3,prueba_controlada\n'
+                   '2026-01-01T00:00:00.500000+00:00,1000,1,2,3,prueba_controlada\n')
+            ruta.write_text(texto)
+            r=self.ejecutar('cadencia','--csv',str(ruta))
+            self.assertEqual(r.returncode,0,r.stderr)
+            self.assertEqual(json.loads(r.stdout)['recepcion_ms']['mediana'],500)
+            ruta.write_text(texto.replace('.500000','.000100'))
+            r=self.ejecutar('cadencia','--csv',str(ruta))
+            self.assertEqual(r.returncode,2,r.stderr)
+            self.assertFalse(json.loads(r.stdout)['cadencia_compatible'])
+
     @unittest.skipUnless(importlib.util.find_spec('qrcode') and importlib.util.find_spec('cv2'),
                          'qrcode y OpenCV no disponibles: QR final pendiente')
     def test_qr_roundtrip_real(self):
