@@ -10,8 +10,8 @@ Los pasos genéricos siguientes se conservan como referencia; no crear duplicado
 El software está probado con HTTP local simulado, pseudoterminales y QR decodificado.
 Además, se aceptaron **6 muestras reales** en ThingsBoard Cloud mediante cuatro
 lotes HTTP 2xx. **El dashboard creado por el equipo todavía no se ha podido
-inspeccionar.** Faltan la consulta de datos almacenados desde la cuenta, los
-widgets y una URL comprobada desde el teléfono. No se requieren nuevas pruebas
+inspeccionar.** La última fila se cotejó con **Latest telemetry** en la cuenta;
+faltan los widgets y una URL comprobada desde el teléfono. No se requieren nuevas pruebas
 con agua, LED ni cambios de firmware para demostrar los tres ADC.
 
 ## Flujo y datos

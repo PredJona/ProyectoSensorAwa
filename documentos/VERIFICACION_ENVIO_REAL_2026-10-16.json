@@ -34,6 +34,16 @@
     "marcas_temporales_desde_utc_csv": true
   },
   "almacenamiento_confirmado_por_consulta": false,
+  "almacenamiento_confirmado_en_ui_por_equipo": true,
+  "ultima_muestra_cotejada_con_ui": {
+    "timestamp_utc": "2026-10-16T19:04:56.635995+00:00",
+    "hora_panama_mostrada": "2026-10-16 14:04:56",
+    "adc1": 2,
+    "adc2": 0,
+    "adc3": 1,
+    "calibracion_valida": false,
+    "csv_origen_coincide": true
+  },
   "dashboard_inspeccionado": false,
   "qr_final_generado": false,
   "token_incluido": false,

@@ -192,8 +192,9 @@ Sin calibración validada se omiten alturas. Las filas atrasadas se publican com
 históricas con su UTC original. Un CSV cerrado utiliza `--modo historico`.
 La red trabaja en otro proceso y el cursor permite recuperar pendientes.
 El dispositivo y dashboard ya existen. El envío real a Cloud se verificó con
-6 muestras y cuatro lotes HTTP 2xx. Quedan por comprobar los datos almacenados
-desde la cuenta, terminar el dashboard privado y generar el QR con su URL real.
+6 muestras y cuatro lotes HTTP 2xx; la última fila coincide con **Latest telemetry**
+vista por el equipo. Quedan por terminar el dashboard privado y generar el QR
+con su URL real.
 Las instrucciones están en [Sensor Awa en Cloud](documentos/SENSOR_AWA_THINGSBOARD_CLOUD.md).
 
 ---
@@ -227,8 +228,8 @@ activarlos ni modificar firmware. La calibración exploratoria sigue sin validar
 por lo que la demostración usa cuentas ADC. No se repiten mediciones con agua.
 El equipo ya creó dispositivo y dashboard en ThingsBoard Cloud; se comprobó la
 captura corregida en el USB real y un envío de 6 muestras nuevas a Cloud con
-respuestas HTTP 2xx. Falta verificar almacenamiento desde la cuenta, vista del
-dashboard y URL desde el teléfono.
+respuestas HTTP 2xx. La última fila también se cotejó con **Latest telemetry**
+en la cuenta. Faltan la vista del dashboard y su URL desde el teléfono.
 Continuar con [Sensor Awa en Cloud](documentos/SENSOR_AWA_THINGSBOARD_CLOUD.md).
 La generación y lectura
 de QR de prueba ya se verifican en el entorno virtual.

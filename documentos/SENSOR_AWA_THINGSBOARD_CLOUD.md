@@ -54,10 +54,15 @@ El cursor local de la sesión quedó en seis filas, modo `en_vivo`, con
 de tres segundos durante el envío se etiquetan como históricas; el ACK por sí
 solo no permite confirmar la etiqueta almacenada de cada fila.
 
-**Pendiente:** consultar los valores almacenados con autorización de cuenta o
-verlos en **Latest telemetry**, configurar los widgets del dashboard privado y
-comprobar su URL desde el teléfono. El token de dispositivo autoriza el envío,
-pero no da acceso de lectura o edición al dashboard. No se ha generado QR final.
+El equipo comprobó **Latest telemetry** en la cuenta: la última fila muestra
+`adc1=2`, `adc2=0`, `adc3=1`, `calibracion_valida=false` y origen
+`cloud_real_20261016T190452_080262Z.csv` a las **14:04:56 de Panamá**. Coincide
+con la última fila del CSV (`19:04:56.635995 UTC`). Esto confirma almacenamiento
+visible en el dispositivo correcto; no se efectuó una consulta REST de cuenta.
+
+**Pendiente:** configurar los widgets del dashboard privado y comprobar su URL
+desde el teléfono. El token de dispositivo autoriza el envío, pero no da acceso
+de edición al dashboard. No se ha generado QR final.
 Resumen sin credenciales: [VERIFICACION_ENVIO_REAL_2026-10-16.json](VERIFICACION_ENVIO_REAL_2026-10-16.json).
 
 Verificación final: **89 pruebas aprobadas**, incluidas las de ingreso y reemplazo
