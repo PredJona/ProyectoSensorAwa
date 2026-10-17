@@ -1,0 +1,11 @@
+{
+  "csv_origen": "datos/mediciones/awa_agua_01.csv",
+  "configuracion_sha256": "ac91a5ed476f4574f6d078794f960ee133acc50c130ae7f5843b5d2ec7347878",
+  "filas_totales_vistas": 60,
+  "filas_enviadas": 60,
+  "sha256_prefijo": "1828828986710b14fc15d0b06c99df5176d18f1886e6f812773e4fe1e58e5404",
+  "modo_transmision": "en_vivo",
+  "calibracion_valida": false,
+  "endpoint_redactado": "https://thingsboard.cloud/api/v1/***/telemetry",
+  "actualizado_utc": "2026-10-16T21:07:52.645579+00:00"
+}

@@ -1,0 +1,11 @@
+{
+  "csv_origen": "datos/mediciones/demo_presentacion_03.csv",
+  "configuracion_sha256": "6b5e063916a975430ddd27483512226f28c49caca15df8df2db78a047432753b",
+  "filas_totales_vistas": 60,
+  "filas_enviadas": 60,
+  "sha256_prefijo": "a89beb2f87c5b42854d39df53ad9178b51c1f316d9768a235cff067ff0dd3010",
+  "modo_transmision": "en_vivo",
+  "calibracion_valida": false,
+  "endpoint_redactado": "https://thingsboard.cloud/api/v1/***/telemetry",
+  "actualizado_utc": "2026-10-17T04:46:07.520887+00:00"
+}
