@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "origen": "experimental",
+  "sincronizacion_requerida": true,
+  "inicio_efectivo_utc": "2026-10-17T14:27:10.795873+00:00",
+  "descartadas_sincronizacion": 4,
+  "desbordamientos_compatibles": 0,
+  "estado": "finalizada",
+  "muestras": 60,
+  "lineas_invalidas": 0,
+  "segundos_desde_apertura": 32.47556700699988,
+  "segundos_captura": 29.58973134200005
+}

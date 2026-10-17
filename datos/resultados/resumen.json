@@ -1,5 +1,7 @@
 {
   "origen": "academico",
+  "problema": "11.2",
+  "modelo": "validacion_estacionaria",
   "A": [
     [
       5.0,
@@ -57,25 +59,6 @@
       "residuo_inf": 0.0006725024999987284,
       "diferencia_numpy_inf": 0.00018673615384656728,
       "error_final": 0.00039366000000029544
-    },
-    {
-      "metodo": "Gauss-Seidel",
-      "solucion": [
-        5.769203919600001,
-        8.84614176382,
-        8.461535440955
-      ],
-      "iteraciones": 6,
-      "converge": true,
-      "motivo": "Cambio menor que tol.",
-      "residuo": [
-        -0.00012216581999524578,
-        -3.05414550005878e-05,
-        0.0
-      ],
-      "residuo_inf": 0.00012216581999524578,
-      "diferencia_numpy_inf": 2.6849630768488453e-05,
-      "error_final": 0.00027147960000117877
     },
     {
       "metodo": "Gauss-Jordan",
