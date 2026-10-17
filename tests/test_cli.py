@@ -41,6 +41,84 @@ class CliTest(unittest.TestCase):
         self.assertEqual(r.returncode,2)
         self.assertIn('positiva',r.stderr)
 
+    def test_problemas_separados_y_compatibilidad_historica(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d)
+            r=self.ejecutar('resolver','--salida',d)
+            self.assertEqual(r.returncode,0,r.stderr)
+            historicos={f.relative_to(p):f.read_bytes() for f in p.rglob('*') if f.is_file()}
+            legacy=json.loads((p/'datos/resultados/resumen.json').read_text())
+            r=self.ejecutar('resolver','--problema','11.1','--salida',d)
+            self.assertEqual(r.returncode,0,r.stderr)
+            self.assertIn('11.1',r.stdout)
+            self.assertIn('A =',r.stdout)
+            self.assertIn('b =',r.stdout)
+            for nombre,contenido in historicos.items():
+                self.assertEqual((p/nombre).read_bytes(),contenido)
+            res=json.loads((p/'datos/resultados/11_1/resumen.json').read_text())
+            self.assertEqual(res['problema'],'11.1')
+            self.assertEqual(res['origen'],'academico')
+            self.assertEqual(res['A'],[[2,-1,0],[-1,3,-1],[0,-1,2]])
+            self.assertEqual(res['b'],[3,2,1])
+            self.assertEqual(res['parametros']['alpha'],1)
+            self.assertEqual(res['parametros']['niveles_anteriores'],[3,2,1])
+            self.assertEqual([m['metodo'] for m in res['metodos']],['Jacobi','Gauss-Seidel'])
+            self.assertEqual([m['iteraciones'] for m in res['metodos']],[14,9])
+            self.assertEqual(res['conservacion']['suma_anterior'],6)
+            self.assertAlmostEqual(res['conservacion']['suma_referencia'],6)
+            self.assertFalse((p/'datos/resultados/11_1/gauss_jordan_operaciones.csv').exists())
+            for nombre in ('jacobi.csv','gauss_seidel.csv','comparacion.csv'):
+                self.assertTrue((p/'datos/resultados/11_1'/nombre).exists())
+            self.assertEqual(len(res['graficas']),4)
+            for nombre in res['graficas']:
+                self.assertTrue(nombre.startswith('graficas/11_1/'))
+                self.assertEqual((p/nombre).read_bytes()[:8],b'\x89PNG\r\n\x1a\n')
+            r=self.ejecutar('resolver','--problema','11.2','--salida',str(p/'explicito'))
+            self.assertEqual(r.returncode,0,r.stderr)
+            res2=json.loads((p/'explicito/datos/resultados/resumen.json').read_text())
+            self.assertEqual(res2['problema'],'11.2')
+            self.assertEqual(res2['A'],[[5,-1,0],[-1,5,-1],[0,-1,4]])
+            self.assertEqual(res2['b'],[20,30,25])
+            self.assertEqual(res2['metodos'],[legacy['metodos'][0],legacy['metodos'][2]])
+            for nombre in ('jacobi.csv','gauss_jordan_operaciones.csv'):
+                self.assertEqual((p/'explicito/datos/resultados'/nombre).read_bytes(),
+                                 (RAIZ/'datos/resultados'/nombre).read_bytes())
+            for nombre in ('jacobi.csv','gauss_seidel.csv','gauss_jordan_operaciones.csv','comparacion.csv'):
+                self.assertEqual((p/'datos/resultados'/nombre).read_bytes(),
+                                 (RAIZ/'datos/resultados'/nombre).read_bytes())
+
+    def test_11_1_niveles_anteriores_distintos_de_x0(self):
+        with tempfile.TemporaryDirectory() as d:
+            r=self.ejecutar('resolver','--problema','11.1','--alpha','.5',
+                '--niveles-anteriores','4','2','0','--x0','1','1','1','--salida',d,'--sin-graficas')
+            self.assertEqual(r.returncode,0,r.stderr)
+            res=json.loads((Path(d)/'datos/resultados/11_1/resumen.json').read_text())
+            self.assertEqual(res['b'],[4,2,0])
+            self.assertEqual(res['parametros']['x0'],[1,1,1])
+            self.assertEqual(res['A'],[[1.5,-.5,0],[-.5,2,-.5],[0,-.5,1.5]])
+            self.assertEqual(res['graficas'],[])
+
+    def test_parametros_de_problema_invalidos_no_generan_archivos(self):
+        casos=[['--problema','12'],['--alpha','1'],
+               ['--problema','11.2','--niveles-anteriores','3','2','1']]
+        casos += [['--problema','11.1','--alpha',a] for a in ('0','-1','nan','inf','1e308')]
+        casos += [['--problema','11.1','--niveles-anteriores',*b] for b in
+                  (['1','2'],['-1','2','3'],['nan','2','3'])]
+        casos += [['--problema','11.1',*kw] for kw in
+                  (['--tol','0'],['--max-iter','0'],['--x0','nan','0','0'])]
+        for args in casos:
+            with self.subTest(args=args), tempfile.TemporaryDirectory() as d:
+                r=self.ejecutar('resolver',*args,'--salida',d,'--sin-graficas')
+                self.assertEqual(r.returncode,2)
+                self.assertEqual(list(Path(d).iterdir()),[])
+
+    def test_11_1_limite_no_es_convergencia(self):
+        with tempfile.TemporaryDirectory() as d:
+            r=self.ejecutar('resolver','--problema','11.1','--salida',d,'--max-iter','1','--sin-graficas')
+            self.assertEqual(r.returncode,2)
+            res=json.loads((Path(d)/'datos/resultados/11_1/resumen.json').read_text())
+            self.assertTrue(all(not m['converge'] for m in res['metodos']))
+
     def test_captura_baudios_r4_y_opcion_legacy(self):
         from python.main import parser
         argumentos=['capturar','--salida','sin_hardware.csv']

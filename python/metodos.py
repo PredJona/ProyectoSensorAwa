@@ -9,6 +9,24 @@ A_VALIDACION = np.array([[5., -1., 0.], [-1., 5., -1.], [0., -1., 4.]])
 B_VALIDACION = np.array([20., 30., 25.])
 
 
+def sistema_11_1(alpha=1., niveles_anteriores=(3., 2., 1.)):
+    """Un paso de Euler implícito; parámetros académicos, sin datos de sensores."""
+    if isinstance(alpha, (bool, np.bool_)) or not np.isscalar(alpha):
+        raise ValueError('alpha debe ser un número positivo y finito.')
+    alpha = float(alpha)
+    if not np.isfinite(alpha) or alpha <= 0:
+        raise ValueError('alpha debe ser positiva y finita.')
+    A = np.array([[1+alpha, -alpha, 0.],
+                  [-alpha, 1+2*alpha, -alpha],
+                  [0., -alpha, 1+alpha]])
+    A, b = validar_sistema(A, niveles_anteriores)
+    if np.any(b < 0):
+        raise ValueError('Los niveles anteriores, referidos al fondo, deben ser no negativos.')
+    if not np.all(np.diag(A) > np.sum(np.abs(A-np.diag(np.diag(A))),axis=1)):
+        raise ValueError('alpha es demasiado grande para conservar la dominancia en precisión flotante.')
+    return A, b
+
+
 @dataclass
 class Resultado:
     metodo: str

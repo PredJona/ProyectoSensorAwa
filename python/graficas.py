@@ -25,8 +25,9 @@ def _guardar(fig,ruta):
 
 
 
-def academicas(resultados,carpeta):
+def academicas(resultados,carpeta,problema=None):
     carpeta=Path(carpeta)
+    titulo='sistema académico' if problema is None else f'problema {problema} · académico'
     iterativos=[r for r in resultados if r.historial]
     archivos=[]
     for campo,nombre,ylabel in (
@@ -39,7 +40,15 @@ def academicas(resultados,carpeta):
             # Un cero exacto no tiene logaritmo; se omite, sin alterar el CSV.
             valores=np.where(valores>0,valores,np.nan)
             ax.semilogy([f['k'] for f in filas],valores,'o-',label=r.metodo)
-        ax.set(title='Convergencia — sistema académico',xlabel='Iteración k',ylabel=ylabel)
+        if campo=='residuo_inf':
+            for r in resultados:
+                if r.historial: continue
+                valor=float(np.linalg.norm(r.residuo,np.inf))
+                if valor>0:
+                    ax.axhline(valor,linestyle='--',label=f'{r.metodo} (residuo final)')
+                else:
+                    ax.plot([],[],linestyle='--',label=f'{r.metodo}: residuo final = 0')
+        ax.set(title=f'Convergencia — {titulo}',xlabel='Iteración k',ylabel=ylabel)
         ax.grid(True,which='both',alpha=.3)
         ax.legend()
         archivos.append(_guardar(fig,carpeta/nombre))
@@ -50,7 +59,7 @@ def academicas(resultados,carpeta):
                     'o-',label=f'h{i}')
         ax.set(title=r.metodo,xlabel='Iteración k',ylabel='Nivel [u. académicas]')
         ax.grid(alpha=.3); ax.legend()
-    fig.suptitle('Aproximaciones del sistema académico')
+    fig.suptitle(f'Aproximaciones — {titulo}')
     archivos.append(_guardar(fig,carpeta/'niveles_iteraciones.png'))
     fig,ax=plt.subplots(figsize=(8,4.5))
     posiciones=np.arange(3)
@@ -58,7 +67,7 @@ def academicas(resultados,carpeta):
     for j,r in enumerate(resultados):
         ax.bar(posiciones-.4+(j+.5)*ancho,r.x,ancho,label=r.metodo)
     ax.set(xticks=posiciones,xticklabels=['h1','h2','h3'],
-           title='Soluciones — sistema académico',xlabel='Variable',ylabel='Nivel [u. académicas]')
+           title=f'Soluciones — {titulo}',xlabel='Variable',ylabel='Nivel [u. académicas]')
     ax.legend(); ax.grid(axis='y',alpha=.3)
     archivos.append(_guardar(fig,carpeta/'comparacion_metodos.png'))
     return archivos

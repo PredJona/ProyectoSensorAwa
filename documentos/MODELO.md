@@ -1,5 +1,108 @@
 # Modelo, métodos y verificación
 
+## Dos problemas independientes
+
+La implementación distingue el **11.1**, continuidad de tres vasos cerrados
+discretizada con Euler implícito, del **11.2**, sistema estacionario de validación
+del profesor. Los datos de ambos ejemplos son hipotéticos y normalizados.
+Arduino, LCD, captura CSV y ThingsBoard son la parte experimental compartida;
+sus cuentas ADC no alimentan ninguno de estos sistemas académicos.
+
+Esta adaptación fue cotejada con las seis páginas de
+[`Problema11_Planteamiento_v4.pdf`](Problema11_Planteamiento_v4.pdf): continuidad,
+Euler implícito y ejemplo de 11.1 en páginas 2–4; balances estacionarios, matriz,
+vector y comparación de residuos de 11.2 en páginas 4–6. Las matrices y los
+métodos coinciden. El PDF deja las tablas y resultados numéricos para apartados
+posteriores; los conteos de iteraciones aquí indicados proceden de las ejecuciones
+locales con el criterio y parámetros documentados.
+
+## Problema 11.1: un paso temporal de continuidad
+
+Para tres vasos de igual sección constante S, conductancia k común y sin
+entradas ni descargas externas, se supone la ley lineal didáctica:
+
+```text
+S dh1/dt = -k(h1-h2)
+S dh2/dt =  k(h1-h2) - k(h2-h3)
+S dh3/dt =  k(h2-h3)
+```
+
+Euler implícito evalúa los intercambios en el nuevo instante n+1:
+
+```text
+alpha = k Delta_t / S > 0
+A(alpha) h^(n+1) = b,        b = h^n
+
+A(alpha) = [[1+alpha, -alpha,          0],
+            [-alpha,  1+2alpha,  -alpha],
+            [0,       -alpha,   1+alpha]]
+```
+
+Es **un paso temporal**, no el equilibrio final de los vasos. Las iteraciones
+de Jacobi/Seidel resuelven ese paso; no representan instantes físicos sucesivos.
+`--niveles-anteriores` define b, mientras `--x0` es únicamente la aproximación
+inicial del solucionador. Se toman niveles no negativos referidos al fondo.
+No se han medido S, k ni Delta_t: solo se configura su combinación alpha.
+
+Con alpha=1 y b=(3,2,1), A=[[2,-1,0],[-1,3,-1],[0,-1,2]] y la solución exacta
+es (2.5,2,1.5). Por sustitución, A h=(3,2,1). La suma pasa de 6 a 6;
+con igual sección S esto conserva el volumen S·sum(h). Cada columna de A suma
+1, de modo que para cualquier aproximación el defecto sum(h)-sum(b) equivale
+a sum(Ah-b). No se fuerza la suma de los iterados mediante correcciones.
+
+Las filas tienen margen de dominancia estricta igual a 1 para todo alpha>0.
+La implementación rechaza valores no positivos, no finitos o tan grandes que
+la aritmética flotante pierda ese margen. Los niveles deben ser tres valores
+finitos no negativos; no se impone esa restricción física a `--x0`.
+
+Con x0=(0,0,0), tol=0.001 y parada por cambio absoluto infinito:
+
+| Método | Primer vector | Iteraciones | Solución aproximada | Residuo infinito | Suma aproximada |
+|---|---|---:|---|---:|---:|
+| Jacobi | (1.5, 2/3, 0.5) | 14 | (2.499085505, 1.999085505, 1.499085505) | 9.144947e-4 | 5.997256516 |
+| Gauss-Seidel | (1.5, 7/6, 13/12) | 9 | (2.499809480, 1.999872987, 1.499936493) | 2.540263e-4 | 5.999618961 |
+
+La solución exacta conserva la suma exactamente. Las aproximaciones tienen
+defectos -0.002743484 y -0.000381039, respectivamente, compatibles con sus
+residuos. Una tolerancia de cambio de 0.001 no exige un defecto de suma menor
+que 0.001. El resumen JSON informa estas diferencias, sin confundirlas con
+incertidumbre de medición ni con pérdida física de agua.
+
+```bash
+.venv/bin/python -m python.main resolver --problema 11.1
+.venv/bin/python -m python.main resolver --problema 11.1 --alpha 0.5 --niveles-anteriores 4 2 0 --x0 1 1 1 --salida /tmp/awa-11-1-personalizado
+```
+
+Las tablas `jacobi.csv`, `gauss_seidel.csv`, `comparacion.csv` y `resumen.json`
+se generan en `datos/resultados/11_1/`; las cuatro figuras `convergencia.png`,
+`residuos.png`, `niveles_iteraciones.png` y `comparacion_metodos.png` en
+`graficas/11_1/`. Los historiales incluyen k=0, cambios absolutos y relativos
+por componente y en norma infinito, y el vector residuo en cada iteración.
+El resumen identifica problema, origen académico, modelo, parámetros, métodos,
+referencia NumPy y conservación. Los cocientes relativos no son porcentajes.
+
+## Problema 11.2 y compatibilidad
+
+Las secciones de balance estacionario y resultados que siguen documentan 11.2.
+`resolver --problema 11.2` usa Jacobi y Gauss-Jordan, compara sus residuos y
+mantiene A=[[5,-1,0],[-1,5,-1],[0,-1,4]], b=(20,30,25). `resolver` sin selector
+conserva además Gauss-Seidel, los cálculos anteriores y las rutas originales:
+`datos/resultados/` y `graficas/`. No se elimina el algoritmo Gauss-Seidel.
+El CSV de comparación y el JSON enumeran solo los métodos de la ejecución.
+Un CSV de Gauss-Seidel de una ejecución anterior puede permanecer en la carpeta.
+
+```bash
+.venv/bin/python -m python.main resolver --problema 11.2
+.venv/bin/python -m python.main resolver
+```
+
+`--salida DIRECTORIO` cambia la raíz de salida, conservando las subrutas.
+Como antes, ejecutar sobre una raíz existente regenera sus salidas académicas;
+para conservar una ejecución histórica se debe elegir una raíz nueva. Durante
+esta adaptación las ejecuciones de 11.2 y del comando original se realizaron
+en directorios de verificación separados, preservando los originales.
+`--alpha` y `--niveles-anteriores` se rechazan fuera de 11.1.
+
 ## Variables y sensores
 
 | Variable | Compartimento | Canal | Magnitud |

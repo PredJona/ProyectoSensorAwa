@@ -8,38 +8,70 @@ from pathlib import Path
 import numpy as np
 
 from .metodos import (A_VALIDACION, B_VALIDACION, exportar_tabla,
-                      jacobi, gauss_seidel, gauss_jordan)
+                      jacobi, gauss_seidel, gauss_jordan, sistema_11_1)
 
 RAIZ=Path(__file__).resolve().parents[1]
 
 
 def resolver(args):
-    A,b=A_VALIDACION,B_VALIDACION
-    resultados=[jacobi(A,b,args.x0,args.tol,args.max_iter),
-                gauss_seidel(A,b,args.x0,args.tol,args.max_iter),gauss_jordan(A,b)]
+    problema=args.problema or '11.2'
+    if problema=='11.1':
+        alpha=1. if args.alpha is None else args.alpha
+        niveles=[3.,2.,1.] if args.niveles_anteriores is None else args.niveles_anteriores
+        A,b=sistema_11_1(alpha,niveles)
+        resultados=[jacobi(A,b,args.x0,args.tol,args.max_iter),
+                    gauss_seidel(A,b,args.x0,args.tol,args.max_iter)]
+        modelo='continuidad_euler_implicito'
+    else:
+        if args.alpha is not None or args.niveles_anteriores is not None:
+            raise ValueError('--alpha y --niveles-anteriores solo se admiten para --problema 11.1.')
+        A,b=A_VALIDACION,B_VALIDACION
+        resultados=[jacobi(A,b,args.x0,args.tol,args.max_iter)]
+        if args.problema is None:  # Conservar los tres métodos del comando original.
+            resultados.append(gauss_seidel(A,b,args.x0,args.tol,args.max_iter))
+        resultados.append(gauss_jordan(A,b))
+        modelo='validacion_estacionaria'
     referencia=np.linalg.solve(A,b)
     carpeta=Path(args.salida)/'datos/resultados'
+    carpeta_graficas=Path(args.salida)/'graficas'
+    if problema=='11.1':
+        carpeta=carpeta/'11_1'
+        carpeta_graficas=carpeta_graficas/'11_1'
+    print(f'Problema {problema} — {modelo} (origen académico, unidades normalizadas)')
+    print(f'A =\n{A}\nb = {b}')
+    print(f'x0 iterativo = {args.x0}; métodos: '+', '.join(r.metodo for r in resultados))
+    print(f'Referencia NumPy: {referencia}')
     carpeta.mkdir(parents=True,exist_ok=True)
-    for r,nombre in zip(resultados[:2],('jacobi','gauss_seidel')):
-        exportar_tabla(r,carpeta/f'{nombre}.csv')
-    with (carpeta/'gauss_jordan_operaciones.csv').open('w',newline='',encoding='utf-8') as f:
-        w=csv.writer(f)
-        w.writerow(['paso','operacion','fila','a1','a2','a3','b'])
-        for k,op in enumerate(resultados[2].operaciones):
-            for i,fila in enumerate(op['matriz']):
-                w.writerow([k,op['operacion'],i+1,*fila])
-    resumen={'origen':'academico','A':A.tolist(),'b':b.tolist(),
+    for r in resultados:
+        if r.historial:
+            exportar_tabla(r,carpeta/(r.metodo.lower().replace('-','_')+'.csv'))
+        if r.operaciones:
+            with (carpeta/'gauss_jordan_operaciones.csv').open('w',newline='',encoding='utf-8') as f:
+                w=csv.writer(f)
+                w.writerow(['paso','operacion','fila','a1','a2','a3','b'])
+                for k,op in enumerate(r.operaciones):
+                    for i,fila in enumerate(op['matriz']):
+                        w.writerow([k,op['operacion'],i+1,*fila])
+    resumen={'origen':'academico','problema':problema,'modelo':modelo,
+             'A':A.tolist(),'b':b.tolist(),
              'parametros':{'x0':args.x0,'tol':args.tol,'max_iter':args.max_iter,
                            'criterio':'||h(k)-h(k-1)||inf < tol'},
              'dominancia_estricta':bool(np.all(np.abs(np.diag(A)) >
                                 np.sum(np.abs(A),axis=1)-np.abs(np.diag(A)))),
              'referencia_numpy':referencia.tolist(),'metodos':[]}
+    if problema=='11.1':
+        resumen['parametros'].update(alpha=alpha,niveles_anteriores=b.tolist())
+        resumen['conservacion']={'suma_anterior':float(sum(b)),
+                                'suma_referencia':float(sum(referencia)),
+                                'defecto_referencia':float(sum(referencia)-sum(b))}
     for r in resultados:
         fila={'metodo':r.metodo,'solucion':r.x.tolist(),'iteraciones':r.iteraciones if r.historial else None,
               'converge':r.converge,'motivo':r.motivo,'residuo':r.residuo.tolist(),
               'residuo_inf':float(np.linalg.norm(r.residuo,np.inf)),
               'diferencia_numpy_inf':float(np.linalg.norm(r.x-referencia,np.inf)),
               'error_final':r.historial[-1]['error_abs_inf'] if r.historial else None}
+        if problema=='11.1':
+            fila.update(suma_alturas=float(sum(r.x)),defecto_suma=float(sum(r.x)-sum(b)))
         resumen['metodos'].append(fila)
         print(f"{r.metodo}: h={np.array2string(r.x,precision=9)}, "
               f"iteraciones={fila['iteraciones']}, converge={r.converge}, "
@@ -55,7 +87,7 @@ def resolver(args):
     if not args.sin_graficas:
         from .graficas import academicas
         resumen['graficas']=[p.relative_to(args.salida).as_posix()
-                            for p in academicas(resultados,Path(args.salida)/'graficas')]
+                            for p in academicas(resultados,carpeta_graficas,problema=problema)]
     (carpeta/'resumen.json').write_text(json.dumps(resumen,indent=2,ensure_ascii=False,allow_nan=False)+'\n',encoding='utf-8')
     print(f'Resultados académicos guardados en {carpeta}')
     return 0 if all(r.converge for r in resultados) else 2
@@ -65,6 +97,11 @@ def parser():
     p=argparse.ArgumentParser(description='Proyecto 1 — nivel de agua, Problema 11')
     sub=p.add_subparsers(dest='comando',required=True)
     r=sub.add_parser('resolver',help='Resolver el sistema académico sin Arduino')
+    r.add_argument('--problema',choices=('11.1','11.2'),
+                   help='11.1: Jacobi/Seidel; 11.2: Jacobi/Jordan; omitido: 11.2 con los tres métodos históricos')
+    r.add_argument('--alpha',type=float,help='k·Δt/S > 0 para 11.1 (predeterminado: 1)')
+    r.add_argument('--niveles-anteriores',type=float,nargs=3,metavar=('H1','H2','H3'),
+                   help='b de 11.1: niveles académicos no negativos del instante anterior (3 2 1); independiente de --x0')
     r.add_argument('--tol',type=float,default=.001)
     r.add_argument('--max-iter',type=int,default=100)
     r.add_argument('--x0',type=float,nargs=3,default=[0.,0.,0.])

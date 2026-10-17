@@ -10,10 +10,16 @@ Implementación y verificación de métodos numéricos en Python, adquisición e
 Desde la carpeta `Proyecto1`:
 
 ```bash
-# 1. Ejecutar toda la suite de pruebas (55 pruebas: 54 aprobadas, 1 omitida sin qrcode/cv2)
+# 1. Ejecutar toda la suite de pruebas (el total real se muestra al finalizar)
 .venv/bin/python -m unittest discover -s tests -v
 
-# 2. Resolver el sistema académico (Jacobi, Gauss-Seidel y Gauss-Jordan) y exportar tablas/gráficas
+# 2. Resolver 11.1: continuidad por Euler implícito (Jacobi y Gauss-Seidel)
+.venv/bin/python -m python.main resolver --problema 11.1
+
+# 11.2: validación estacionaria del profesor (Jacobi y Gauss-Jordan)
+.venv/bin/python -m python.main resolver --problema 11.2
+
+# Compatibilidad: 11.2 con los tres métodos históricos
 .venv/bin/python -m python.main resolver
 
 # 3. Regenerar la auditoría estadística y gráficas de la sesión experimental del 16 de octubre
@@ -54,14 +60,54 @@ En Windows use `.venv\Scripts\python.exe` en lugar de `.venv/bin/python`. Las pr
 
 ## 3. Separación conceptual y desarrollo matemático
 
-El proyecto distingue estrictamente cuatro planos que **no deben confundirse ni mezclarse**:
+Los dos problemas matemáticos son independientes y usan valores hipotéticos,
+normalizados, sin mediciones físicas ni ADC calibrados. La adquisición Arduino,
+LCD, Python y ThingsBoard es la parte experimental compartida.
+
+### Problema 11.1: continuidad discretizada en el tiempo
+
+Tres vasos de igual sección S, cerrados a aportes y descargas externas, con
+intercambio lineal de conductancia k. Euler implícito da, para un paso temporal:
+
+```text
+alpha = k Delta_t/S > 0
+A = [[1+alpha, -alpha, 0], [-alpha, 1+2alpha, -alpha], [0, -alpha, 1+alpha]]
+b = niveles del instante anterior
+```
+
+El ejemplo alpha=1, b=(3,2,1) tiene solución exacta (2.5,2,1.5), suma 6 y
+dominancia diagonal estricta. Con x0=(0,0,0) y tol=0.001, Jacobi tarda 14
+iteraciones y Gauss-Seidel 9. Las iteraciones son del solucionador de **un paso**,
+no una simulación de múltiples instantes ni el equilibrio final.
+
+```bash
+.venv/bin/python -m python.main resolver --problema 11.1 --alpha 1 --niveles-anteriores 3 2 1 --x0 0 0 0
+```
+
+`--niveles-anteriores` define b; `--x0` define la aproximación iterativa inicial.
+Los historiales, errores absolutos/relativos, residuos y comparación con NumPy
+se guardan en `datos/resultados/11_1/` (`jacobi.csv`, `gauss_seidel.csv`,
+`comparacion.csv`, `resumen.json`). Las cuatro figuras están en `graficas/11_1/`
+(`convergencia.png`, `residuos.png`, `niveles_iteraciones.png`, `comparacion_metodos.png`).
+La conservación es exacta en la solución matemática; los iterados finales tienen
+un pequeño defecto de suma, informado en el JSON y explicado en [MODELO.md](documentos/MODELO.md).
+
+### Problema 11.2 y separación experimental
+
+El comando explícito `resolver --problema 11.2` ejecuta Jacobi y Gauss-Jordan;
+el comando original `resolver` conserva los tres métodos y sus rutas anteriores.
+Las tablas siguientes son de 11.2. `--alpha` y `--niveles-anteriores` solo se
+admiten en 11.1. Para verificar 11.2 sin regenerar los archivos históricos, usar
+una raíz nueva, por ejemplo `resolver --problema 11.2 --salida /tmp/awa-11-2`.
+
+Se distinguen los siguientes conceptos:
 
 1. **Modelo matemático académico del profesor:**
    Sistema lineal estacionario suministrado en la guía de clase para tres depósitos acoplados:
    $$A = \begin{bmatrix} 5 & -1 & 0 \\ -1 & 5 & -1 \\ 0 & -1 & 4 \end{bmatrix}, \quad b = \begin{bmatrix} 20 \\ 30 \\ 25 \end{bmatrix}, \quad A h = b$$
    La matriz $A$ es estrictamente diagonal dominante ($|5|>1$, $|5|>2$, $|4|>1$), lo que garantiza convergencia global de Jacobi y Gauss-Seidel para cualquier vector inicial $h^{(0)}$. La solución exacta racional es:
    $$h^* = \left(\frac{75}{13},\; \frac{115}{13},\; \frac{110}{13}\right) \approx (5.769230769,\; 8.846153846,\; 8.461538462)\text{ [u. académicas]}$$
-   *(Nota: un tanque cerrado sin aportes ni descargas externas tiene matriz laplaciana singular y equilibrio $h_1=h_2=h_3$; por tanto, $A$ y $b$ representan el ejercicio académico con aportes/salidas nominales, no lecturas crudas del ADC).*
+   *(En equilibrio estacionario, un tanque cerrado comunicado tiene matriz laplaciana singular y niveles iguales. Esto no se aplica a la matriz de Euler implícito de 11.1, que incluye la identidad y resuelve un paso temporal. Los aportes/salidas usados para interpretar 11.2 son hipótesis académicas, no componentes medidos del montaje).*
 
 2. **Soluciones mediante métodos numéricos** ($h^{(0)}=(0,0,0)$, criterio $\|h^{(k)}-h^{(k-1)}\|_\infty < 0.001$, sin redondeo intermedio):
 
@@ -202,7 +248,7 @@ Las instrucciones están en [Sensor Awa en Cloud](documentos/SENSOR_AWA_THINGSBO
 ## 7. Procedimiento de demostración para la exposición
 
 1. **Demostración matemática y numérica (sin hardware):**
-   Ejecutar `.venv/bin/python -m python.main resolver` y mostrar las tablas en `datos/resultados/comparacion.csv` junto con las 4 figuras en `graficas/` (`convergencia.png`, `residuos.png`, `niveles_iteraciones.png`, `comparacion_metodos.png`), explicando por qué Gauss-Seidel converge en 6 iteraciones frente a 9 de Jacobi y cómo Gauss-Jordan obtiene la solución exacta $(75/13, 115/13, 110/13)$.
+   Para 11.1, mostrar `datos/resultados/11_1/comparacion.csv` y `graficas/11_1/`: Jacobi (14 iteraciones), Gauss-Seidel (9) y conservación de suma en la solución exacta (2.5,2,1.5). Para 11.2, comparar Jacobi (9 iteraciones) y Gauss-Jordan con la solución $(75/13,115/13,110/13)$ y sus residuos. `resolver` sigue disponible con Gauss-Seidel adicional (6 iteraciones). Usar `--salida` con una raíz nueva al repetir una ejecución que se desee conservar.
 2. **Demostración del análisis experimental reproducible:**
    Ejecutar `.venv/bin/python -m python.analisis_sesion --sesion datos/calibracion/sesion_2026-10-16_01/sesion.json --salida /tmp/demo_sesion` y presentar `comparacion_tres_canales.png` y `curva_exploratoria_sensor1.png`, explicando la diferencia entre las 420 lecturas ADC resumidas (140 por canal) y por qué la discrepancia en 25 mm (+7,10 mm y −10,78 mm por movimiento del sensor) impidió dar por validada la calibración.
 3. **Verificación automatizada de calidad (QA):**

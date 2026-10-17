@@ -1,0 +1,104 @@
+{
+  "origen": "academico",
+  "problema": "11.1",
+  "modelo": "continuidad_euler_implicito",
+  "A": [
+    [
+      2.0,
+      -1.0,
+      0.0
+    ],
+    [
+      -1.0,
+      3.0,
+      -1.0
+    ],
+    [
+      0.0,
+      -1.0,
+      2.0
+    ]
+  ],
+  "b": [
+    3.0,
+    2.0,
+    1.0
+  ],
+  "parametros": {
+    "x0": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "tol": 0.001,
+    "max_iter": 100,
+    "criterio": "||h(k)-h(k-1)||inf < tol",
+    "alpha": 1.0,
+    "niveles_anteriores": [
+      3.0,
+      2.0,
+      1.0
+    ]
+  },
+  "dominancia_estricta": true,
+  "referencia_numpy": [
+    2.5,
+    2.0,
+    1.5000000000000002
+  ],
+  "metodos": [
+    {
+      "metodo": "Jacobi",
+      "solucion": [
+        2.499085505258345,
+        1.9990855052583447,
+        1.499085505258345
+      ],
+      "iteraciones": 14,
+      "converge": true,
+      "motivo": "Cambio menor que tol.",
+      "residuo": [
+        -0.0009144947416546145,
+        -0.0009144947416555027,
+        -0.0009144947416548366
+      ],
+      "residuo_inf": 0.0009144947416555027,
+      "diferencia_numpy_inf": 0.0009144947416552807,
+      "error_final": 0.0009144947416550586,
+      "suma_alturas": 5.997256515775035,
+      "defecto_suma": -0.0027434842249647318
+    },
+    {
+      "metodo": "Gauss-Seidel",
+      "solucion": [
+        2.4998094802621553,
+        1.9998729868414369,
+        1.4999364934207184
+      ],
+      "iteraciones": 9,
+      "converge": true,
+      "motivo": "Cambio menor que tol.",
+      "residuo": [
+        -0.00025402631712623247,
+        -0.00012701315856311624,
+        0.0
+      ],
+      "residuo_inf": 0.00025402631712623247,
+      "diferencia_numpy_inf": 0.00019051973784467435,
+      "error_final": 0.0003810394756897928,
+      "suma_alturas": 5.999618960524311,
+      "defecto_suma": -0.0003810394756893487
+    }
+  ],
+  "conservacion": {
+    "suma_anterior": 6.0,
+    "suma_referencia": 6.0,
+    "defecto_referencia": 0.0
+  },
+  "graficas": [
+    "graficas/11_1/convergencia.png",
+    "graficas/11_1/residuos.png",
+    "graficas/11_1/niveles_iteraciones.png",
+    "graficas/11_1/comparacion_metodos.png"
+  ]
+}
